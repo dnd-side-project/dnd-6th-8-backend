@@ -54,5 +54,5 @@ jobs:
         aws s3 cp \
         --region ap-northeast-2 \
         --acl private \
-        ./travel-build.zip s3://dnd-travel/
+        ./travel-build.zip s3://deploy/
 
