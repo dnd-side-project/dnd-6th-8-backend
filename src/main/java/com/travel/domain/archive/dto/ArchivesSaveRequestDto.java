@@ -7,6 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 
+<<<<<<< HEAD
+=======
+import java.util.Date;
+
+>>>>>>> dev
 
 @Getter
 @ApiModel(value = "태그 생성 정보")
@@ -18,8 +23,8 @@ public class ArchivesSaveRequestDto {
     @ApiModelProperty(value = "여행 장소", example = "부산", required = true)
     private EPlaces place;
 
-
-
+    @ApiModelProperty(value = "출발 날짜", example = "2021.12.10",required = true)
+    private Date firstDate;
 
     @Builder
     public ArchivesSaveRequestDto(String title, EPlaces place){
