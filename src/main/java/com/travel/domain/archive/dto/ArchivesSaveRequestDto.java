@@ -7,11 +7,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 
-//import javax.validation.constraints.NotBlank;
 
 @Getter
 @ApiModel(value = "태그 생성 정보")
 public class ArchivesSaveRequestDto {
+
     @ApiModelProperty(value = "아카이브 제목", example = "대충 다녀도 아름다운 제주", required = true)
     private String title;
 
@@ -26,6 +26,8 @@ public class ArchivesSaveRequestDto {
         this.title = title;
         this.place = place;
     }
+
+    public ArchivesSaveRequestDto() {}
 
     public Archives toEntity(){
         return Archives.builder().title(title).place(place).build();

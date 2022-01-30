@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@Api(tags = {"게시글 API 정보를 제공"})
+@Api(tags = {"사용자 API 정보를 제공"})
 public class UserApiController {
 
     @GetMapping("/user")
