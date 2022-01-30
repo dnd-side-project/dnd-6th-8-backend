@@ -27,15 +27,25 @@ public class ArchiveApiController {
         return archivesService.findById(id);
     }
 
-    @GetMapping("/archives/place")
+    @GetMapping("/archives/places")
     public String getArchiveListByPlace(){
+        return "  ";
+    }
+
+    @GetMapping("/archives/suggestion/survey")
+    public String getArchiveBySurvey(){
         return "";
     }
 
     @GetMapping("/archives/suggestion/")
-    public String getArchiveSuggestionBySurvey(){
-        return "";
-    }
+    public String getArchiveBySuggestion(){return "";}
 
+    @PostMapping("/archives/update/{id}")
+    public String updateArchive(){return "";}
 
+    @DeleteMapping("/archives/{id}")
+    public String deleteArchive(){return "";}
+
+    @PostMapping("/archives/share/{id}")
+    public String changeArchiveStatus(){return "";}
 }
