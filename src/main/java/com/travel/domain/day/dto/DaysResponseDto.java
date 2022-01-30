@@ -1,8 +1,9 @@
 package com.travel.domain.day.dto;
 
 import com.travel.domain.day.entity.Days;
-import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class DaysResponseDto {
 
     private Long id;

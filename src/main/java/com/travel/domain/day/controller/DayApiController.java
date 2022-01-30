@@ -23,7 +23,7 @@ public class DayApiController {
     }
 
     @GetMapping("/archives/{id}/days/{id}")
-    public String findById(@PathVariable Long id) {return ""; }
+    public DaysResponseDto findById(@PathVariable Long id) {return daysService.findById(id); }
 
     @PostMapping("/archives/{id}/days/update/{id}")
     public String updateDay(){return "";}

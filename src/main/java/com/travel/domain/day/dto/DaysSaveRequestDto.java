@@ -28,6 +28,8 @@ public class DaysSaveRequestDto {
         this.tipDescription = tipDescription;
     }
 
+    public DaysSaveRequestDto() {}
+
     public Days toEntity() { return Days.builder().weather(weather).travelDescription(travelDescription).emotionDescription(emotionDescription).build(); }
 
 }
