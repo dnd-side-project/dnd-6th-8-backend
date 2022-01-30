@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 @ApiModel(value = "태그 생성 정보")
 public class ArchivesSaveRequestDto {
+
     @ApiModelProperty(value="태그의 이름", example = "이름입니다.", required = true)
 //    @NotBlank(message = "태그 이름이 입력되지 않았습니다.")
     private String title;
@@ -19,6 +20,8 @@ public class ArchivesSaveRequestDto {
     public ArchivesSaveRequestDto(String title){
         this.title = title;
     }
+
+    public ArchivesSaveRequestDto() {}
 
     public Archives toEntity(){
         return Archives.builder().title(title).build();
