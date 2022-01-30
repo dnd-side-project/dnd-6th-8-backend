@@ -1,7 +1,9 @@
 package com.travel.domain.archive.dto;
 
 import com.travel.domain.archive.entity.Archives;
+import lombok.Getter;
 
+@Getter
 public class ArchivesResponseDto {
 
     private Long id;
