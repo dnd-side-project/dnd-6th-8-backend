@@ -3,13 +3,11 @@ package com.travel.domain.archive.dto;
 import com.travel.domain.archive.entity.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import jdk.vm.ci.meta.Local;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 @Getter
@@ -52,7 +50,6 @@ public class ArchivesSaveRequestDto {
         this.archivingStyle = eArchivingStyle;
     }
 
-//    public ArchivesSaveRequestDto() {}
 
     public Archives toEntity() {
         return Archives.builder().title(title).place(place).firstDay(firstDay).lastDay(lastDay)
