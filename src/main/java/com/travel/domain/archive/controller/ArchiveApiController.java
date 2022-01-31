@@ -40,11 +40,14 @@ public class ArchiveApiController {
     @GetMapping("/archives/suggestion/")
     public String getArchiveBySuggestion(){return "";}
 
-    @PostMapping("/archives/update/{id}")
+    @PostMapping("/archives/update/{archiveId}")
     public String updateArchive(){return "";}
 
-    @DeleteMapping("/archives/{id}")
-    public String deleteArchive(){return "";}
+    @DeleteMapping("/archives/{archiveId}")
+    public Long deleteArchive(@PathVariable Long archiveId){
+        archivesService.delete(archiveId);
+        return archiveId;
+    }
 
     @PostMapping("/archives/share/{id}")
     public String changeArchiveStatus(){return "";}

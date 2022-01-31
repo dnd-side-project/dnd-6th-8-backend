@@ -17,14 +17,21 @@ public class ArchivesService {
     private final ArchivesRepository archivesRepository;
 
     @Transactional
-    public Long save(ArchivesSaveRequestDto archivesSaveRequestDto){
+    public Long save(ArchivesSaveRequestDto archivesSaveRequestDto) {
         return archivesRepository.save(archivesSaveRequestDto.toEntity()).getId();
     }
 
     @Transactional
-    public ArchivesResponseDto findById(Long id ){
-        Archives entity = archivesRepository.findById(id).orElseThrow
-                (()-> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
-        return new ArchivesResponseDto(entity);
+    public ArchivesResponseDto findById(Long id) {
+        Archives archive = archivesRepository.findById(id).orElseThrow
+                (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+        return new ArchivesResponseDto(archive);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Archives archive = archivesRepository.findById(id).orElseThrow
+                (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+        archivesRepository.delete(archive);
     }
 }
