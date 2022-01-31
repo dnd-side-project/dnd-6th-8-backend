@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -30,10 +32,10 @@ public class Archives {
     private EPlaces place;
 
     @Column()
-    private Date firstDay;
+    private LocalDate firstDay;
 
     @Column()
-    private Date lastDay;
+    private LocalDate lastDay;
 
     @Column()
     @Enumerated(EnumType.STRING)
@@ -42,16 +44,20 @@ public class Archives {
     @Column()
     private EArchivingStyle archivingStyle;
 
+    @Column()
+    private boolean isAlone;
+
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
-                    EPlaces place, Date firstDay, Date lastDay, EBudget budget,
-                    EArchivingStyle archivingStyle) {
+                    EPlaces place, LocalDate firstDay, LocalDate lastDay, EBudget budget,
+                    EArchivingStyle archivingStyle, boolean isAlone) {
         this.title = title;
         this.isShare = isShare;
         this.coverImage = coverImage;
         this.place = place;
         this.firstDay = firstDay;
         this.lastDay = lastDay;
+        this.isAlone = isAlone;
         this.budget = budget;
         this.archivingStyle = archivingStyle;
     }

@@ -29,7 +29,7 @@ public class ArchiveApiController {
 
     @GetMapping("/archives/places")
     public String getArchiveListByPlace(){
-        return "  ";
+        return " ";
     }
 
     @GetMapping("/archives/suggestion/survey")
