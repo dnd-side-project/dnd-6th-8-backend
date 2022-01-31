@@ -10,28 +10,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-@RequiredArgsConstructor
-@Service
-public class ArchivesService {
 
-    private final ArchivesRepository archivesRepository;
+public interface ArchivesService {
 
-    @Transactional
-    public Long save(ArchivesSaveRequestDto archivesSaveRequestDto) {
-        return archivesRepository.save(archivesSaveRequestDto.toEntity()).getId();
-    }
+    public Long save(ArchivesSaveRequestDto archivesSaveRequestDto);
 
-    @Transactional
-    public ArchivesResponseDto findById(Long id) {
-        Archives archive = archivesRepository.findById(id).orElseThrow
-                (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
-        return new ArchivesResponseDto(archive);
-    }
+    public ArchivesResponseDto findById(Long id);
 
-    @Transactional
-    public void delete(Long id) {
-        Archives archive = archivesRepository.findById(id).orElseThrow
-                (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
-        archivesRepository.delete(archive);
-    }
+    public void delete(Long id);
 }
