@@ -29,7 +29,7 @@ public class ArchivesSaveRequestDto {
     private LocalDate lastDay;
 
     @ApiModelProperty(value = "동행 여부", example = "함께", required = true)
-    private boolean isAlone;
+    private boolean haveCompanion;
 
     @ApiModelProperty(value = "예산 계획", example = "최소한", required = true)
     private EBudget eBudget;
@@ -40,12 +40,12 @@ public class ArchivesSaveRequestDto {
 
     @Builder
     public ArchivesSaveRequestDto(String title, EPlaces place, LocalDate firstDay, LocalDate lastDay,
-                                  boolean isAlone, EBudget eBudget, EArchivingStyle eArchivingStyle) {
+                                  boolean haveCompanion, EBudget eBudget, EArchivingStyle eArchivingStyle) {
         this.title = title;
         this.place = place;
         this.firstDay = firstDay;
         this.lastDay = lastDay;
-        this.isAlone = isAlone;
+        this.haveCompanion = haveCompanion;
         this.eBudget = eBudget;
         this.archivingStyle = eArchivingStyle;
     }
@@ -53,6 +53,6 @@ public class ArchivesSaveRequestDto {
 
     public Archives toEntity() {
         return Archives.builder().title(title).place(place).firstDay(firstDay).lastDay(lastDay)
-                .isAlone(isAlone).build();
+                .haveCompanion(haveCompanion).build();
     }
 }
