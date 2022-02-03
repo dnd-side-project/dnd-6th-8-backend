@@ -49,6 +49,9 @@ jobs:
     - name: Copy shell
       run: cp ./scripts/* ./deploy/
 
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./deploy/deploy.sh
+
     # 압축파일 형태로 전달
     - name: Make zip file
       run: zip -r -qq -j ./travel-build.zip ./deploy
