@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -16,7 +17,10 @@ public class Days {
     private Long id;
 
     @Column()
-    private String day;
+    private String dayNumber;
+
+    @Column
+    private LocalDate date;
 
     @Column()
     private String weather;
@@ -34,8 +38,9 @@ public class Days {
     private String tipDescription;
 
     @Builder
-    public Days(String day, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
-        this.day = day;
+    public Days(String dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+        this.dayNumber = dayNumber;
+        this.date = date;
         this.weather = weather;
         this.image = image;
         this.travelDescription = travelDescription;

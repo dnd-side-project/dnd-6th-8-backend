@@ -22,12 +22,15 @@ public class DayApiController {
         return daysService.save(daysSaveRequestDto);
     }
 
+    @ApiOperation(value = "데이 피드를 읽는 api")
     @GetMapping("/archives/{id}/days/{id}")
     public DaysResponseDto findById(@PathVariable Long id) {return daysService.findById(id); }
 
+    @ApiOperation(value = "데이 피드를 수정하는 api")
     @PostMapping("/archives/{id}/days/update/{id}")
     public String updateDay(){return "";}
 
+    @ApiOperation(value = "데이 피드를 삭제하는 api")
     @DeleteMapping("/archives/{id}/days/{id}")
     public String deleteDay(){return "";}
 }
