@@ -40,22 +40,23 @@ public class Archives {
     private EBudget budget;
 
     @Column()
+    @Enumerated(EnumType.STRING)
     private EArchivingStyle archivingStyle;
 
     @Column()
-    private boolean isAlone;
+    private boolean haveCompanion;
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
                     EPlaces place, LocalDate firstDay, LocalDate lastDay, EBudget budget,
-                    EArchivingStyle archivingStyle, boolean isAlone) {
+                    EArchivingStyle archivingStyle, boolean haveCompanion) {
         this.title = title;
         this.isShare = isShare;
         this.coverImage = coverImage;
         this.place = place;
         this.firstDay = firstDay;
         this.lastDay = lastDay;
-        this.isAlone = isAlone;
+        this.haveCompanion = haveCompanion;
         this.budget = budget;
         this.archivingStyle = archivingStyle;
     }
