@@ -50,7 +50,6 @@ public class ArchivesSaveRequestDto {
         this.archivingStyle = eArchivingStyle;
     }
 
-
     public Archives toEntity() {
         return Archives.builder().title(title).place(place).firstDay(firstDay).lastDay(lastDay)
                 .haveCompanion(haveCompanion).build();

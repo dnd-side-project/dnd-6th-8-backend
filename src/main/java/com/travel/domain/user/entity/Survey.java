@@ -2,10 +2,13 @@ package com.travel.domain.user.entity;
 
 import com.travel.domain.archive.entity.EArchivingStyle;
 import com.travel.domain.archive.entity.EBudget;
+import com.travel.domain.archive.entity.EPlaces;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -26,4 +29,11 @@ public class Survey {
 
     @Column()
     private boolean haveCompanion;
+
+    @Builder
+    public Survey(EArchivingStyle archivingStyle, EBudget budget, boolean haveCompanion) {
+        this.haveCompanion = haveCompanion;
+        this.budget = budget;
+        this.archivingStyle = archivingStyle;
+    }
 }
