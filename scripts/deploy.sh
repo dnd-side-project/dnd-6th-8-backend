@@ -4,7 +4,10 @@ REPOSITORY=/home/ec2-user/app/deploy
 
 echo">check running pid"
 
-echo "> $CURRENT_PID"
+CURRENT_PID=$(pgrep -f demo)
+
+
+echo "> CURRENT_PID"
 
 if [ -z $CURRENT_PID ]; then
     echo "> There is no pid running currently."
