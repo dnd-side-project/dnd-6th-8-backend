@@ -1,5 +1,6 @@
 package com.travel.domain.user.entity;
 
+import com.travel.domain.archive.entity.Archives;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,4 +20,8 @@ public class User {
 
     @Column()
     private String userName;
+
+//    @Column()
+////    @OneToMany(mappedBy = )
+//    private Archives archives;
 }
