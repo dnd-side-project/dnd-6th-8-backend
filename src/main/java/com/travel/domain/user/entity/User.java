@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,7 +22,12 @@ public class User {
     @Column()
     private String userName;
 
-//    @Column()
-////    @OneToMany(mappedBy = )
-//    private Archives archives;
+    @OneToOne()
+    @JoinColumn(name = "SURVEY_ID")
+    private Survey survey;
+
+    @Column()
+    @OneToMany(mappedBy = "user")
+    private List<Archives> archives;
+
 }

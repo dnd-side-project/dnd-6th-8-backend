@@ -1,5 +1,6 @@
 package com.travel.domain.archive.entity;
 
+import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 public class Archives {
 
     @Id
+    @Column(name = "ARCHIVE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -46,6 +48,11 @@ public class Archives {
     @Column()
     private boolean haveCompanion;
 
+    @ManyToOne()
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
+
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
                     EPlaces place, LocalDate firstDay, LocalDate lastDay, EBudget budget,
@@ -60,6 +67,4 @@ public class Archives {
         this.budget = budget;
         this.archivingStyle = archivingStyle;
     }
-
-
 }
