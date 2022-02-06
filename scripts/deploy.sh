@@ -4,6 +4,8 @@ REPOSITORY=/home/ec2-user/app/deploy
 
 echo">check running pid"
 
+
+
 echo "$CURRENT_PID"
 
 if [ -z $CURRENT_PID ]; then
