@@ -19,19 +19,27 @@ public class ArchiveApiController {
 
     private final ArchivesService archivesService;
 
-    @ApiOperation(value = "게시글을 저장하는 api")
+    @ApiOperation(value = "아카이브 생성 api")
     @PostMapping("/archives")
     public ResponseEntity<ArchivesResponseDto> saveArchive
             (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
-        ArchivesResponseDto archivesResponseDto = archivesService.save(archivesSaveRequestDto);
+        ArchivesResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto);
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);
     }
 
-    @ApiOperation(value = "게시글 하나가져오는 API")
+    @ApiOperation(value = "아카이브 id로 가져오기 API")
     @GetMapping("/archives/{id}")
-    public ArchivesResponseDto findById(@PathVariable Long id){
-        return archivesService.findById(id);
+    public ResponseEntity<ArchivesResponseDto> findById(@PathVariable Long id){
+        return ResponseEntity.ok(archivesService.findById(id));
+    }
+
+    @ApiOperation(value = "아카이브 업데이트 API")
+    @PutMapping("/archives/{id}")
+    public ResponseEntity<Void> updateArchive
+            (@PathVariable Long id, @RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+        archivesService.updateArchive(id, archivesSaveRequestDto);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "장소별로 게시물 필터링 API")
@@ -50,9 +58,7 @@ public class ArchiveApiController {
     @GetMapping("/archives/suggestion/")
     public String getArchiveBySuggestion(){return "";}
 
-    @ApiOperation(value = "게시물 업데이트 API")
-    @PostMapping("/archives/update/{archiveId}")
-    public String updateArchive(){return "";}
+
 
     @ApiOperation(value = "게시글 삭제 API")
     @DeleteMapping("/archives/{archiveId}")

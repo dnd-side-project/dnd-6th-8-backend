@@ -17,7 +17,7 @@ public class ArchiveServiceImpl implements ArchivesService{
 
     @Override
     @Transactional
-    public ArchivesResponseDto save(ArchivesSaveRequestDto archivesSaveRequestDto) {
+    public ArchivesResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto) {
         Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity());
         return new ArchivesResponseDto(archive);
     }
@@ -30,6 +30,36 @@ public class ArchiveServiceImpl implements ArchivesService{
         return new ArchivesResponseDto(archive);
     }
 
+    public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto){
+
+        Archives archive = archivesRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+
+        if (archivesSaveRequestDto.getTitle() != null) {
+            archive.setTitle(archivesSaveRequestDto.getTitle());
+        }
+        if (archivesSaveRequestDto.getFirstDay() != null) {
+            archive.setFirstDay(archivesSaveRequestDto.getFirstDay());
+        }
+        if (archivesSaveRequestDto.getLastDay() != null) {
+            archive.setLastDay(archivesSaveRequestDto.getLastDay());
+        }
+        if (archivesSaveRequestDto.getArchivingStyle() != null) {
+            archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
+        }
+        if (archivesSaveRequestDto.getPlace() != null) {
+            archive.setPlace(archivesSaveRequestDto.getPlace());
+        }
+        if (archivesSaveRequestDto.getBudget() != null) {
+            archive.setBudget(archivesSaveRequestDto.getBudget());
+        }
+        if (archivesSaveRequestDto.isHaveCompanion() != archive.isHaveCompanion()) {
+            archive.setHaveCompanion(archivesSaveRequestDto.isHaveCompanion());
+        }
+
+        archivesRepository.save(archive);
+    }
+
     @Override
     @Transactional
     public void delete(Long id) {
@@ -37,4 +67,6 @@ public class ArchiveServiceImpl implements ArchivesService{
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
         archivesRepository.delete(archive);
     }
+
+
 }
