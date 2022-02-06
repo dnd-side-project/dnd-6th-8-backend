@@ -6,7 +6,10 @@ import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -18,8 +21,11 @@ public class ArchiveApiController {
 
     @ApiOperation(value = "게시글을 저장하는 api")
     @PostMapping("/archives")
-    public Long saveArchive(@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
-        return archivesService.save(archivesSaveRequestDto);
+    public ResponseEntity<ArchivesResponseDto> saveArchive
+            (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+        ArchivesResponseDto archivesResponseDto = archivesService.save(archivesSaveRequestDto);
+        return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
+                .body(archivesResponseDto);
     }
 
     @ApiOperation(value = "게시글 하나가져오는 API")

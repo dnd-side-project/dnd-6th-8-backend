@@ -7,7 +7,7 @@ import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 
 public interface ArchivesService {
 
-    public Long save(ArchivesSaveRequestDto archivesSaveRequestDto);
+    public ArchivesResponseDto save(ArchivesSaveRequestDto archivesSaveRequestDto);
 
     public ArchivesResponseDto findById(Long id);
 

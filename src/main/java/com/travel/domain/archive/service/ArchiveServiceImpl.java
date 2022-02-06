@@ -17,8 +17,9 @@ public class ArchiveServiceImpl implements ArchivesService{
 
     @Override
     @Transactional
-    public Long save(ArchivesSaveRequestDto archivesSaveRequestDto) {
-        return archivesRepository.save(archivesSaveRequestDto.toEntity()).getId();
+    public ArchivesResponseDto save(ArchivesSaveRequestDto archivesSaveRequestDto) {
+        Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity());
+        return new ArchivesResponseDto(archive);
     }
 
     @Override
