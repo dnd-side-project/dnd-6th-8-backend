@@ -1,9 +1,7 @@
 package com.travel.domain.archive.controller;
 
-import com.travel.domain.archive.dto.ArchiveShareRequestDto;
 import com.travel.domain.archive.dto.ArchivesResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,6 +1,5 @@
 package com.travel.domain.archive.service;
 
-import com.travel.domain.archive.dto.ArchiveShareRequestDto;
 import com.travel.domain.archive.dto.ArchivesResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 
