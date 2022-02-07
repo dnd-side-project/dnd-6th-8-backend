@@ -1,7 +1,9 @@
 package com.travel.domain.archive.controller;
 
+import com.travel.domain.archive.dto.ArchiveShareRequestDto;
 import com.travel.domain.archive.dto.ArchivesResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +44,14 @@ public class ArchiveApiController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "아카이브 공유여부변경 API")
+    @PutMapping("/archives/{id}/share")
+    public ResponseEntity<Void> changeArchiveStatus
+            (@PathVariable Long id, @RequestParam boolean isShare){
+        archivesService.updateArchiveShare(id, isShare);
+        return ResponseEntity.ok().build();
+    }
+
     @ApiOperation(value = "장소별로 게시물 필터링 API")
     @GetMapping("/archives/places")
     public String getArchiveListByPlace(){
@@ -67,7 +77,4 @@ public class ArchiveApiController {
         return archiveId;
     }
 
-    @ApiOperation(value = "게시물 공유여부변경")
-    @PostMapping("/archives/share/{id}")
-    public String changeArchiveStatus(){return "";}
 }

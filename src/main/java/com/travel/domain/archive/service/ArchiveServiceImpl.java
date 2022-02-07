@@ -1,5 +1,6 @@
 package com.travel.domain.archive.service;
 
+import com.travel.domain.archive.dto.ArchiveShareRequestDto;
 import com.travel.domain.archive.dto.ArchivesResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.Archives;
@@ -30,6 +31,7 @@ public class ArchiveServiceImpl implements ArchivesService{
         return new ArchivesResponseDto(archive);
     }
 
+    @Override
     public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto){
 
         Archives archive = archivesRepository.findById(id)
@@ -57,6 +59,18 @@ public class ArchiveServiceImpl implements ArchivesService{
             archive.setHaveCompanion(archivesSaveRequestDto.isHaveCompanion());
         }
 
+        archivesRepository.save(archive);
+    }
+
+    @Override
+    public void updateArchiveShare(Long id, boolean isShare){
+
+        Archives archive = archivesRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+
+        if (archive.isShare() != isShare) {
+            archive.setShare(isShare);
+        }
         archivesRepository.save(archive);
     }
 

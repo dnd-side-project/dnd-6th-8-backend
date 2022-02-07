@@ -31,6 +31,7 @@ public class ArchivesResponseDto {
     private EArchivingStyle archivingStyle;
     private EBudget budget;
     private boolean haveCompanion;
+    private boolean isShare;
 
     public ArchivesResponseDto(Archives entity){
         this.id = entity.getId();
@@ -41,5 +42,6 @@ public class ArchivesResponseDto {
         this.archivingStyle = entity.getArchivingStyle();
         this.budget = entity.getBudget();
         this.haveCompanion = entity.isHaveCompanion();
+        this.isShare = entity.isShare();
     }
 }
