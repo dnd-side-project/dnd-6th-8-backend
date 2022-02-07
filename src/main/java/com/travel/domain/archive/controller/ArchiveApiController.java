@@ -68,11 +68,11 @@ public class ArchiveApiController {
 
 
 
-    @ApiOperation(value = "게시글 삭제 API")
+    @ApiOperation(value = "아카이브 삭제 API")
     @DeleteMapping("/archives/{archiveId}")
-    public Long deleteArchive(@PathVariable Long archiveId){
+    public ResponseEntity<Void> deleteArchive(@PathVariable Long archiveId){
         archivesService.delete(archiveId);
-        return archiveId;
+        return ResponseEntity.noContent().build();
     }
 
 }
