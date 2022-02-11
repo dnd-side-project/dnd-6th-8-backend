@@ -1,12 +1,16 @@
 package com.travel.domain.day.service;
 
-import com.travel.domain.day.dto.DaysResponseDto;
+import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
 
 public interface DaysService {
-    Long save(DaysSaveRequestDto daysSaveRequestDto);
 
-    DaysResponseDto findById(Long id);
+    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto);
 
-    void delete(Long id);
+    public DayDetailResponseDto findById(Long id);
+
+    public void delete(Long id);
+
+    public void updateDay(Long id, DaysSaveRequestDto daysSaveRequestDto);
+
 }

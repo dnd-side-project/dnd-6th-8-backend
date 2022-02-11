@@ -17,7 +17,7 @@ public class Days {
     private Long id;
 
     @Column()
-    private String dayNumber;
+    private int dayNumber;
 
     @Column
     private LocalDate date;
@@ -38,7 +38,7 @@ public class Days {
     private String tipDescription;
 
     @Builder
-    public Days(String dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+    public Days(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;

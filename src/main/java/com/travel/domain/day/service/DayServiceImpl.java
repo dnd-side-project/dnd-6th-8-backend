@@ -1,12 +1,11 @@
 package com.travel.domain.day.service;
 
 import com.travel.domain.day.repository.DaysRepository;
-import com.travel.domain.day.dto.DaysResponseDto;
+import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
 import com.travel.domain.day.entity.Days;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 
 @Service
@@ -22,10 +21,10 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional
-    public DaysResponseDto findById(Long id) {
+    public DayDetailResponseDto findById(Long id) {
         Days day = daysRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 피드가 없습니다. id = " + id));
-        return new DaysResponseDto(day);
+        return new DayDetailResponseDto(day);
     }
 
     @Override
