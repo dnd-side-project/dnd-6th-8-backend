@@ -1,7 +1,6 @@
 package com.travel.domain.user.service;
 
 import com.travel.domain.user.dto.SurveySaveRequestDto;
-import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.repository.SurveyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
