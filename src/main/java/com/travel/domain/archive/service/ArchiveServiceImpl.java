@@ -81,7 +81,7 @@ public class ArchiveServiceImpl implements ArchivesService{
     @Override
     @Transactional(readOnly = true)
     public List<ArchiveResponseDto> findByPlace(EPlaces place) {
-        List<Archives> filtered = archivesRepository.findTop5ByPlace(place);
+        List<Archives> filtered = archivesRepository.findByPlace(place);
         return ArchiveResponseDto.listOf(filtered);
     }
 
