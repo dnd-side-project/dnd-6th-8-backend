@@ -1,6 +1,7 @@
 package com.travel.domain.archive.entity;
 
 import com.travel.domain.emoji.entity.Emoji;
+import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -60,7 +61,8 @@ public class Archives {
     @OneToMany(mappedBy = "archive")
     List<Emoji> emojis = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "archive")
+    private List<Scraps> scraps = new ArrayList<>();;
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
