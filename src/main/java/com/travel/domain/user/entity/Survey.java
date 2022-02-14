@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class Survey {
 
     @Id
-    @Column(name = "SURVEY_ID")
+    @Column(name = "survey_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

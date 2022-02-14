@@ -1,8 +1,8 @@
 package com.travel.domain.archive.entity;
 
-import com.travel.domain.emoji.entity.Emoji;
+import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
-import com.travel.domain.sticker.entity.Sticker;
+import com.travel.domain.sticker.entity.UserSticker;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +21,7 @@ import java.util.List;
 public class Archives {
 
     @Id
-    @Column(name = "ARCHIVE_ID")
+    @Column(name = "archive_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -56,17 +56,17 @@ public class Archives {
     private boolean haveCompanion;
 
     @ManyToOne()
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "archive")
-    List<Emoji> emojis = new ArrayList<>();
+    List<UserMarkedEmoji> markedemojis = new ArrayList<>();
 
     @OneToMany(mappedBy = "archive")
     private List<Scraps> scraps = new ArrayList<>();
 
     @OneToMany(mappedBy = "archive")
-    private List<Sticker> sticker = new ArrayList<>();
+    private List<UserSticker> userStickers = new ArrayList<>();
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,

@@ -15,5 +15,5 @@ public class Sticker {
     private Long id;
 
     @Column()
-    String sticker;
+    String stickerName;
 }
