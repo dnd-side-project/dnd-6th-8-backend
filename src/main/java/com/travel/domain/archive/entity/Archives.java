@@ -1,5 +1,6 @@
 package com.travel.domain.archive.entity;
 
+import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -53,6 +56,10 @@ public class Archives {
     @ManyToOne()
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    @OneToMany(mappedBy = "archive")
+    List<Emoji> emojis = new ArrayList<>();
+
 
 
     @Builder
