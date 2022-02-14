@@ -5,6 +5,7 @@ import com.travel.domain.archive.entity.EArchivingStyle;
 import com.travel.domain.archive.entity.EBudget;
 import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.scrap.entity.Scraps;
+import com.travel.domain.sticker.entity.Sticker;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,14 +37,16 @@ public class User {
 
     @Column()
     @OneToMany(mappedBy = "user")
-    private List<Archives> archives = new ArrayList<>();;
+    private List<Archives> archives = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Emoji> emojis = new ArrayList<>();;
+    private List<Emoji> emojis = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Scraps> scraps = new ArrayList<>();;
+    private List<Scraps> scraps = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Sticker> sticker = new ArrayList<>();
 
     @Builder
     public User(String userName) {
