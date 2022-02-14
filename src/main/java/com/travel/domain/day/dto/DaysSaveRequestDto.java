@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @ApiModel(value = "데이 피드 기록하기")
 public class DaysSaveRequestDto {
 
+    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
+    private int dayNumber;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "다녀온 날짜", example = "2021-12-10", required = true)
     private LocalDate date;
@@ -33,7 +36,8 @@ public class DaysSaveRequestDto {
     private String tipDescription;
 
     @Builder
-    public DaysSaveRequestDto(LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+    public DaysSaveRequestDto(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+        this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
         this.image = image;
@@ -43,7 +47,7 @@ public class DaysSaveRequestDto {
     }
 
     public Days toEntity() {
-        return Days.builder().weather(weather).travelDescription(travelDescription).
-                emotionDescription(emotionDescription).build();
+        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).image(image).travelDescription(travelDescription).
+                emotionDescription(emotionDescription).tipDescription(tipDescription).build();
     }
 }

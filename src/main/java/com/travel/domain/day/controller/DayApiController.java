@@ -19,20 +19,21 @@ public class DayApiController {
 
     private final DaysService daysService;
 
-    @ApiOperation(value = "데이 피드를 저장하는 API")
+    @ApiOperation(value = "데이 피드를 생성하는 API")
     @PostMapping("/archives/{id}/days")
-    public ResponseEntity<DayDetailResponseDto> saveDay(@RequestBody DaysSaveRequestDto daysSaveRequestDto){
+    public ResponseEntity<DayDetailResponseDto> saveDay
+            (@PathVariable Long id, @RequestBody DaysSaveRequestDto daysSaveRequestDto){
         DayDetailResponseDto dayDetailResponseDto = daysService.saveDay(daysSaveRequestDto);
-        return ResponseEntity.created(URI.create("/api/v1/archives/{id}/days" + DayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
+        return ResponseEntity.created(URI.create("/api/v1/archives/{id}/days" + dayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
     }
 
-    @ApiOperation(value = "데이 피드를 id로 가져오기 API")
-    @GetMapping("/archives/{id}/days/{id}")
-    public ResponseEntity<DayDetailResponseDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(daysService.findById(id));
-    }
+//    @ApiOperation(value = "데이 피드를 id로 가져오기 API")
+//    @GetMapping("/archives/{id}/days/{id}")
+//    public ResponseEntity<DayDetailResponseDto> findById(@PathVariable Long id) {
+//        return ResponseEntity.ok(daysService.findById(id));
+//    }
 
-    @ApiOperation(value = "데이 피드를 수정하는 API")
+    @ApiOperation(value = "데이 피드 업데이트 API")
     @PutMapping("/archives/{id}/days/update/{id}")
     public ResponseEntity<Void> updateDay
             (@PathVariable Long id, @RequestBody DaysSaveRequestDto daysSaveRequestDto){
