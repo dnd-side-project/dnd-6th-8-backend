@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,9 +27,9 @@ public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-//    @Type(type = "uuid-char")
-    @Column(name= "user_id", columnDefinition = "BINARY(16)")
-    private String id;
+    @Type(type = "uuid-char")
+    @Column(name= "user_id")
+    private UUID id;
 
     @Column()
     private String userName;
