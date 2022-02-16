@@ -46,7 +46,7 @@ public class Days {
     private Archives archives;
 
     @Builder
-    public Days(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+    public Days(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Archives archives) {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
@@ -54,6 +54,7 @@ public class Days {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
+        this.archives = archives;
     }
 
 }

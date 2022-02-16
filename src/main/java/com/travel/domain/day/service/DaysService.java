@@ -11,7 +11,7 @@ public interface DaysService {
 
     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto);
 
-    public List<DayDetailResponseDto> findByArchiveIdAndDayNumber(Days archives, Days dayNumber);
+    public List<DayDetailResponseDto> findByArchivesAndDayNumber(Days archiveId, Days dayNumber);
 
     public void delete(Long id);
 
