@@ -30,7 +30,7 @@ public class DayDetailResponseDto {
 
     private String tipDescription;
 
-    private Archives archives;
+    private Archives archiveId;
 
     public DayDetailResponseDto(Days entity){
         this.dayNumber = entity.getDayNumber();
@@ -39,7 +39,7 @@ public class DayDetailResponseDto {
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();
-        this.archives = entity.getArchives();
+        this.archiveId = entity.getArchiveId();
     }
 
     public static List<DayDetailResponseDto> listOf(List<Days> filtered) {

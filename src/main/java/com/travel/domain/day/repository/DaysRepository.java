@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface DaysRepository extends JpaRepository<Days, Long> {
-    List<Days> findByArchivesAndDayNumber(@Param("archives")Days archives, @Param("dayNumber")Days dayNumber);
+    List<Days> findByArchiveIdAndDayNumber(@Param("archiveId")Days archiveId, @Param("dayNumber")Days dayNumber);
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Archives {
 
     @Id
-    @Column(name = "ARCHIVE_ID")
+    @Column(name = "archiveId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

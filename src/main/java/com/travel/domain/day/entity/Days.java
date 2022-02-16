@@ -43,7 +43,7 @@ public class Days {
 
     @ManyToOne
     @JoinColumn(name = "archiveId")
-    private Archives archives;
+    private Archives archiveId;
 
     @Builder
     public Days(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Archives archives) {
@@ -54,7 +54,7 @@ public class Days {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
-        this.archives = archives;
+        this.archiveId = archiveId;
     }
 
 }
