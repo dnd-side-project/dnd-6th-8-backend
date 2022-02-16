@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,9 +32,9 @@ public class DayApiController {
 
     @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
     @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<?> getDay(@PathVariable Long archiveId, int dayNumber) {
-        Optional<Days> days = daysService.getDay(archiveId, dayNumber);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchiveIdAndDayNumber(@PathVariable Days archiveId, Days dayNumber) {
+        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.findByArchiveIdAndDayNumber(archiveId, dayNumber);
+        return ResponseEntity.ok(dayDetailResponseDtos);
     }
 
 //    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")

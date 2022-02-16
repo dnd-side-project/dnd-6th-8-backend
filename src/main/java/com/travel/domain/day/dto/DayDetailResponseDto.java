@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ApiModel(value = "데이 피드 읽기(Detail)")
@@ -38,5 +40,15 @@ public class DayDetailResponseDto {
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();
         this.archives = entity.getArchives();
+    }
+
+    public static List<DayDetailResponseDto> listOf(List<Days> filtered) {
+        List<DayDetailResponseDto> dayResponses = new ArrayList<>();
+
+        for (Days day : filtered) {
+            dayResponses.add(new DayDetailResponseDto(day));
+        }
+
+        return dayResponses;
     }
 }

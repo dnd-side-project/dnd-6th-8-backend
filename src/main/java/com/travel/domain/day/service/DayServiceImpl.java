@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DayServiceImpl implements DaysService {
@@ -21,7 +23,7 @@ public class DayServiceImpl implements DaysService {
         return new DayDetailResponseDto(day);
     }
 
-//    @Override
+//    @Override  // original (error)
 //    @Transactional(readOnly=true)
 //    public DayDetailResponseDto findById(Long id) {
 //        Days day = daysRepository.findById(id).orElseThrow
@@ -29,12 +31,19 @@ public class DayServiceImpl implements DaysService {
 //        return new DayDetailResponseDto(day);
 //    }
 
-    @Override
+//    @Override // test1 (getDay)
+//    @Transactional(readOnly=true)
+//    public DayDetailResponseDto getDay(Long archiveId, int dayNumber, DayDetailResponseDto dayDetailResponseDto) {
+//        Days day = daysRepository.findByArchiveIdAndDayNumber(archiveId, dayNumber).orElseThrow
+//                (() -> new IllegalArgumentException("해당 데이 피드가 없습니다. id = " + dayNumber));
+//        return new DayDetailResponseDto(day);
+//    }
+
+    @Override // test2 (findByArchiveIdAndDayNumber)
     @Transactional(readOnly=true)
-    public DayDetailResponseDto getDay(Long archiveId, int dayNumber, DayDetailResponseDto dayDetailResponseDto) {
-        Days day = daysRepository.findByArchiveIdAndDayNumber(archiveId, dayNumber).orElseThrow
-                (() -> new IllegalArgumentException("해당 데이 피드가 없습니다. id = " + dayNumber));
-        return new DayDetailResponseDto(day);
+    public List<DayDetailResponseDto> findByArchiveIdAndDayNumber(Days archives, Days dayNumber) {
+        List<Days> filtered = daysRepository.findByArchiveIdAndDayNumber(archives, dayNumber);
+        return DayDetailResponseDto.listOf(filtered);
     }
 
     @Override
