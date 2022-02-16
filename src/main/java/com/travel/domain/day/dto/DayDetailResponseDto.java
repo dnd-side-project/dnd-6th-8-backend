@@ -1,5 +1,6 @@
 package com.travel.domain.day.dto;
 
+import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 public class DayDetailResponseDto {
 
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-    private int dayNumber;
+    public int dayNumber;
 
     @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
     private LocalDate date;
@@ -25,11 +26,17 @@ public class DayDetailResponseDto {
 
     private String emotionDescription;
 
+    private String tipDescription;
+
+    private Archives archives;
+
     public DayDetailResponseDto(Days entity){
         this.dayNumber = entity.getDayNumber();
         this.date = entity.getDate();
         this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
+        this.tipDescription = entity.getTipDescription();
+        this.archives = entity.getArchives();
     }
 }
