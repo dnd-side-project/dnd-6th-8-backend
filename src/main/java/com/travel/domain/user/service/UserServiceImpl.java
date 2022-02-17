@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public String save(UserSaveRequestDto userSaveRequestDto) {
+    public int save(UserSaveRequestDto userSaveRequestDto) {
         return userRepository.save(userSaveRequestDto.toEntity()).getId();
     }
 }

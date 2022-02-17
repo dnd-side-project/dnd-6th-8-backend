@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -31,8 +32,9 @@ public class UserApiController {
     @ApiOperation(value = "사용자 생성 임시 API(소셜 로그인 구현 후 바꿀 예정)")
     @PostMapping("/user")
     public ResponseEntity<Void> createUser(@RequestParam String userName){
-        String saveId = userService.save(new UserSaveRequestDto(userName));
-        return ResponseEntity.created(URI.create("/api/v1/user/" + saveId)).build();
+//        UUID saveId = userService.save(new UserSaveRequestDto(userName));
+        int saveId = userService.save(new UserSaveRequestDto(userName));
+        return ResponseEntity.created(URI.create("/api/v1/user/")).build();
     }
 
     @ApiOperation(value = "사용자 서베이 저장 API")
@@ -46,5 +48,6 @@ public class UserApiController {
     public String getUserArchive(){
         return "";
     }
+
 
 }

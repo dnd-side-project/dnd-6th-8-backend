@@ -5,5 +5,5 @@ import com.travel.domain.user.dto.UserSaveRequestDto;
 import java.util.UUID;
 
 public interface UserService {
-    public String save(UserSaveRequestDto userSaveRequestDto);
+    public int save(UserSaveRequestDto userSaveRequestDto);
 }
