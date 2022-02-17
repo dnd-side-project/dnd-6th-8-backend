@@ -1,10 +1,7 @@
 package com.travel.domain.day.entity;
 
 import com.travel.domain.archive.entity.Archives;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,11 +13,11 @@ import java.time.LocalDate;
 public class Days {
 
     @Id
-    @Column(name = "DAY_ID")
+    @Column(name = "dayId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
+    @Column(name = "dayNumber")
     private int dayNumber;
 
     @Column
@@ -43,7 +40,7 @@ public class Days {
 
     @ManyToOne
     @JoinColumn(name = "archiveId")
-    private Archives archiveId;
+    private Archives archives;
 
     @Builder
     public Days(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Archives archives) {
@@ -54,7 +51,7 @@ public class Days {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
-        this.archiveId = archiveId;
+        this.archives = archives;
     }
 
 }

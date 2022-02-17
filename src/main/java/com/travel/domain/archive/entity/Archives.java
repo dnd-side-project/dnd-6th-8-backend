@@ -51,7 +51,7 @@ public class Archives {
     private boolean haveCompanion;
 
     @OneToMany(mappedBy = "archives")
-    private List<Days> days = new ArrayList<Days>();
+    private List<Days> days = new ArrayList<>();
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,

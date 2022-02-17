@@ -29,18 +29,19 @@ public class DayApiController {
         return ResponseEntity.created(URI.create("/api/v1/archives/days" + dayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
     }
 
-    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
-    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchiveIdAndDayNumber(@PathVariable Days archiveId, Days dayNumber) {
-        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.findByArchiveIdAndDayNumber(archiveId, dayNumber);
+//    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API") //Error:[com.travel.domain.day.entity.Days@3a131389] did not match expected type [com.travel.domain.archive.entity.Archives (n/a)]"
+//    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
+//    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Days archiveId, Days dayNumber) {
+//        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.findByArchivesAndDayNumber(archiveId, dayNumber);
+//        return ResponseEntity.ok(dayDetailResponseDtos);
+//    }
+
+    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")  //PathVariable -> RequestParam
+    @GetMapping("/archives/days")
+    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@RequestParam Days archiveId, Days dayNumber) {
+        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.findByArchivesAndDayNumber(archiveId, dayNumber);
         return ResponseEntity.ok(dayDetailResponseDtos);
     }
-
-//    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
-//    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-//    public ResponseEntity<DayDetailResponseDto> findById(@PathVariable Long archiveId, Long dayNumber) {
-//        return ResponseEntity.ok(daysService.findById(dayNumber));
-//    }
 
     @ApiOperation(value = "데이 피드 업데이트 API")
     @PutMapping("/archives/{archiveId}/days/update/{dayNumber}")

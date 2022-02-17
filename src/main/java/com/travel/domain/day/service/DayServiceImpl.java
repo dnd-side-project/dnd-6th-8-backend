@@ -23,26 +23,10 @@ public class DayServiceImpl implements DaysService {
         return new DayDetailResponseDto(day);
     }
 
-//    @Override  // original (error)
-//    @Transactional(readOnly=true)
-//    public DayDetailResponseDto findById(Long id) {
-//        Days day = daysRepository.findById(id).orElseThrow
-//                (() -> new IllegalArgumentException("해당 피드가 없습니다. id = " + id));
-//        return new DayDetailResponseDto(day);
-//    }
-
-//    @Override // test1 (getDay)
-//    @Transactional(readOnly=true)
-//    public DayDetailResponseDto getDay(Long archiveId, int dayNumber, DayDetailResponseDto dayDetailResponseDto) {
-//        Days day = daysRepository.findByArchiveIdAndDayNumber(archiveId, dayNumber).orElseThrow
-//                (() -> new IllegalArgumentException("해당 데이 피드가 없습니다. id = " + dayNumber));
-//        return new DayDetailResponseDto(day);
-//    }
-
-    @Override // test2 (findByArchiveIdAndDayNumber)
+    @Override // test2 (findByArchivesAndDayNumber)
     @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> findByArchiveIdAndDayNumber(Days archiveId, Days dayNumber) {
-        List<Days> filtered = daysRepository.findByArchiveIdAndDayNumber(archiveId, dayNumber);
+    public List<DayDetailResponseDto> findByArchivesAndDayNumber(Days archiveId, Days dayNumber) {
+        List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archiveId, dayNumber);
         return DayDetailResponseDto.listOf(filtered);
     }
 

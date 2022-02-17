@@ -26,11 +26,14 @@ public class DayDetailResponseDto {
     @ApiModelProperty(value = "날씨", example="맑음")
     private String travelDescription;
 
+    @ApiModelProperty(value = "감정 스티커", example = "힐링")
     private String emotionDescription;
 
+    @ApiModelProperty(value = "꿀팁")
     private String tipDescription;
 
-    private Archives archiveId;
+    @ApiModelProperty(value = "연결된 아카이브", example = "제주 여행")
+    private Archives archives;
 
     public DayDetailResponseDto(Days entity){
         this.dayNumber = entity.getDayNumber();
@@ -39,7 +42,7 @@ public class DayDetailResponseDto {
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();
-        this.archiveId = entity.getArchiveId();
+        this.archives = entity.getArchives();
     }
 
     public static List<DayDetailResponseDto> listOf(List<Days> filtered) {
