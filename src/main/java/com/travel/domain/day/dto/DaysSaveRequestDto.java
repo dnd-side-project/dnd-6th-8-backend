@@ -1,8 +1,10 @@
 package com.travel.domain.day.dto;
 
+import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javafx.scene.shape.Arc;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +16,7 @@ import java.time.LocalDate;
 public class DaysSaveRequestDto {
 
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-    private int dayNumber;
+    private Integer dayNumber;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "다녀온 날짜", example = "2021-12-10", required = true)
@@ -35,8 +37,10 @@ public class DaysSaveRequestDto {
     @ApiModelProperty(value = "여행 꿀팁", example = "성산일출봉 갈 때 주차장 자리 파악하고 가기! 그리고,", required = true)
     private String tipDescription;
 
+    private Long archives;
+
     @Builder
-    public DaysSaveRequestDto(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+    public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Long archives) {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
@@ -44,10 +48,11 @@ public class DaysSaveRequestDto {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
+        this.archives = archives;
     }
 
     public Days toEntity() {
         return Days.builder().dayNumber(dayNumber).date(date).weather(weather).image(image).travelDescription(travelDescription).
-                emotionDescription(emotionDescription).tipDescription(tipDescription).build();
+                emotionDescription(emotionDescription).tipDescription(tipDescription).archives(archives).build();
     }
 }

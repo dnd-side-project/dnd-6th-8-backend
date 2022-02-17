@@ -1,5 +1,6 @@
 package com.travel.domain.day.controller;
 
+import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
 import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.entity.Days;
@@ -22,24 +23,17 @@ public class DayApiController {
     private final DaysService daysService;
 
     @ApiOperation(value = "데이 피드를 생성하는 API")
-    @PostMapping("/archives/{archiveId}/days")
+    @PostMapping("/archives/days")
     public ResponseEntity<DayDetailResponseDto> saveDay
-            (@PathVariable Long archiveId, @RequestBody DaysSaveRequestDto daysSaveRequestDto){
+            (@RequestBody DaysSaveRequestDto daysSaveRequestDto){
         DayDetailResponseDto dayDetailResponseDto = daysService.saveDay(daysSaveRequestDto);
-        return ResponseEntity.created(URI.create("/api/v1/archives/days" + dayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
+        return ResponseEntity.created(URI.create("/api/v1/archives/days/" + dayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
     }
 
-//    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API") //Error:[com.travel.domain.day.entity.Days@3a131389] did not match expected type [com.travel.domain.archive.entity.Archives (n/a)]"
-//    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-//    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Days archiveId, Days dayNumber) {
-//        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.findByArchivesAndDayNumber(archiveId, dayNumber);
-//        return ResponseEntity.ok(dayDetailResponseDtos);
-//    }
-
     @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")  //PathVariable -> RequestParam
-    @GetMapping("/archives/days")
-    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@RequestParam Days archiveId, Days dayNumber) {
-        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.findByArchivesAndDayNumber(archiveId, dayNumber);
+    @GetMapping("/archives/days/{dayNumber}")
+    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @RequestParam Archives archives) {
+        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.getDays(archives, dayNumber);
         return ResponseEntity.ok(dayDetailResponseDtos);
     }
 

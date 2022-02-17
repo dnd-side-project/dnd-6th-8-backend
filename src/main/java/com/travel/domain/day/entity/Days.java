@@ -18,7 +18,7 @@ public class Days {
     private Long id;
 
     @Column(name = "dayNumber")
-    private int dayNumber;
+    private Integer dayNumber;
 
     @Column
     private LocalDate date;
@@ -38,12 +38,16 @@ public class Days {
     @Column()
     private String tipDescription;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "archiveId")
     private Archives archives;
 
+    public void addArchive(Archives archives) {
+        this.archives = archives;
+    }
+
     @Builder
-    public Days(int dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Archives archives) {
+    public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Long archives) {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
@@ -52,6 +56,7 @@ public class Days {
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
         this.archives = archives;
+        addArchive(archives);
     }
 
 }

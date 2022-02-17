@@ -15,7 +15,7 @@ import java.util.List;
 public class DayDetailResponseDto {
 
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-    public int dayNumber;
+    public Integer dayNumber;
 
     @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
     private LocalDate date;

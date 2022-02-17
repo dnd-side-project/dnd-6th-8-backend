@@ -1,5 +1,6 @@
 package com.travel.domain.day.service;
 
+import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.repository.DaysRepository;
 import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
@@ -18,15 +19,17 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto) {
-        Days day = daysRepository.save(daysSaveRequestDto.toEntity());
+    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
+        Days day = daysSaveRequestDto.toEntity();
+        daysRepository.save(day);
         return new DayDetailResponseDto(day);
     }
 
     @Override // test2 (findByArchivesAndDayNumber)
     @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> findByArchivesAndDayNumber(Days archiveId, Days dayNumber) {
-        List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archiveId, dayNumber);
+    public List<DayDetailResponseDto> getDays(Archives archives, Integer dayNumber) {
+        List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archives.getId());
+        System.out.println(filtered);
         return DayDetailResponseDto.listOf(filtered);
     }
 
