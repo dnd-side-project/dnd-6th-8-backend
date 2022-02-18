@@ -25,8 +25,8 @@ public class DayApiController {
     @ApiOperation(value = "데이 피드를 생성하는 API")
     @PostMapping("/archives/days")
     public ResponseEntity<DayDetailResponseDto> saveDay
-            (@RequestBody DaysSaveRequestDto daysSaveRequestDto){
-        DayDetailResponseDto dayDetailResponseDto = daysService.saveDay(daysSaveRequestDto);
+            (@RequestParam Long archiveId, @RequestBody DaysSaveRequestDto daysSaveRequestDto){
+        DayDetailResponseDto dayDetailResponseDto = daysService.saveDay(daysSaveRequestDto, archiveId);
         return ResponseEntity.created(URI.create("/api/v1/archives/days/" + dayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
     }
 

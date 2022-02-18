@@ -1,6 +1,8 @@
 package com.travel.domain.day.service;
 
 import com.travel.domain.archive.entity.Archives;
+import com.travel.domain.archive.repository.ArchivesRepository;
+import com.travel.domain.archive.service.ArchivesService;
 import com.travel.domain.day.repository.DaysRepository;
 import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
@@ -16,20 +18,23 @@ import java.util.List;
 public class DayServiceImpl implements DaysService {
 
     private final DaysRepository daysRepository;
+    private final ArchivesRepository archivesRepository;
 
     @Override
     @Transactional(readOnly=true)
     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
         Days day = daysSaveRequestDto.toEntity();
+        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
+        day.setArchives(archives);
         daysRepository.save(day);
         return new DayDetailResponseDto(day);
     }
 
-    @Override // test2 (findByArchivesAndDayNumber)
+    @Override
     @Transactional(readOnly=true)
     public List<DayDetailResponseDto> getDays(Archives archives, Integer dayNumber) {
         List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archives.getId());
-        System.out.println(filtered);
         return DayDetailResponseDto.listOf(filtered);
     }
 

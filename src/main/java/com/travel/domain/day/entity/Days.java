@@ -42,12 +42,8 @@ public class Days {
     @JoinColumn(name = "archiveId")
     private Archives archives;
 
-    public void addArchive(Archives archives) {
-        this.archives = archives;
-    }
-
     @Builder
-    public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription, Long archives) {
+    public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
@@ -55,8 +51,6 @@ public class Days {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
-        this.archives = archives;
-        addArchive(archives);
     }
 
 }
