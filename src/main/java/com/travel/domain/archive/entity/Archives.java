@@ -1,5 +1,6 @@
 package com.travel.domain.archive.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.user.entity.User;
@@ -20,7 +21,7 @@ import java.util.List;
 public class Archives {
 
     @Id
-    @Column(name = "ARCHIVE_ID")
+    @Column(name = "archiveId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -58,11 +59,12 @@ public class Archives {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @OneToMany(mappedBy = "archive")
-    List<Emoji> emojis = new ArrayList<>();
+//    @OneToMany(mappedBy = "archive")
+//    List<Emoji> emojis = new ArrayList<>();
 
-    @OneToMany(mappedBy = "archive")
-    private List<Scraps> scraps = new ArrayList<>();;
+    @JsonIgnoreProperties({"archives"})
+    @OneToMany(mappedBy = "archives")
+    private List<Scraps> scrapsList;
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,

@@ -38,8 +38,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Archives> archives = new ArrayList<>();;
 
-    @OneToMany(mappedBy = "user")
-    private List<Emoji> emojis = new ArrayList<>();;
+//    @OneToMany(mappedBy = "user")
+//    private List<Emoji> emojis = new ArrayList<>();;
 
     @OneToMany(mappedBy = "user")
     private List<Scraps> scraps = new ArrayList<>();;
