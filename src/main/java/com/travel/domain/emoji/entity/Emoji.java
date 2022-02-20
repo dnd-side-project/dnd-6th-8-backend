@@ -20,5 +20,5 @@ public class Emoji {
     private Long id;
 
     @Column()
-    String emoji;
+    private String emoji;
 }
