@@ -41,8 +41,8 @@ public class User {
 //    @OneToMany(mappedBy = "user")
 //    private List<Emoji> emojis = new ArrayList<>();;
 
-    @OneToMany(mappedBy = "user")
-    private List<Scraps> scraps = new ArrayList<>();;
+//    @OneToMany(mappedBy = "user")
+//    private List<Scraps> scraps = new ArrayList<>();;
 
 
     @Builder

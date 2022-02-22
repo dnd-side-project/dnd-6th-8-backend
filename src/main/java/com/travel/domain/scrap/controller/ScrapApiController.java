@@ -1,5 +1,7 @@
 package com.travel.domain.scrap.controller;
 
+import com.travel.domain.scrap.dto.ScrapPreviewDto;
+import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.scrap.service.ScrapsService;
 import io.swagger.annotations.Api;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,9 +25,10 @@ public class ScrapApiController {
     private final ScrapsService scrapsService;
 
     @ApiOperation(value = "스크랩 추가 api")
-    @PostMapping("/archives/{archiveId}/scraps")
-    public void addScraps(@PathVariable long archiveId) { //Authentication authentication
-        scrapsService.addScraps(archiveId); //authentication.getName()
+    @PostMapping("/archives/scraps")
+    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId, @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
+        ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId);
+        return ResponseEntity.created(URI.create("/api/v1/archives/scraps" + scrapPreviewDto.getId())).body(scrapPreviewDto);
     }
 
     @ApiOperation(value = "스크랩 취소 api")

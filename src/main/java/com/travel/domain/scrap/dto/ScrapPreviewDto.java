@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ApiModel(value = "스크랩 목록")
@@ -16,19 +18,28 @@ public class ScrapPreviewDto {
     private Long id;
 
     @ApiModelProperty(value = "스크랩한 시간", example = "2022-02-19T22:24:00")
-    private LocalDateTime scrapDateTime = LocalDateTime.now();
+    private LocalDateTime scrapDateTime;
 
     @ApiModelProperty(value = "스크랩한 아카이브", example = "대충 다녀도 아름다운 제주")
     private Archives archives;
 
-    @ApiModelProperty(value = "스크랩한 유저")
-    private User user;
+//    @ApiModelProperty(value = "스크랩한 유저")
+//    private User user;
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
-        this.archives = entity.getArchives();
         this.scrapDateTime = entity.getScrapDateTime();
-        this.user = entity.getUser();
+        this.archives = entity.getArchives();
+//        this.user = entity.getUser();
+    }
+
+    public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {
+        List<ScrapPreviewDto> scarpResponses = new ArrayList<>();
+
+        for (Scraps scrap : filtered) {
+            scarpResponses.add(new ScrapPreviewDto(scrap));
+        }
+        return scarpResponses;
     }
 }
 

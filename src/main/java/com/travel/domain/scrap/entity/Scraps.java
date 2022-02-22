@@ -8,11 +8,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Scraps {
@@ -22,22 +24,23 @@ public class Scraps {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column()
+    @CreatedDate
     private LocalDateTime scrapDateTime;
 
     @ManyToOne
     @JoinColumn(name= "archiveId")
     private Archives archives;
 
-    @ManyToOne
-    @JoinColumn(name= "userId")
+//    @ManyToOne
+//    @JoinColumn(name= "userId")
 //    @JsonIgnoreProperties({"archivesList"})
-    private User user;
+//    private User user;
 
     @Builder
-    public Scraps(Archives archives, User user) {
-        this.archives = archives;
+    public Scraps(LocalDateTime scrapDateTime) {
+//        this.archives = archives;
         this.scrapDateTime = scrapDateTime;
-        this.user = user;
+//        this.user = user;
     }
 }
