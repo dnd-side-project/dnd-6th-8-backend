@@ -1,12 +1,8 @@
 package com.travel.domain.user.entity;
 
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.archive.entity.EArchivingStyle;
-import com.travel.domain.archive.entity.EBudget;
-import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
-import com.travel.domain.sticker.entity.Sticker;
 import com.travel.domain.sticker.entity.UserSticker;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +12,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @NoArgsConstructor

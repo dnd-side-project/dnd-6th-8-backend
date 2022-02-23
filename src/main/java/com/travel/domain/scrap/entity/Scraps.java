@@ -1,7 +1,6 @@
 package com.travel.domain.scrap.entity;
 
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -18,9 +18,9 @@ public class UserMarkedEmoji {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "emoji_id")
-    private Emoji emoji;
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private EEmojis emoji;
 
     @ManyToOne
     @JoinColumn(name= "user_id")
