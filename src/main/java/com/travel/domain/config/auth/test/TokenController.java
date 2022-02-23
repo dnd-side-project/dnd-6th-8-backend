@@ -15,7 +15,7 @@ public class TokenController {
 
     @GetMapping("/token/expired")
     public String auth() {
-        throw new RuntimeException();
+        throw new RuntimeException("Token expired");
     }
 
     @GetMapping("/token/refresh")
@@ -26,7 +26,7 @@ public class TokenController {
             String email = tokenService.getUid(token);
             Token newToken = tokenService.generateToken(email, "USER");
 
-            response.addHeader("Auth", newToken.getToken());
+            response.addHeader("Auth", newToken.getAccessToken());
             response.addHeader("Refresh", newToken.getRefreshToken());
             response.setContentType("application/json;charset=UTF-8");
 
@@ -38,8 +38,6 @@ public class TokenController {
 
     @GetMapping("/token")
     public String createAuth(HttpServletRequest request, HttpServletResponse response) {
-
-
         throw new RuntimeException();
     }
 }

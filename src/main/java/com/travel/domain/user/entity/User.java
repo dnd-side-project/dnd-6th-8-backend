@@ -42,6 +42,9 @@ public class User {
     @Column()
     private String email;
 
+    @Column()
+    private String profilePicture;
+
     @OneToOne(optional = true)
     @JoinColumn(name = "survey_id")
     private Survey survey;
@@ -59,13 +62,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserSticker> userStickers = new ArrayList<>();
 
-    private Role role;
+//    private Role role;
 
     @Builder
-    public User(String userName, String email, Role role) {
+    public User(String userName, String email, String profilePicture) {
         this.userName = userName;
         this.email = email;
-        this.role = role;
+        this.profilePicture = profilePicture;
     }
 
     public void addSurvey(Survey survey) {

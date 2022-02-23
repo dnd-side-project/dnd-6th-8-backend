@@ -1,12 +1,18 @@
 package com.travel.domain.config.auth.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
+import com.travel.domain.user.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,30 +25,36 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final TokenService tokenService;
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
+    private final UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
+        boolean newUser = false;
 
-        // 최초 로그인이라면 회원가입 처리를 한다.
+        if(userService.findByEmail(userDto.getEmail()) == null){
+            userService.save(userDto);
+            newUser = true;
+        }
 
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
-
-        writeTokenResponse(response, token);
+        String redirect = "/oauth2" + "/access_token=" + token.getAccessToken() + "/refresh_token="+ token.getRefreshToken()
+                +"/" + newUser;
+        System.out.println(redirect);
+        response.sendRedirect(redirect);
     }
 
-    private void writeTokenResponse(HttpServletResponse response, Token token)
-            throws IOException {
-        response.setContentType("text/html;charset=UTF-8");
 
-        response.addHeader("Auth", token.getToken());
-        response.addHeader("Refresh", token.getRefreshToken());
-        response.setContentType("application/json;charset=UTF-8");
+//    @ApiOperation(value = "아카이브 id로 가져오기 API")
+//    @GetMapping("/archives/{id}")
+//    public ResponseEntity<ArchiveDetailResponseDto> findById(@PathVariable Long id){
+//        return ResponseEntity.ok(archivesService.findById(id));
+//    }
 
-        var writer = response.getWriter();
-        writer.println(objectMapper.writeValueAsString(token));
-        writer.flush();
+    @GetMapping("/oauth2/{accessToken}/{refreshToken}")
+    private ResponseEntity <Void> returnTokens(@PathVariable String accessToken, @PathVariable String refreshToken){
+        return ResponseEntity.ok().build();
     }
 }

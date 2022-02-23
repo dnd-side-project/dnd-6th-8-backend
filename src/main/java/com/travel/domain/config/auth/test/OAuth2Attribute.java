@@ -49,13 +49,13 @@ class OAuth2Attribute {
 
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         System.out.println(kakaoAccount);
-//        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
-//        System.out.println(kakaoProfile);
+        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
+
 
         return OAuth2Attribute.builder()
-//                .name((String) kakaoProfile.get("nickname"))
                 .email((String) kakaoAccount.get("email"))
-//                .picture((String)kakaoProfile.get("profile_image_url"))
+                .name((String) kakaoProfile.get("nickname"))
+                .picture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
                 .build();

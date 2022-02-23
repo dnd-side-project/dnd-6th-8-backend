@@ -10,9 +10,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.UUID;
 
 @RestController
@@ -24,17 +26,10 @@ public class UserApiController {
     private final UserService userService;
     private final SurveyService surveyService;
 
+    @ApiOperation(value = "사용자 정보 가져오기")
     @GetMapping("/user")
-    public String userInfo(){
-        return "";
-    }
-
-    @ApiOperation(value = "사용자 생성 임시 API(소셜 로그인 구현 후 바꿀 예정)")
-    @PostMapping("/user")
-    public ResponseEntity<Void> createUser(@RequestParam String userName){
-//        UUID saveId = userService.save(new UserSaveRequestDto(userName));
-        int saveId = userService.save(new UserSaveRequestDto(userName));
-        return ResponseEntity.created(URI.create("/api/v1/user/")).build();
+    public ResponseEntity<String> getUserInfo(Principal principal){
+        return ResponseEntity.ok(principal.getName());
     }
 
     @ApiOperation(value = "사용자 서베이 저장 API")

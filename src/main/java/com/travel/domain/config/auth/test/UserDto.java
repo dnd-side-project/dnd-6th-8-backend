@@ -1,5 +1,7 @@
 package com.travel.domain.config.auth.test;
 
+import com.travel.domain.archive.entity.Archives;
+import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,10 +24,16 @@ public class UserDto {
         this.picture = picture;
     }
 
-//    //toEntity 작성
-//    public User toEntity() {
-//        return User.builder().userName(userName).build();
-//    }
+    public User toEntity() {
+        return User.builder().email(email).profilePicture(picture)
+                .userName(name).build();
+    }
+
+    public UserDto(User entity) {
+        this.email = entity.getEmail();
+        this.picture = entity.getProfilePicture();
+        this.name = entity.getUserName();
+    }
 }
 
 
