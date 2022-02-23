@@ -1,7 +1,6 @@
 package com.travel.domain.day.dto;
 
 import com.travel.domain.day.entity.Days;
-import lombok.Builder;
 
 public class DaysResponseDto {
 

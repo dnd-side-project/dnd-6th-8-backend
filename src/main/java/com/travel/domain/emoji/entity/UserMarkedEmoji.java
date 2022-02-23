@@ -22,9 +22,9 @@ public class UserMarkedEmoji {
     @JoinColumn(name = "emoji_id")
     private Emoji emoji;
 
-    @ManyToOne
-    @JoinColumn(name= "user_id")
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name= "user_id")
+//    private User user;
 
     @ManyToOne
     @JoinColumn(name= "archive_id")

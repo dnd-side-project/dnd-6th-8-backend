@@ -41,11 +41,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Archives> archives = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();;
 
-    @OneToMany(mappedBy = "user")
-    private List<Scraps> scraps = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Scraps> scraps = new ArrayList<>();;
 
     @OneToMany(mappedBy = "user")
     private List<UserSticker> userStickers = new ArrayList<>();
