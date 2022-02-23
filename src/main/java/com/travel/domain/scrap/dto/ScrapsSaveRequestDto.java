@@ -18,14 +18,20 @@ import java.time.LocalDateTime;
 @ApiModel(value = "스크랩 저장하기")
 public class ScrapsSaveRequestDto {
     private final LocalDateTime scrapDateTime;
+    private final User user;
 
-    public LocalDateTime scrapDateTime() {
+    private LocalDateTime scrapDateTime() {
         return scrapDateTime;
     }
+    private User user() { return user; }
 
     @JsonCreator
     public ScrapsSaveRequestDto(
-            @JsonProperty("scrapDateTime") LocalDateTime scrapDateTime) { this.scrapDateTime = scrapDateTime;}
+            @JsonProperty("scrapDateTime") LocalDateTime scrapDateTime,
+            @JsonProperty("user") User user) {
+        this.scrapDateTime = scrapDateTime;
+        this.user = user;
+    }
 
 
 //    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -42,6 +48,6 @@ public class ScrapsSaveRequestDto {
 //    }
 
     public Scraps toEntity() {
-        return Scraps.builder().scrapDateTime(scrapDateTime).build();
+        return Scraps.builder().scrapDateTime(scrapDateTime).user(user).build();
     }
 }

@@ -4,6 +4,7 @@ import com.travel.domain.scrap.dto.ScrapPreviewDto;
 import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.scrap.service.ScrapsService;
+import com.travel.domain.user.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,12 @@ public class ScrapApiController {
     public void unScraps(@PathVariable long archiveId) { //Authentication authentication
         scrapsService.unScraps(archiveId); //authentication.getName()
 
+    }
+
+    @ApiOperation(value = "유저별 스크랩 목록 api")
+    @GetMapping("/archives/scraps")
+    public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@RequestParam User user){
+        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByUser(user);
+        return ResponseEntity.ok(scrapPreviewDtos);
     }
 }

@@ -34,12 +34,14 @@ public class ScrapPreviewDto {
     }
 
     public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {
-        List<ScrapPreviewDto> scarpResponses = new ArrayList<>();
+        List<ScrapPreviewDto> scrapResponses = new ArrayList<>();
 
         for (Scraps scrap : filtered) {
-            scarpResponses.add(new ScrapPreviewDto(scrap));
+            scrapResponses.add(new ScrapPreviewDto(scrap));
         }
-        return scarpResponses;
+
+        return scrapResponses;
     }
+
 }
 

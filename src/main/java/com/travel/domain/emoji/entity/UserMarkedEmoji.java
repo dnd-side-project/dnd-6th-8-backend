@@ -18,15 +18,15 @@ public class UserMarkedEmoji {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "emoji_id")
-    private Emoji emoji;
-
-//    @ManyToOne
-//    @JoinColumn(name= "user_id")
-//    private User user;
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private EEmojis emoji;
 
     @ManyToOne
-    @JoinColumn(name= "archive_id")
+    @JoinColumn(name= "userId")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name= "archiveId")
     private Archives archive;
 }

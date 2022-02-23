@@ -1,13 +1,8 @@
 package com.travel.domain.archive.entity;
 
-<<<<<<< HEAD
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.travel.domain.emoji.entity.Emoji;
-=======
-import com.travel.domain.emoji.entity.UserMarkedEmoji;
->>>>>>> dev
+//import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
-import com.travel.domain.sticker.entity.UserSticker;
+//import com.travel.domain.sticker.entity.UserSticker;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,11 +21,7 @@ import java.util.List;
 public class Archives {
 
     @Id
-<<<<<<< HEAD
     @Column(name = "archiveId")
-=======
-    @Column(name = "archive_id")
->>>>>>> dev
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -65,26 +56,17 @@ public class Archives {
     private boolean haveCompanion;
 
     @ManyToOne()
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
-<<<<<<< HEAD
-//    @OneToMany(mappedBy = "archive")
-//    List<Emoji> emojis = new ArrayList<>();
+//    @OneToMany(mappedBy = "archives")
+//    List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
 
-    @JsonIgnoreProperties({"archives"})
     @OneToMany(mappedBy = "archives")
-    private List<Scraps> scrapsList;
-=======
-    @OneToMany(mappedBy = "archive")
-    List<UserMarkedEmoji> markedemojis = new ArrayList<>();
-
-    @OneToMany(mappedBy = "archive")
     private List<Scraps> scraps = new ArrayList<>();
 
-    @OneToMany(mappedBy = "archive")
-    private List<UserSticker> userStickers = new ArrayList<>();
->>>>>>> dev
+//    @OneToMany(mappedBy = "archives")
+//    private List<UserSticker> userStickers = new ArrayList<>();
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
