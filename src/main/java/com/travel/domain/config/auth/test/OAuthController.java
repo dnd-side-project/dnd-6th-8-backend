@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Component
 @AllArgsConstructor
 @Api(tags = {"사용자인증 API"})
+@RequestMapping("/auth")
 public class OAuthController {
 
     //여기서 접근 url던져준다.
@@ -24,7 +25,7 @@ public class OAuthController {
     @ResponseBody
     @GetMapping("/kakao")
     public ResponseEntity<String> socialLogin(@RequestParam String loginType) {
-        return new ResponseEntity<String>(url,HttpStatus.OK);
+        return ResponseEntity.ok(url);
     }
 }
 
