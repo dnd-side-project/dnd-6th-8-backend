@@ -12,10 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1")
@@ -27,8 +26,8 @@ public class ScrapApiController {
 
     @ApiOperation(value = "스크랩 추가 api")
     @PostMapping("/archives/scraps")
-    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId, @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
-        ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId);
+    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId, String email, @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
+        ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId, email);
         return ResponseEntity.created(URI.create("/api/v1/archives/scraps" + scrapPreviewDto.getId())).body(scrapPreviewDto);
     }
 
@@ -41,8 +40,8 @@ public class ScrapApiController {
 
     @ApiOperation(value = "유저별 스크랩 목록 api")
     @GetMapping("/archives/scraps")
-    public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@RequestParam User user){
-        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByUser(user);
+    public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@RequestParam String email){
+        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByEmail(email);
         return ResponseEntity.ok(scrapPreviewDtos);
     }
 }

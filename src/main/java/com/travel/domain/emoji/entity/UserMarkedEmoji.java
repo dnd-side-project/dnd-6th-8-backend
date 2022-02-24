@@ -28,5 +28,5 @@ public class UserMarkedEmoji {
 
     @ManyToOne
     @JoinColumn(name= "archiveId")
-    private Archives archive;
+    private Archives archives;
 }

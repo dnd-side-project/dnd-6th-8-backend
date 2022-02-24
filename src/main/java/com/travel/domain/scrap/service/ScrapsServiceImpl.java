@@ -22,12 +22,14 @@ import java.util.List;
 public class ScrapsServiceImpl implements ScrapsService {
 
     private final ScrapsRepository scrapsRepository;
+    private final UserRepository userRepository;
     private final ArchivesRepository archivesRepository;
 
     @Override
     @Transactional(readOnly=true)
-    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId) {
+    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId, String email) {
         Scraps scrap = scrapsSaveRequestDto.toEntity();
+        User user = userRepository.findByEmail(email);
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         scrap.setArchives(archives);
@@ -46,8 +48,8 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScrapPreviewDto> findByUser(User user) {
-        List<Scraps> filtered = scrapsRepository.findByUser(user);
+    public List<ScrapPreviewDto> findByEmail(String email) {
+        List<Scraps> filtered = scrapsRepository.findByEmail(email);
         return ScrapPreviewDto.listOf(filtered);
     }
 }

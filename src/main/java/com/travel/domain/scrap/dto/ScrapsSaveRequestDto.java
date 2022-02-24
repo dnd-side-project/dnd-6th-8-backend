@@ -33,20 +33,6 @@ public class ScrapsSaveRequestDto {
         this.user = user;
     }
 
-
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-//    @ApiModelProperty(value = "스크랩한 시간", example = "2022-02-19T22:24:00")
-//    private LocalDateTime scrapDateTime;
-
-//    @ApiModelProperty(value = "스크랩한 유저")
-//    private User user;
-
-//    @Builder
-//    public ScrapsSaveRequestDto(LocalDateTime scrapDateTime) {
-//        this.scrapDateTime = scrapDateTime;
-////        this.user = user;
-//    }
-
     public Scraps toEntity() {
         return Scraps.builder().scrapDateTime(scrapDateTime).user(user).build();
     }

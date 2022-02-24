@@ -11,6 +11,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ScrapsRepository extends JpaRepository<Scraps, Long> {
-    @Query("select s from Scraps as s where s.user.id = :userId")
-    List<Scraps> findByUser(@Param("user")User user);
+    @Query("select s from Scraps as s where s.user.email = :email")
+    List<Scraps> findByEmail(@Param("email")String email);
 }

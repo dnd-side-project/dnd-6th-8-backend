@@ -1,5 +1,6 @@
 package com.travel.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.entity.EArchivingStyle;
 import com.travel.domain.archive.entity.EBudget;
@@ -10,6 +11,7 @@ import com.travel.domain.sticker.entity.UserSticker;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -55,8 +57,10 @@ public class User {
 //    @OneToMany(mappedBy = "user")
 //    private List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Scraps> scraps = new ArrayList<>();;
+    @OrderBy("scrapDateTime DESC")
+    @JsonIgnoreProperties({"user"})
+    @OneToMany(mappedBy = "user")
+    private List<Scraps> scraps = new ArrayList<>();;
 
     @OneToMany(mappedBy = "user")
     private List<UserSticker> userStickers = new ArrayList<>();
