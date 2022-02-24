@@ -26,22 +26,22 @@ public class ScrapApiController {
 
     @ApiOperation(value = "스크랩 추가 api")
     @PostMapping("/archives/scraps")
-    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId, String email, @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
-        ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId, email);
+    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId, @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
+        ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId);
         return ResponseEntity.created(URI.create("/api/v1/archives/scraps" + scrapPreviewDto.getId())).body(scrapPreviewDto);
     }
 
     @ApiOperation(value = "스크랩 취소 api")
-    @DeleteMapping("/archives/{archiveId}/unScraps")
-    public void unScraps(@PathVariable long archiveId) { //Authentication authentication
-        scrapsService.unScraps(archiveId); //authentication.getName()
+    @DeleteMapping("/archives/{scrapId}/unScraps")
+    public void unScraps(@PathVariable long scrapId) { //Authentication authentication
+        scrapsService.unScraps(scrapId); //authentication.getName()
 
     }
 
     @ApiOperation(value = "유저별 스크랩 목록 api")
     @GetMapping("/archives/scraps")
-    public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@RequestParam String email){
-        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByEmail(email);
+    public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@RequestParam String user){
+        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByUser(user);
         return ResponseEntity.ok(scrapPreviewDtos);
     }
 }

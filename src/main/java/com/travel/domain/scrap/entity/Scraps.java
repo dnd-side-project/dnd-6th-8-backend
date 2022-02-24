@@ -30,13 +30,11 @@ public class Scraps {
     @JoinColumn(name= "archiveId")
     private Archives archives;
 
-    @ManyToOne
-    @JoinColumn(name= "userId")
-//    @JsonIgnoreProperties({"archivesList"})
-    private User user;
+    @Column()
+    private String user;
 
     @Builder
-    public Scraps(LocalDateTime scrapDateTime, User user) {
+    public Scraps(LocalDateTime scrapDateTime, String user) {
 //        this.archives = archives;
         this.scrapDateTime = scrapDateTime;
         this.user = user;

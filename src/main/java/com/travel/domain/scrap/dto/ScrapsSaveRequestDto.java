@@ -18,17 +18,17 @@ import java.time.LocalDateTime;
 @ApiModel(value = "스크랩 저장하기")
 public class ScrapsSaveRequestDto {
     private final LocalDateTime scrapDateTime;
-    private final User user;
+    private final String user;
 
     private LocalDateTime scrapDateTime() {
         return scrapDateTime;
     }
-    private User user() { return user; }
+    private String user() { return user; }
 
     @JsonCreator
     public ScrapsSaveRequestDto(
             @JsonProperty("scrapDateTime") LocalDateTime scrapDateTime,
-            @JsonProperty("user") User user) {
+            @JsonProperty("user") String user) {
         this.scrapDateTime = scrapDateTime;
         this.user = user;
     }

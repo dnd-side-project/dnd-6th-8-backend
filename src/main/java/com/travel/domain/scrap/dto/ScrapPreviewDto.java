@@ -23,14 +23,14 @@ public class ScrapPreviewDto {
     @ApiModelProperty(value = "스크랩한 아카이브", example = "대충 다녀도 아름다운 제주")
     private Archives archives;
 
-//    @ApiModelProperty(value = "스크랩한 유저")
-//    private User user;
+    @ApiModelProperty(value = "스크랩한 유저", example = "경아")
+    private String user;
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
         this.scrapDateTime = entity.getScrapDateTime();
         this.archives = entity.getArchives();
-//        this.user = entity.getUser();
+        this.user = entity.getUser();
     }
 
     public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {

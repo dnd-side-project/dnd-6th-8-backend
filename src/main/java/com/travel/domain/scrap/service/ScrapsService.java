@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ScrapsService {
 
-    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId, String email);
+    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId);
 
-    public void unScraps(long archiveId);
+    public void unScraps(long scrapId);
 
-    public List<ScrapPreviewDto> findByEmail(String email);
+    public List<ScrapPreviewDto> findByUser(String user);
 }

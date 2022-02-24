@@ -22,14 +22,12 @@ import java.util.List;
 public class ScrapsServiceImpl implements ScrapsService {
 
     private final ScrapsRepository scrapsRepository;
-    private final UserRepository userRepository;
     private final ArchivesRepository archivesRepository;
 
     @Override
     @Transactional(readOnly=true)
-    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId, String email) {
+    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId) {
         Scraps scrap = scrapsSaveRequestDto.toEntity();
-        User user = userRepository.findByEmail(email);
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         scrap.setArchives(archives);
@@ -39,17 +37,17 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void unScraps(long id) {
-        Scraps scrap = scrapsRepository.findById(id).orElseThrow(
-                ()->new IllegalArgumentException("해당 스크랩 내역이 없습니다. id = " + id)
+    public void unScraps(long scrapId) {
+        Scraps scrap = scrapsRepository.findById(scrapId).orElseThrow(
+                ()->new IllegalArgumentException("해당 스크랩 내역이 없습니다. id = " + scrapId)
         );
         scrapsRepository.delete(scrap);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScrapPreviewDto> findByEmail(String email) {
-        List<Scraps> filtered = scrapsRepository.findByEmail(email);
+    public List<ScrapPreviewDto> findByUser(String user) {
+        List<Scraps> filtered = scrapsRepository.findByUser(user);
         return ScrapPreviewDto.listOf(filtered);
     }
 }
