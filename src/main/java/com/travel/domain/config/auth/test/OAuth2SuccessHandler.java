@@ -6,6 +6,8 @@ import com.travel.domain.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -18,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URI;
 
 @RequiredArgsConstructor
 @Component
@@ -40,10 +43,10 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         }
 
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
-        String redirect = "/oauth2" + "/access_token=" + token.getAccessToken() + "/refresh_token="+ token.getRefreshToken()
-                +"/" + newUser;
-        System.out.println(redirect);
-        response.sendRedirect(redirect);
+        String redirect = "/" + token.getAccessToken() + "/"+ token.getRefreshToken()
+                +"/"+ userDto.getName() +"/"+ newUser;
+
+        response.sendRedirect("https://localhost:3000/callback" + redirect);
     }
 
 
