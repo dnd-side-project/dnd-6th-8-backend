@@ -1,4 +1,4 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
 import lombok.var;
 import org.springframework.security.oauth2.core.user.OAuth2User;

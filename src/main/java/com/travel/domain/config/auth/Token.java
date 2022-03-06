@@ -1,4 +1,4 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

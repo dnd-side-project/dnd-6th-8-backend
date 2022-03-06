@@ -1,6 +1,7 @@
 package com.travel.domain.archive.dto;
 
 import com.travel.domain.archive.entity.*;
+import com.travel.domain.user.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -36,6 +37,9 @@ public class ArchivesSaveRequestDto {
 
     @ApiModelProperty(value = "기록 스타일", example = "감성", required = true)
     private EArchivingStyle archivingStyle;
+
+    @ApiModelProperty(value = "사용자", required = false)
+    private User user;
 
 
     @Builder

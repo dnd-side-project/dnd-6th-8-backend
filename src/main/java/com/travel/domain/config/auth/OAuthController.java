@@ -1,4 +1,4 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
 
 import io.swagger.annotations.Api;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class OAuthController {
 
     //여기서 접근 url던져준다.
-    private String url = "http://3.37.253.113:8080/oauth2/authorization/kakao";
+    private String url = "http://3.37.253.113:8080/login/oauth2/authorization/kakao";
     @ResponseBody
     @GetMapping("/kakao")
     public ResponseEntity<String> socialLogin(@RequestParam String loginType) {

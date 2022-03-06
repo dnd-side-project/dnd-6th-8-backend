@@ -6,6 +6,8 @@ import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.repository.ArchivesRepository;
+import com.travel.domain.user.entity.User;
+import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +20,13 @@ import java.util.List;
 public class ArchiveServiceImpl implements ArchivesService{
 
     private final ArchivesRepository archivesRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly=true)
     public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto) {
+//        User user = userRepository.findByUserName(userName);
+//        archivesSaveRequestDto.setUser(user);
         Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity());
         return new ArchiveDetailResponseDto(archive);
     }
