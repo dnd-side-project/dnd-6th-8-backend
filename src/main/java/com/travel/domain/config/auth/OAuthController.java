@@ -21,11 +21,26 @@ import org.springframework.web.bind.annotation.*;
 public class OAuthController {
 
     //여기서 접근 url던져준다.
-    private String url = "http://3.37.253.113:8080/oauth2/authorization/kakao";
+    private String kakaoUrl = "http://3.37.253.113:8080/oauth2/authorization/kakao";
+    private String naverUrl = "";
+    private String googleUrl = "";
+
     @ResponseBody
     @GetMapping("/kakao")
-    public ResponseEntity<String> socialLogin(@RequestParam String loginType) {
-        return ResponseEntity.ok(url);
+    public ResponseEntity<String> kakaoLogin() {
+        return ResponseEntity.ok(kakaoUrl);
+    }
+
+    @ResponseBody
+    @GetMapping("/naver")
+    public ResponseEntity<String> naverLogin() {
+        return ResponseEntity.ok(naverUrl);
+    }
+
+    @ResponseBody
+    @GetMapping("/google")
+    public ResponseEntity<String> googleLogin() {
+        return ResponseEntity.ok(googleUrl);
     }
 }
 

@@ -1,6 +1,8 @@
 package com.travel.domain.config.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.travel.domain.user.entity.User;
+import com.travel.domain.user.repository.UserRepository;
 import com.travel.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,22 +25,25 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final UserRequestMapper userRequestMapper;
     private final ObjectMapper objectMapper;
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
-        boolean newUser = false;
+//        userRepository.getById(userDto.getEmail());
+        int newUser = 1;
 
         if(userService.findByEmail(userDto.getEmail()) == null){
+            System.out.println("saving user");
             userService.save(userDto);
-            newUser = true;
+            newUser = 0;
         }
-
+        User user = userRepository.findByEmail(userDto.getEmail());
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
         String redirect = "/" + token.getAccessToken() + "/"+ token.getRefreshToken()
-                +"/"+ userDto.getName() +"/"+ newUser;
+                +"/"+ user.getUserName() + "/" + newUser;
 
         response.sendRedirect("http://localhost:3000/callback" + redirect);
     }

@@ -1,5 +1,6 @@
 package com.travel.domain.config.auth;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-//@Slf4j
+@Slf4j
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     @Override
