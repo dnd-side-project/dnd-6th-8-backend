@@ -38,6 +38,7 @@ dependencies {
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
 //	runtimeOnly 'mysql:mysql-connector-java'
 
+	implementation group: 'org.springframework', name: 'spring-web', version: '4.3.11.RELEASE'
 
 
 	runtimeOnly 'com.h2database:h2'
