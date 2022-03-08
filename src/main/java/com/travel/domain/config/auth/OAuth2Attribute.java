@@ -51,10 +51,10 @@ class OAuth2Attribute {
         System.out.println(kakaoAccount);
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
-        System.out.println("kakao profile" + kakaoProfile.get("profile_nickname"));
+        System.out.println("kakao profile" + kakaoProfile.get("nickname"));
         return OAuth2Attribute.builder()
                 .email((String) kakaoAccount.get("email"))
-                .name((String) kakaoProfile.get("profile_nickname"))
+                .name((String) kakaoProfile.get("nickname"))
                 .picture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
