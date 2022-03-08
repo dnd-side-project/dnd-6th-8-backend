@@ -43,7 +43,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         User user = userRepository.findByEmail(userDto.getEmail());
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
         String redirect = "/" + token.getAccessToken() + "/"+ token.getRefreshToken()
-                +"/"+ user.getUserName() + "/" + newUser;
+                + "/" + newUser;
 
         response.sendRedirect("http://localhost:3000/callback" + redirect);
     }
