@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 @RequiredArgsConstructor
 @Component
@@ -34,7 +35,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         UserDto userDto = userRequestMapper.toDto(oAuth2User);
 //        userRepository.getById(userDto.getEmail());
         int newUser = 1;
-
+        System.out.println(userDto.getEmail());
         if(userService.findByEmail(userDto.getEmail()) == null){
             System.out.println("saving user");
             userService.save(userDto);
@@ -42,7 +43,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         }
         User user = userRepository.findByEmail(userDto.getEmail());
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
-        String redirect = "/" + token.getAccessToken() + "/" + newUser;
+        String redirect = "/" + token.getAccessToken() + "/" + newUser + "/" + URLEncoder.encode(user.getUserName());
 
         response.sendRedirect("http://localhost:3000/callback" + redirect);
     }
