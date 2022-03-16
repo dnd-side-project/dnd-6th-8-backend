@@ -15,10 +15,9 @@ import javax.persistence.*;
 public class Emoji {
 
     @Id
-    @Column(name = "emoji_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column()
-    String emoji;
+    String name;
 }

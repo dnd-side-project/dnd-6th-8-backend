@@ -1,5 +1,6 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.var;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-//@Slf4j
+@Slf4j
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     @Override
@@ -24,11 +25,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        System.out.println(userNameAttributeName);
+        System.out.println("userName" + userNameAttributeName);
+        System.out.println("registrationId" + registrationId);
+
         OAuth2Attribute oAuth2Attribute =
                 OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        System.out.println(oAuth2Attribute);
+        System.out.println("oauth" + oAuth2Attribute);
 
         var memberAttribute = oAuth2Attribute.convertToMap();
 

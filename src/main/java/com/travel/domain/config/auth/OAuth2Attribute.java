@@ -1,4 +1,4 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
 
 import lombok.AccessLevel;
@@ -51,6 +51,7 @@ class OAuth2Attribute {
         System.out.println(kakaoAccount);
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
+        System.out.println("kakao profile" + kakaoProfile.get("nickname"));
 
         return OAuth2Attribute.builder()
                 .email((String) kakaoAccount.get("email"))

@@ -1,9 +1,9 @@
 package com.travel.config;
 
-import com.travel.domain.config.auth.test.CustomOAuth2UserService;
-import com.travel.domain.config.auth.test.JwtAuthFilter;
-import com.travel.domain.config.auth.test.OAuth2SuccessHandler;
-import com.travel.domain.config.auth.test.TokenService;
+import com.travel.domain.config.auth.CustomOAuth2UserService;
+import com.travel.domain.config.auth.JwtAuthFilter;
+import com.travel.domain.config.auth.OAuth2SuccessHandler;
+import com.travel.domain.config.auth.TokenService;
 import com.travel.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

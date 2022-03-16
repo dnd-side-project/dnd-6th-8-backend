@@ -1,4 +1,4 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
 import com.travel.domain.user.entity.User;
 import lombok.Getter;

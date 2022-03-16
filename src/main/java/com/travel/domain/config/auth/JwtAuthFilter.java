@@ -1,6 +1,5 @@
-package com.travel.domain.config.auth.test;
+package com.travel.domain.config.auth;
 
-import com.travel.domain.user.entity.User;
 import com.travel.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
