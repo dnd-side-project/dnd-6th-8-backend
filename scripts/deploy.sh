@@ -4,7 +4,12 @@ REPOSITORY=/home/ec2-user/app/deploy
 
 echo">check running pid"
 
-echo "$CURRENT_PID"
+
+CURRENT_PID=$(pgrep -f demo)
+
+
+echo "> CURRENT_PID"
+
 
 if [ -z $CURRENT_PID ]; then
     echo "> There is no pid running currently."
@@ -28,5 +33,8 @@ echo "> give authority to $JAR_NAME"
 
 chmod +x $JAR_NAME
 
-nohup java -jar $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
+# nohup java -jar $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
+nohup java -jar -jar \
+    -Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.yml\
+    $REPOSITORY/$JAR_NAME 2&1 &

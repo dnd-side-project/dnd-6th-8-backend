@@ -1,12 +1,18 @@
 package com.travel.domain.archive.controller;
 
-import com.travel.domain.archive.dto.ArchivesResponseDto;
+import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
+import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -16,22 +22,42 @@ public class ArchiveApiController {
 
     private final ArchivesService archivesService;
 
-    @ApiOperation(value = "게시글을 저장하는 api")
+    @ApiOperation(value = "아카이브 생성 api")
     @PostMapping("/archives")
-    public Long saveArchive(@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
-        return archivesService.save(archivesSaveRequestDto);
+    public ResponseEntity<ArchiveDetailResponseDto> saveArchive
+            (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto);
+        return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
+                .body(archivesResponseDto);
     }
 
-    @ApiOperation(value = "게시글 하나가져오는 API")
+    @ApiOperation(value = "아카이브 id로 가져오기 API")
     @GetMapping("/archives/{id}")
-    public ArchivesResponseDto findById(@PathVariable Long id){
-        return archivesService.findById(id);
+    public ResponseEntity<ArchiveDetailResponseDto> findById(@PathVariable Long id){
+        return ResponseEntity.ok(archivesService.findById(id));
+    }
+
+    @ApiOperation(value = "아카이브 업데이트 API")
+    @PutMapping("/archives/{id}")
+    public ResponseEntity<Void> updateArchive
+            (@PathVariable Long id, @RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+        archivesService.updateArchive(id, archivesSaveRequestDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "아카이브 공유여부변경 API")
+    @PutMapping("/archives/{id}/share")
+    public ResponseEntity<Void> changeArchiveStatus
+            (@PathVariable Long id, @RequestParam boolean isShare){
+        archivesService.updateArchiveShare(id, isShare);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "장소별로 게시물 필터링 API")
     @GetMapping("/archives/places")
-    public String getArchiveListByPlace(){
-        return " ";
+    public ResponseEntity<List<ArchiveResponseDto>> getArchiveListByPlace(@RequestParam EPlaces place){
+        List<ArchiveResponseDto> archivesResponseDtos = archivesService.findByPlace(place);
+        return ResponseEntity.ok(archivesResponseDtos);
     }
 
     @ApiOperation(value = "개인설문별로 게시물 필터링 API")
@@ -44,18 +70,13 @@ public class ArchiveApiController {
     @GetMapping("/archives/suggestion/")
     public String getArchiveBySuggestion(){return "";}
 
-    @ApiOperation(value = "게시물 업데이트 API")
-    @PostMapping("/archives/update/{archiveId}")
-    public String updateArchive(){return "";}
 
-    @ApiOperation(value = "게시글 삭제 API")
+
+    @ApiOperation(value = "아카이브 삭제 API")
     @DeleteMapping("/archives/{archiveId}")
-    public Long deleteArchive(@PathVariable Long archiveId){
+    public ResponseEntity<Void> deleteArchive(@PathVariable Long archiveId){
         archivesService.delete(archiveId);
-        return archiveId;
+        return ResponseEntity.noContent().build();
     }
 
-    @ApiOperation(value = "게시물 공유여부변경")
-    @PostMapping("/archives/share/{id}")
-    public String changeArchiveStatus(){return "";}
 }
