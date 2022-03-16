@@ -1,9 +1,8 @@
 package com.travel.domain.user.service;
 
-import com.travel.domain.user.dto.UserSaveRequestDto;
-
-import java.util.UUID;
+import com.travel.domain.config.auth.UserDto;
 
 public interface UserService {
-    public String save(UserSaveRequestDto userSaveRequestDto);
+    public String save(UserDto userDto);
+    public UserDto findByEmail(String email);
 }

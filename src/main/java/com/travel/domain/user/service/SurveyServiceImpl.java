@@ -19,6 +19,4 @@ public class SurveyServiceImpl implements SurveyService{
         return surveyRepository.save(surveySaveRequestDto.toEntity()).getId();
     }
 
-
-
 }

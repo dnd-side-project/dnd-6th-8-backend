@@ -22,9 +22,9 @@ public class UserMarkedEmoji {
     @Enumerated(EnumType.STRING)
     private EEmojis emoji;
 
-    @ManyToOne
-    @JoinColumn(name= "user_id")
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name= "user_id")
+//    private User user;
 
     @ManyToOne
     @JoinColumn(name= "archive_id")
