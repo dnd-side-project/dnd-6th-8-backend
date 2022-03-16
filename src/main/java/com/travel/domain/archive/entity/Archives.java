@@ -1,5 +1,6 @@
 package com.travel.domain.archive.entity;
 
+import com.travel.domain.day.entity.Days;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.travel.domain.emoji.entity.UserMarkedEmoji;
@@ -57,6 +58,9 @@ public class Archives extends BaseTimeEntity {
     @Column()
     private boolean haveCompanion;
 
+    @OneToMany(mappedBy = "archives")
+    private List<Days> days = new ArrayList<>();
+
     @ManyToOne()
     @JoinColumn(name = "userId")
     private User user;
@@ -64,11 +68,10 @@ public class Archives extends BaseTimeEntity {
     @OneToMany(mappedBy = "archives")
     List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
 
-    @JsonIgnoreProperties({"archives"})
     @OneToMany(mappedBy = "archives")
     private List<Scraps> scraps = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "archives")
+//    @OneToMany(mappedBy = "archive")
 //    private List<UserSticker> userStickers = new ArrayList<>();
 
     @Builder
