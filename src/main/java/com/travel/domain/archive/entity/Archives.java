@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
+//import com.travel.domain.sticker.entity.UserSticker;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
@@ -61,15 +62,11 @@ public class Archives extends BaseTimeEntity {
     private List<Days> days = new ArrayList<>();
 
     @ManyToOne()
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "userId")
     private User user;
 
-//    @JsonIgnoreProperties({"archives"})
     @OneToMany(mappedBy = "archives")
-    private List<Scraps> scrapsList;
-
-    @OneToMany(mappedBy = "archive")
-    List<UserMarkedEmoji> markedemojis = new ArrayList<>();
+    List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
 
     @OneToMany(mappedBy = "archives")
     private List<Scraps> scraps = new ArrayList<>();
