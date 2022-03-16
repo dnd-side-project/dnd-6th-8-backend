@@ -28,3 +28,4 @@ hs_err_pid*
 /.idea/
 
 application-oauth.yml
+application-real-db.properties

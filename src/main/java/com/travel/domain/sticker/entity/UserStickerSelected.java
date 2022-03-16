@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class UserSticker {
+public class UserStickerSelected {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

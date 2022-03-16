@@ -9,9 +9,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,10 +25,11 @@ public class ArchiveApiController {
 
     private final ArchivesService archivesService;
 
+
     @ApiOperation(value = "아카이브 생성 api")
     @PostMapping("/archives")
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
-            (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+            (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto, @ApiIgnore Principal principal){
         ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto);
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);

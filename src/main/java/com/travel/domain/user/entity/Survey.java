@@ -20,7 +20,6 @@ import java.util.Objects;
 public class Survey {
 
     @Id
-    @Column(name = "survey_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

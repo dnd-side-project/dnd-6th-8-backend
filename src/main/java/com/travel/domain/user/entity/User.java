@@ -7,7 +7,7 @@ import com.travel.domain.archive.entity.EBudget;
 import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.sticker.entity.Sticker;
-import com.travel.domain.sticker.entity.UserSticker;
+import com.travel.domain.sticker.entity.UserStickerSelected;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,17 +25,9 @@ import java.util.UUID;
 @Entity
 public class User {
 
-//    @Id
-//    @GeneratedValue(generator = "uuid2")
-//    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-//    @Type(type = "uuid-char")
-//    @Column(name= "user_id")
-//    private UUID id;
-
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column()
     private String userName;
@@ -63,7 +55,7 @@ public class User {
     private List<Scraps> scraps = new ArrayList<>();;
 
     @OneToMany(mappedBy = "user")
-    private List<UserSticker> userStickers = new ArrayList<>();
+    private List<UserStickerSelected> userStickers = new ArrayList<>();
 
 //    private Role role;
 
