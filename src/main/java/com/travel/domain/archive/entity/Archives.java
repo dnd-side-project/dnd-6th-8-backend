@@ -1,5 +1,11 @@
 package com.travel.domain.archive.entity;
 
+import com.travel.domain.day.entity.Days;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import com.travel.domain.emoji.entity.UserMarkedEmoji;
+import com.travel.domain.scrap.entity.Scraps;
+//import com.travel.domain.sticker.entity.UserSticker;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
@@ -9,6 +15,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -50,10 +58,21 @@ public class Archives extends BaseTimeEntity {
     @Column()
     private boolean haveCompanion;
 
+    @OneToMany(mappedBy = "archives")
+    private List<Days> days = new ArrayList<>();
+
     @ManyToOne()
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "userId")
     private User user;
 
+    @OneToMany(mappedBy = "archives")
+    List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
+
+    @OneToMany(mappedBy = "archives")
+    private List<Scraps> scraps = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "archive")
+//    private List<UserSticker> userStickers = new ArrayList<>();
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,

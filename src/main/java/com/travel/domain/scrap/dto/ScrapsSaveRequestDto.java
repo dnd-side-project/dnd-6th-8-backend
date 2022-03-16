@@ -18,30 +18,22 @@ import java.time.LocalDateTime;
 @ApiModel(value = "스크랩 저장하기")
 public class ScrapsSaveRequestDto {
     private final LocalDateTime scrapDateTime;
+    private final String user;
 
-    public LocalDateTime scrapDateTime() {
+    private LocalDateTime scrapDateTime() {
         return scrapDateTime;
     }
+    private String user() { return user; }
 
     @JsonCreator
     public ScrapsSaveRequestDto(
-            @JsonProperty("scrapDateTime") LocalDateTime scrapDateTime) { this.scrapDateTime = scrapDateTime;}
-
-
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-//    @ApiModelProperty(value = "스크랩한 시간", example = "2022-02-19T22:24:00")
-//    private LocalDateTime scrapDateTime;
-
-//    @ApiModelProperty(value = "스크랩한 유저")
-//    private User user;
-
-//    @Builder
-//    public ScrapsSaveRequestDto(LocalDateTime scrapDateTime) {
-//        this.scrapDateTime = scrapDateTime;
-////        this.user = user;
-//    }
+            @JsonProperty("scrapDateTime") LocalDateTime scrapDateTime,
+            @JsonProperty("user") String user) {
+        this.scrapDateTime = scrapDateTime;
+        this.user = user;
+    }
 
     public Scraps toEntity() {
-        return Scraps.builder().scrapDateTime(scrapDateTime).build();
+        return Scraps.builder().scrapDateTime(scrapDateTime).user(user).build();
     }
 }

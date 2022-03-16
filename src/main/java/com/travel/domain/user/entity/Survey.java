@@ -52,5 +52,4 @@ public class Survey {
             this.user.addSurvey(this);
         }
     }
-
 }

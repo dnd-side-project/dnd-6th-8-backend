@@ -1,12 +1,18 @@
 package com.travel.domain.day.controller;
 
+import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
-import com.travel.domain.day.dto.DaysResponseDto;
+import com.travel.domain.day.dto.DayDetailResponseDto;
+import com.travel.domain.day.entity.Days;
 import com.travel.domain.day.service.DaysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -16,18 +22,33 @@ public class DayApiController {
 
     private final DaysService daysService;
 
-    @ApiOperation(value = "데이 피드를 저장하는 api")
-    @PostMapping("/archives/{id}/days")
-    public Long saveDay(@RequestBody DaysSaveRequestDto daysSaveRequestDto){
-        return daysService.save(daysSaveRequestDto);
+    @ApiOperation(value = "데이 피드를 생성하는 API")
+    @PostMapping("/archives/days")
+    public ResponseEntity<DayDetailResponseDto> saveDay
+            (@RequestParam Long archiveId, @RequestBody DaysSaveRequestDto daysSaveRequestDto){
+        DayDetailResponseDto dayDetailResponseDto = daysService.saveDay(daysSaveRequestDto, archiveId);
+        return ResponseEntity.created(URI.create("/api/v1/archives/days/" + dayDetailResponseDto.getDayNumber())).body(dayDetailResponseDto);
     }
 
-    @GetMapping("/archives/{id}/days/{id}")
-    public String findById(@PathVariable Long id) {return ""; }
+    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")  //PathVariable -> RequestParam
+    @GetMapping("/archives/days/{dayNumber}")
+    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @RequestParam Archives archives) {
+        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.getDays(archives, dayNumber);
+        return ResponseEntity.ok(dayDetailResponseDtos);
+    }
 
-    @PostMapping("/archives/{id}/days/update/{id}")
-    public String updateDay(){return "";}
+    @ApiOperation(value = "데이 피드 업데이트 API")
+    @PutMapping("/archives/{archiveId}/days/update/{dayNumber}")
+    public ResponseEntity<Void> updateDay
+            (@PathVariable Long dayNumber, @RequestBody DaysSaveRequestDto daysSaveRequestDto){
+        daysService.updateDay(dayNumber, daysSaveRequestDto);
+        return ResponseEntity.ok().build();
+    }
 
-    @DeleteMapping("/archives/{id}/days/{id}")
-    public String deleteDay(){return "";}
+    @ApiOperation(value = "데이 피드를 삭제하는 API")
+    @DeleteMapping("/archives/{archiveId}/days/{dayNumber}")
+    public ResponseEntity<Void> deleteDay(@PathVariable Long dayNumber){
+        daysService.delete(dayNumber);
+        return ResponseEntity.noContent().build();
+    }
 }

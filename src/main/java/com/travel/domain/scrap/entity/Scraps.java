@@ -1,6 +1,5 @@
 package com.travel.domain.scrap.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
@@ -27,19 +26,17 @@ public class Scraps {
     @CreatedDate
     private LocalDateTime scrapDateTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "archiveId")
     private Archives archives;
 
-//    @ManyToOne
-//    @JoinColumn(name= "userId")
-//    @JsonIgnoreProperties({"archivesList"})
-//    private User user;
+    @Column()
+    private String user;
 
     @Builder
-    public Scraps(LocalDateTime scrapDateTime) {
+    public Scraps(LocalDateTime scrapDateTime, String user) {
 //        this.archives = archives;
         this.scrapDateTime = scrapDateTime;
-//        this.user = user;
+        this.user = user;
     }
 }
