@@ -63,7 +63,7 @@ public class ArchiveApiController {
 
     @ApiOperation(value = "장소별로 게시물 필터링 API")
     @GetMapping("/archives/places")
-    public ResponseEntity<List<ArchiveResponseDto>> getArchiveListByPlace(@RequestParam EPlaces place){
+    public ResponseEntity<List<ArchiveResponseDto>> getArchiveListByPlace(@RequestParam String place){
         List<ArchiveResponseDto> archivesResponseDtos = archivesService.findByPlace(place);
         return ResponseEntity.ok(archivesResponseDtos);
     }

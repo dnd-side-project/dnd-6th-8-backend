@@ -6,8 +6,12 @@ import com.travel.domain.archive.entity.EPlaces;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import org.apache.tomcat.jni.Local;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,9 @@ public class ArchiveResponseDto {
     private EArchivingStyle archivingStyle;
 
     @ApiModelProperty(value = "여행 장소", example = "부산")
-    private EPlaces places;
+    private String places;
+
+    private String coverPicture;
 
     private int scrapNum;
 
@@ -37,10 +43,17 @@ public class ArchiveResponseDto {
     public ArchiveResponseDto(Archives entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
-//        this.travelDuration ;
+        this.travelDuration = calculateDuration(entity);
         this.archivingStyle = entity.getArchivingStyle();
-//        this.places = entity.getPlace();
+        this.places = entity.getPlace().getName();
+        this.coverPicture = entity.getCoverImage();
+    }
 
+    public static String calculateDuration(Archives entity) {
+        Period period = Period.between(entity.getFirstDay(), entity.getLastDay());
+        int end = period.getDays() + 1;
+        String result = period.getDays() + "박" + end + "일";
+        return result;
     }
 
     public static List<ArchiveResponseDto> listOf(List<Archives> filtered) {

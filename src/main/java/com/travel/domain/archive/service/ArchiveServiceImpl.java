@@ -118,8 +118,9 @@ public class ArchiveServiceImpl implements ArchivesService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ArchiveResponseDto> findByPlace(EPlaces place) {
-        List<Archives> filtered = archivesRepository.findByPlace(place);
+    public List<ArchiveResponseDto> findByPlace(String place) {
+        Place placeEntity = placeRepository.getByName(place);
+        List<Archives> filtered = archivesRepository.findByPlace_Id(placeEntity.getId());
         return ArchiveResponseDto.listOf(filtered);
     }
 
