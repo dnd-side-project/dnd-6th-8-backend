@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ArchivesService {
 
-    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto);
+    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto, String user);
 
     public ArchiveDetailResponseDto findById(Long id);
 

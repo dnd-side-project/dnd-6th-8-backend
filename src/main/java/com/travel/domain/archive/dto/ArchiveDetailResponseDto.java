@@ -46,7 +46,7 @@ public class ArchiveDetailResponseDto {
         this.title = entity.getTitle();
         this.firstDay = entity.getFirstDay();
         this.lastDay = entity.getLastDay();
-        this.places = entity.getPlace();
+//        this.places = entity.getPlace();
         this.archivingStyle = entity.getArchivingStyle();
         this.budget = entity.getBudget();
         this.haveCompanion = entity.isHaveCompanion();

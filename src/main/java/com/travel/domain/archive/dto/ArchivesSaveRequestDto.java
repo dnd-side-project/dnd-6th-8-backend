@@ -19,7 +19,7 @@ public class ArchivesSaveRequestDto {
     private String title;
 
     @ApiModelProperty(value = "여행 장소", example = "부산", required = true)
-    private EPlaces place;
+    private String place;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "출발 날짜", example = "2021-12-10", required = true)
@@ -38,12 +38,9 @@ public class ArchivesSaveRequestDto {
     @ApiModelProperty(value = "기록 스타일", example = "감성", required = true)
     private EArchivingStyle archivingStyle;
 
-    @ApiModelProperty(value = "사용자", required = false)
-    private User user;
-
 
     @Builder
-    public ArchivesSaveRequestDto(String title, EPlaces place, LocalDate firstDay, LocalDate lastDay,
+    public ArchivesSaveRequestDto(String title, String place , LocalDate firstDay, LocalDate lastDay,
                                   boolean haveCompanion, EBudget budget, EArchivingStyle archivingStyle) {
         this.title = title;
         this.place = place;
@@ -54,8 +51,8 @@ public class ArchivesSaveRequestDto {
         this.archivingStyle = archivingStyle;
     }
 
-    public Archives toEntity() {
+    public Archives toEntity(User user, Place place) {
         return Archives.builder().title(title).place(place).firstDay(firstDay).lastDay(lastDay)
-                .haveCompanion(haveCompanion).budget(budget).archivingStyle(archivingStyle).build();
+                .haveCompanion(haveCompanion).budget(budget).archivingStyle(archivingStyle).user(user).build();
     }
 }

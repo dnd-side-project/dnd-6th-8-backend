@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
 import java.security.Principal;
@@ -34,9 +35,9 @@ public class UserApiController {
 
     @ApiOperation(value = "사용자 서베이 저장 API")
     @PostMapping("/user/survey")
-    public ResponseEntity<Void> saveSurveyInfo(@RequestBody SurveySaveRequestDto surveySaveRequestDto){
-        Long saveId = surveyService.save(surveySaveRequestDto);
-        return ResponseEntity.created(URI.create("/api/v1/user/survey/" + saveId)).build();
+    public ResponseEntity<Void> saveSurveyInfo(@RequestBody SurveySaveRequestDto surveySaveRequestDto, @ApiIgnore Principal principal){
+        surveyService.save(surveySaveRequestDto, principal.getName());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/user/achives")

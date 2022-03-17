@@ -5,7 +5,9 @@ import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.entity.EPlaces;
+import com.travel.domain.archive.entity.Place;
 import com.travel.domain.archive.repository.ArchivesRepository;
+import com.travel.domain.archive.repository.PlaceRepository;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +23,17 @@ public class ArchiveServiceImpl implements ArchivesService{
 
     private final ArchivesRepository archivesRepository;
     private final UserRepository userRepository;
+    private final PlaceRepository placeRepository;
 
     @Override
     @Transactional(readOnly=true)
-    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto) {
-//        User user = userRepository.findByUserName(userName);
-//        archivesSaveRequestDto.setUser(user);
-        Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity());
+    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
+        User user = userRepository.findByEmail(userEmail);
+        boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
+
+        Place place = placeHandler(archivesSaveRequestDto.getPlace());
+
+        Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity(user, place));
         return new ArchiveDetailResponseDto(archive);
     }
 
@@ -37,6 +43,18 @@ public class ArchiveServiceImpl implements ArchivesService{
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
         return new ArchiveDetailResponseDto(archive);
+    }
+
+    public Place placeHandler(String placeName){
+        boolean placeExists = placeRepository.existsByName(placeName);
+        Place place = null;
+        if(placeExists){
+            place = placeRepository.getByName(placeName);
+        }else{
+            place = placeRepository.save(place.builder()
+                    .name(placeName).build());
+        }
+        return place;
     }
 
     @Override
@@ -59,7 +77,7 @@ public class ArchiveServiceImpl implements ArchivesService{
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
         }
         if (archivesSaveRequestDto.getPlace() != null) {
-            archive.setPlace(archivesSaveRequestDto.getPlace());
+            archive.setPlace(placeHandler(archivesSaveRequestDto.getPlace()));
         }
         if (archivesSaveRequestDto.getBudget() != null) {
             archive.setBudget(archivesSaveRequestDto.getBudget());

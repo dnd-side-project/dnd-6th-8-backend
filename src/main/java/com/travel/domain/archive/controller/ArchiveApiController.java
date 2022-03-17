@@ -30,7 +30,8 @@ public class ArchiveApiController {
     @PostMapping("/archives")
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
             (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto, @ApiIgnore Principal principal){
-        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto);
+        System.out.println(principal.getName());
+        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto, principal.getName());
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);
     }

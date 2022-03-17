@@ -39,7 +39,7 @@ public class ArchiveResponseDto {
         this.firstDay = entity.getFirstDay();
         this.lastDay = entity.getLastDay();
         this.archivingStyle = entity.getArchivingStyle();
-        this.places = entity.getPlace();
+//        this.places = entity.getPlace();
 
     }
 

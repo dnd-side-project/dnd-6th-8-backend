@@ -30,10 +30,6 @@ public class Archives extends BaseTimeEntity {
     private String coverImage;
 
     @Column()
-    @Enumerated(EnumType.STRING)
-    private EPlaces place;
-
-    @Column()
     private LocalDate firstDay;
 
     @Column()
@@ -54,20 +50,41 @@ public class Archives extends BaseTimeEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="PLACE_ID")
+    private Place place;
+//
+//    @Column()
+//    @Enumerated(EnumType.STRING)
+//    private EPlaces place;
+
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
-                    EPlaces place, LocalDate firstDay, LocalDate lastDay, EBudget budget,
-                    EArchivingStyle archivingStyle, boolean haveCompanion) {
+                    Place place, LocalDate firstDay, LocalDate lastDay, EBudget budget, EPlaces places,
+                    EArchivingStyle archivingStyle, boolean haveCompanion, User user) {
         this.title = title;
         this.isShare = isShare;
         this.coverImage = coverImage;
-        this.place = place;
         this.firstDay = firstDay;
         this.lastDay = lastDay;
         this.haveCompanion = haveCompanion;
         this.budget = budget;
         this.archivingStyle = archivingStyle;
+        setUser(user);
+        setPlace(place);
+    }
+
+    public void setUser(User user) {
+        if(this.user != null){
+            this.user = user;
+        }
+    }
+
+    public void setPlace(Place place) {
+        if(this.place != null){
+            this.place = place;
+        }
     }
 }
 
