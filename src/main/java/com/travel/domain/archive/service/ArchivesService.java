@@ -21,4 +21,6 @@ public interface ArchivesService {
     public void updateArchiveShare(Long id, boolean isShare);
 
     public List<ArchiveResponseDto> findByPlace(String place);
+
+    public List<ArchiveResponseDto> findByRecommendation(String userEmail);
 }

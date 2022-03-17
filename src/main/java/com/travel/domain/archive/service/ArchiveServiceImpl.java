@@ -9,6 +9,7 @@ import com.travel.domain.archive.entity.Place;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
 import com.travel.domain.common.S3Uploader;
+import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -122,6 +123,28 @@ public class ArchiveServiceImpl implements ArchivesService {
         Place placeEntity = placeRepository.getByName(place);
         List<Archives> filtered = archivesRepository.findByPlace_Id(placeEntity.getId());
         return ArchiveResponseDto.listOf(filtered);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ArchiveResponseDto> findByRecommendation(String userEmail) {
+        User user = userRepository.findByEmail(userEmail);
+        List<Archives> archivesList;
+        if(user.getSurvey() != null){
+            archivesList = findBySurvey(user.getSurvey());
+        }else{
+            archivesList = defaultRecommendation();
+        }
+        return ArchiveResponseDto.listOf(archivesList);
+    }
+
+    private List<Archives> findBySurvey(Survey survey){
+        System.out.println(survey.getBudget());
+        return archivesRepository.findByArchivingStyleAndBudgetAndHaveCompanion(survey.getArchivingStyle().toString(),survey.getBudget().toString(),survey.isHaveCompanion());
+    }
+
+    private List<Archives> defaultRecommendation(){
+        return archivesRepository.findRandom();
     }
 
     @Override

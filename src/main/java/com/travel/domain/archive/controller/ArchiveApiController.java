@@ -68,12 +68,12 @@ public class ArchiveApiController {
         return ResponseEntity.ok(archivesResponseDtos);
     }
 
-//    @ApiOperation(value = "추천 게시물 API")
-//    @GetMapping("/archives/places")
-//    public ResponseEntity<List<ArchiveResponseDto>> getArchiveRecommendation(@RequestParam EPlaces place){
-//        List<ArchiveResponseDto> archivesResponseDtos = archivesService;
-//        return ResponseEntity.ok(archivesResponseDtos);
-//    }
+    @ApiOperation(value = "추천 게시물 API")
+    @GetMapping("/archives/suggestions")
+    public ResponseEntity<List<ArchiveResponseDto>> getArchiveRecommendation(@ApiIgnore Principal principal){
+        List<ArchiveResponseDto> archivesResponseDtos = archivesService.findByRecommendation(principal.getName());
+        return ResponseEntity.ok(archivesResponseDtos);
+    }
 
 
 
