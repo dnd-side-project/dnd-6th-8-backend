@@ -1,19 +1,21 @@
 package com.travel.domain.day.service;
 
+import com.travel.domain.archive.entity.Archives;
+import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
-import com.travel.domain.day.repository.DaysRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.travel.domain.day.entity.Days;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
-@RequiredArgsConstructor
-@Service
-public class DaysService {
-    private final DaysRepository daysRepository;
+public interface DaysService {
 
-    @Transactional
-    public Long save(DaysSaveRequestDto daysSaveRequestDto){
-        return daysRepository.save(daysSaveRequestDto.toEntity()).getId();
-    }
+    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId);
+
+    public List<DayDetailResponseDto> getDays(Archives archives, Integer dayNumber);
+
+    public void delete(Long id);
+
+    public void updateDay(Long id, DaysSaveRequestDto daysSaveRequestDto);
+
 }

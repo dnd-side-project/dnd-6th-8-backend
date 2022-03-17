@@ -28,5 +28,5 @@ public class UserStickerSelected {
 
     @ManyToOne
     @JoinColumn(name = "archive_id")
-    private Archives archive;
+    private Archives archives;
 }
