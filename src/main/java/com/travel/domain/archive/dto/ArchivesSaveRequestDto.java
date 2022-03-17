@@ -6,12 +6,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 @Getter
+@Setter
 @ApiModel(value = "아카이브 기록하기")
 public class ArchivesSaveRequestDto {
 
@@ -38,6 +42,9 @@ public class ArchivesSaveRequestDto {
     @ApiModelProperty(value = "기록 스타일", example = "감성", required = true)
     private EArchivingStyle archivingStyle;
 
+    @ApiModelProperty(value = "이미지")
+    private MultipartFile coverPicture;
+
 
     @Builder
     public ArchivesSaveRequestDto(String title, String place , LocalDate firstDay, LocalDate lastDay,
@@ -49,10 +56,12 @@ public class ArchivesSaveRequestDto {
         this.haveCompanion = haveCompanion;
         this.budget = budget;
         this.archivingStyle = archivingStyle;
+//        this.coverPicture = coverPicture;
     }
 
-    public Archives toEntity(User user, Place place) {
+    public Archives toEntity(User user, Place place, String imageUrl) {
+        System.out.println(user.getId());
         return Archives.builder().title(title).place(place).firstDay(firstDay).lastDay(lastDay)
-                .haveCompanion(haveCompanion).budget(budget).archivingStyle(archivingStyle).user(user).build();
+                .haveCompanion(haveCompanion).budget(budget).archivingStyle(archivingStyle).user(user).coverImage(imageUrl).build();
     }
 }

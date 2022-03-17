@@ -1,11 +1,9 @@
 package com.travel.domain.archive.entity;
 
 import com.travel.domain.day.entity.Days;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
-//import com.travel.domain.sticker.entity.UserSticker;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
@@ -58,7 +56,7 @@ public class Archives extends BaseTimeEntity {
     private List<Days> days = new ArrayList<>();
 
     @ManyToOne()
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @ManyToOne
@@ -90,15 +88,16 @@ public class Archives extends BaseTimeEntity {
     }
 
     public void setUser(User user) {
-        if(this.user != null){
+        System.out.println("setting user");
+        if(this.user == null){
+            System.out.println("user ");
             this.user = user;
         }
     }
 
     public void setPlace(Place place) {
-        if(this.place != null){
-            this.place = place;
-        }
+        System.out.println(place.getId());
+        this.place = place;
     }
 }
 

@@ -8,49 +8,64 @@ import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.Place;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
+import com.travel.domain.common.S3Uploader;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
-public class ArchiveServiceImpl implements ArchivesService{
+public class ArchiveServiceImpl implements ArchivesService {
 
     private final ArchivesRepository archivesRepository;
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
+    private final S3Uploader s3Uploader;
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
         User user = userRepository.findByEmail(userEmail);
         boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
 
         Place place = placeHandler(archivesSaveRequestDto.getPlace());
 
-        Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity(user, place));
+        String imageUrl = null;
+        System.out.println(archivesSaveRequestDto.getCoverPicture());
+        if (archivesSaveRequestDto.getCoverPicture() != null) {
+            System.out.println("image not null");
+            try {
+                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+                        , "archive");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Archives archive = archivesRepository.save(archivesSaveRequestDto.toEntity(user, place, imageUrl));
         return new ArchiveDetailResponseDto(archive);
     }
 
     @Override
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     public ArchiveDetailResponseDto findById(Long id) {
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
         return new ArchiveDetailResponseDto(archive);
     }
 
-    public Place placeHandler(String placeName){
+    public Place placeHandler(String placeName) {
         boolean placeExists = placeRepository.existsByName(placeName);
         Place place = null;
-        if(placeExists){
+        if (placeExists) {
             place = placeRepository.getByName(placeName);
-        }else{
+        } else {
             place = placeRepository.save(place.builder()
                     .name(placeName).build());
         }
@@ -59,10 +74,10 @@ public class ArchiveServiceImpl implements ArchivesService{
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto){
+    public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto) {
 
         Archives archive = archivesRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
 
         if (archivesSaveRequestDto.getTitle() != null) {
             archive.setTitle(archivesSaveRequestDto.getTitle());
@@ -90,10 +105,10 @@ public class ArchiveServiceImpl implements ArchivesService{
     }
 
     @Override
-    public void updateArchiveShare(Long id, boolean isShare){
+    public void updateArchiveShare(Long id, boolean isShare) {
 
         Archives archive = archivesRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
 
         if (archive.isShare() != isShare) {
             archive.setShare(isShare);

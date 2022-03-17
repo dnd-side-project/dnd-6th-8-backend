@@ -22,10 +22,7 @@ public class ArchiveResponseDto {
     private String title;
 
     @ApiModelProperty(value = "출발 날짜", example = "2021-12-10")
-    private LocalDate firstDay;
-
-    @ApiModelProperty(value = "마지막 날짜", example = "2021-12-15")
-    private LocalDate lastDay;
+    private String travelDuration;
 
     @ApiModelProperty(value = "기록 스타일", example = "감성")
     private EArchivingStyle archivingStyle;
@@ -33,11 +30,14 @@ public class ArchiveResponseDto {
     @ApiModelProperty(value = "여행 장소", example = "부산")
     private EPlaces places;
 
+    private int scrapNum;
+
+    private int emojiNum;
+
     public ArchiveResponseDto(Archives entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
-        this.firstDay = entity.getFirstDay();
-        this.lastDay = entity.getLastDay();
+//        this.travelDuration ;
         this.archivingStyle = entity.getArchivingStyle();
 //        this.places = entity.getPlace();
 

@@ -8,6 +8,7 @@ import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,12 @@ public class ArchiveApiController {
 
 
     @ApiOperation(value = "아카이브 생성 api")
-    @PostMapping("/archives")
+    @PostMapping(path = "/archives", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
-            (@RequestBody ArchivesSaveRequestDto archivesSaveRequestDto, @ApiIgnore Principal principal){
+            (@ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto, @ApiIgnore Principal principal){
         System.out.println(principal.getName());
+        System.out.println("controller");
+        System.out.println(archivesSaveRequestDto.getCoverPicture());
         ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto, principal.getName());
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);
@@ -65,15 +68,12 @@ public class ArchiveApiController {
         return ResponseEntity.ok(archivesResponseDtos);
     }
 
-    @ApiOperation(value = "개인설문별로 게시물 필터링 API")
-    @GetMapping("/archives/suggestion/survey")
-    public String getArchiveBySurvey(){
-        return "";
-    }
-
-    @ApiOperation(value = "기본 게시물 추천 API")
-    @GetMapping("/archives/suggestion/")
-    public String getArchiveBySuggestion(){return "";}
+//    @ApiOperation(value = "추천 게시물 API")
+//    @GetMapping("/archives/places")
+//    public ResponseEntity<List<ArchiveResponseDto>> getArchiveRecommendation(@RequestParam EPlaces place){
+//        List<ArchiveResponseDto> archivesResponseDtos = archivesService;
+//        return ResponseEntity.ok(archivesResponseDtos);
+//    }
 
 
 
