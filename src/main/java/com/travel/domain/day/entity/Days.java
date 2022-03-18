@@ -13,7 +13,6 @@ import java.time.LocalDate;
 public class Days {
 
     @Id
-    @Column(name = "dayId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

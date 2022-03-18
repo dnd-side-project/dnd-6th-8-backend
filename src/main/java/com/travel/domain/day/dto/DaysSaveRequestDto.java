@@ -7,8 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @ApiModel(value = "데이 피드 기록하기")
@@ -24,8 +26,8 @@ public class DaysSaveRequestDto {
     @ApiModelProperty(value = "날씨", example = "맑음", required = true)
     private String weather;
 
-    @ApiModelProperty(value = "피드 사진 링크", example = "https://~~~", required = true)
-    private String image;
+    @ApiModelProperty(value = "피드 사진 링크", required = true)
+    private List<MultipartFile> images;
 
     @ApiModelProperty(value = "하루의 여정", example = "제주도의 인생 맛집을 찾았다! 간장게장과", required = true)
     private String travelDescription;
@@ -42,14 +44,16 @@ public class DaysSaveRequestDto {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
-        this.image = image;
+//        this.image = image;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
     }
 
+//    .image(image)
+
     public Days toEntity() {
-        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).image(image).travelDescription(travelDescription).
+        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).travelDescription(travelDescription).
                 emotionDescription(emotionDescription).tipDescription(tipDescription).build();
     }
 }
