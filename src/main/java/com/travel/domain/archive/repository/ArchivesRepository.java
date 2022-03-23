@@ -23,4 +23,6 @@ public interface ArchivesRepository extends JpaRepository<Archives, Long> {
     List<Archives> findRandom();
 
     List<Archives> findByArchivingStyle(@Param(value = "archivingStyle") EArchivingStyle archivingStyle);
+    List<Archives> findByIsShareAndUser_Id(@Param(value = "isShare")boolean isShare, long userId);
+
 }
