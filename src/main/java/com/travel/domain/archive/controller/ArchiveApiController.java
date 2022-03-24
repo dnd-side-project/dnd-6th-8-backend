@@ -3,6 +3,7 @@ package com.travel.domain.archive.controller;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
@@ -48,10 +50,11 @@ public class ArchiveApiController {
     @ApiOperation(value = "아카이브 업데이트 API")
     @PutMapping("/archives/{id}")
     public ResponseEntity<Void> updateArchive
-            (@PathVariable Long id, @RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+            (@PathVariable Long id, @ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto){
         archivesService.updateArchive(id, archivesSaveRequestDto);
         return ResponseEntity.ok().build();
     }
+
 
     @ApiOperation(value = "아카이브 공유여부변경 API")
     @PutMapping("/archives/{id}/share")
@@ -81,6 +84,13 @@ public class ArchiveApiController {
     @DeleteMapping("/archives/{archiveId}")
     public ResponseEntity<Void> deleteArchive(@PathVariable Long archiveId){
         archivesService.delete(archiveId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "뱃지 정하기")
+    @PatchMapping("/archives/{archiveId}/badges")
+    public ResponseEntity<Void> setBadge(@PathVariable Long archiveId, @RequestParam EBadges badges){
+        archivesService.setBadges(archiveId, badges);
         return ResponseEntity.noContent().build();
     }
 

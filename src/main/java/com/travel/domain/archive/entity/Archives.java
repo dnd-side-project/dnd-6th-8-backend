@@ -63,6 +63,8 @@ public class Archives extends BaseTimeEntity {
     @JoinColumn(name="PLACE_ID")
     private Place place;
 
+    private EBadges badges;
+
 
     @OneToMany(mappedBy = "archives")
     List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();

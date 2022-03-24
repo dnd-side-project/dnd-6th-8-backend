@@ -4,6 +4,7 @@ import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.Archives;
+import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.Place;
 import com.travel.domain.archive.repository.ArchivesRepository;
@@ -61,6 +62,14 @@ public class ArchiveServiceImpl implements ArchivesService {
         return new ArchiveDetailResponseDto(archive);
     }
 
+    @Override
+    public void setBadges(Long id, EBadges badges) {
+        Archives archive = archivesRepository.findById(id).orElseThrow
+                (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+        archive.setBadges(badges);
+        archivesRepository.save(archive);
+    }
+
     public Place placeHandler(String placeName) {
         boolean placeExists = placeRepository.existsByName(placeName);
         Place place = null;
@@ -100,6 +109,17 @@ public class ArchiveServiceImpl implements ArchivesService {
         }
         if (archivesSaveRequestDto.isHaveCompanion() != archive.isHaveCompanion()) {
             archive.setHaveCompanion(archivesSaveRequestDto.isHaveCompanion());
+        }
+
+        if(archivesSaveRequestDto.getCoverPicture() != null){
+            String imageUrl = null;
+            try {
+                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
+                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+                        , "archive");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         archivesRepository.save(archive);

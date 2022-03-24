@@ -3,6 +3,7 @@ package com.travel.domain.archive.service;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ArchivesService {
     public List<ArchiveResponseDto> findByPlace(String place);
 
     public List<ArchiveResponseDto> findByRecommendation(String userEmail);
+
+    public void setBadges(Long id, EBadges badges);
 }

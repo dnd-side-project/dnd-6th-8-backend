@@ -50,7 +50,6 @@ public class DaysSaveRequestDto {
         this.tipDescription = tipDescription;
     }
 
-//    .image(image)
 
     public Days toEntity() {
         return Days.builder().dayNumber(dayNumber).date(date).weather(weather).travelDescription(travelDescription).

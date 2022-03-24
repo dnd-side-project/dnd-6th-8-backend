@@ -26,7 +26,8 @@ public class ScrapApiController {
 
     @ApiOperation(value = "스크랩 추가 api")
     @PostMapping("/archives/scraps")
-    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId, @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
+    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId,
+                                                     @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
         ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId);
         return ResponseEntity.created(URI.create("/api/v1/archives/scraps" + scrapPreviewDto.getId())).body(scrapPreviewDto);
     }
