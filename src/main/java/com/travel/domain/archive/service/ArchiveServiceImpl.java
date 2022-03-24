@@ -172,6 +172,9 @@ public class ArchiveServiceImpl implements ArchivesService {
     public void delete(Long id) {
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+        if(archive.getCoverImage() != null){
+            s3Uploader.deleteS3(archive.getCoverImage(), "archive");
+        }
         archivesRepository.delete(archive);
     }
 
