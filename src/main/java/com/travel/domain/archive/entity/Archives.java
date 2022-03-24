@@ -65,7 +65,7 @@ public class Archives extends BaseTimeEntity {
 
 
     @OneToMany(mappedBy = "archives")
-    List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
+    private List<UserMarkedEmoji> userMarkedEmojis;
 
     @OneToMany(mappedBy = "archives")
     private List<Scraps> scraps = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.travel.domain.emoji.entity;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.user.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,4 +30,10 @@ public class UserMarkedEmoji {
     @ManyToOne
     @JoinColumn(name= "archiveId")
     private Archives archives;
+
+    @Builder
+    public UserMarkedEmoji(Archives archives, User user) {
+        this.archives = archives;
+        this.user = user;
+    }
 }
