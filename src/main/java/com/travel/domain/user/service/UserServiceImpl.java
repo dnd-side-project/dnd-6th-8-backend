@@ -6,7 +6,11 @@ import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.config.auth.UserDto;
 import com.travel.domain.user.dto.MyPageResponse;
+import com.travel.domain.user.dto.MyProfileResponse;
+import com.travel.domain.user.dto.SurveyResponse;
+import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
+import com.travel.domain.user.repository.SurveyRepository;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final ArchivesRepository archivesRepository;
+    private final SurveyRepository surveyRepository;
 
     @Override
     @Transactional
@@ -53,5 +58,12 @@ public class UserServiceImpl implements UserService{
 
         return MyPageResponse.builder().userName(user.getUserName())
                 .archiveNumber(archiveNum).badgesList(badgesList).diaryColor(user.getDiaryColor()).build();
+    }
+
+    @Override
+    public MyProfileResponse getUserProfile(String userEmail){
+        User user = userRepository.findByEmail(userEmail);
+        return MyProfileResponse.builder().userName(user.getUserName())
+                .survey(user.getSurvey()).userEmail(user.getEmail()).build();
     }
 }
