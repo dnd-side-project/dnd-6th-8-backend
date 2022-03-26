@@ -63,6 +63,7 @@ public class Archives extends BaseTimeEntity {
     @JoinColumn(name="PLACE_ID")
     private Place place;
 
+    @Enumerated(EnumType.STRING)
     private EBadges badges;
 
 

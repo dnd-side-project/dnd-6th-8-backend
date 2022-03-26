@@ -42,6 +42,9 @@ public class User {
     @JoinColumn(name = "survey_id")
     private Survey survey;
 
+    @Enumerated(EnumType.STRING)
+    private EDiaryColor diaryColor;
+
     @Column()
     @OneToMany(mappedBy = "user")
     private List<Archives> archives = new ArrayList<>();
