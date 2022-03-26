@@ -5,6 +5,7 @@ import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
+import com.travel.domain.archive.entity.EReportType;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface ArchivesService {
     public List<ArchiveResponseDto> findByRecommendation(String userEmail);
 
     public void setBadges(Long id, EBadges badges);
+
+    public void reportArchive(long archiveId, String userEmail, EReportType reportType);
 }

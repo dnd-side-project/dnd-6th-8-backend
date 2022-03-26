@@ -3,16 +3,15 @@ package com.travel.domain.archive.service;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.archive.entity.EBadges;
-import com.travel.domain.archive.entity.EPlaces;
-import com.travel.domain.archive.entity.Place;
+import com.travel.domain.archive.entity.*;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
+import com.travel.domain.archive.repository.ReportRepository;
 import com.travel.domain.common.S3Uploader;
 import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +28,7 @@ public class ArchiveServiceImpl implements ArchivesService {
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
     private final S3Uploader s3Uploader;
+    private final ReportRepository reportRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -176,6 +176,14 @@ public class ArchiveServiceImpl implements ArchivesService {
             s3Uploader.deleteS3(archive.getCoverImage(), "archive");
         }
         archivesRepository.delete(archive);
+    }
+
+    @Override
+    public void reportArchive(long archiveId, String userEmail, EReportType reportType){
+        Archives archives = archivesRepository.getById(archiveId);
+        User user = userRepository.findByEmail(userEmail);
+        Report report = Report.builder().reportType(reportType).archives(archives).user(user).build();
+        reportRepository.save(report);
     }
 
 

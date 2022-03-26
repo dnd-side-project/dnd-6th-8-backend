@@ -5,6 +5,7 @@ import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
+import com.travel.domain.archive.entity.EReportType;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -94,4 +95,11 @@ public class ArchiveApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "아카이브 신고 API")
+    @PostMapping("/report/archives/{archiveId}")
+    public ResponseEntity<Void> reportArchive(@PathVariable Long archiveId, @ApiIgnore Principal principal,
+                                              EReportType reportType){
+        archivesService.reportArchive(archiveId, principal.getName(), reportType);
+        return ResponseEntity.ok().build();
+    }
 }
