@@ -2,7 +2,7 @@ package com.travel.domain.archive.entity;
 
 import com.travel.domain.day.entity.Days;
 
-import com.travel.domain.emoji.entity.UserMarkedEmoji;
+import com.travel.domain.emoji.entity.UserEmojiSelected;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
@@ -65,7 +65,7 @@ public class Archives extends BaseTimeEntity {
 
 
     @OneToMany(mappedBy = "archives")
-    private List<UserMarkedEmoji> userMarkedEmojis;
+    private List<UserEmojiSelected> userMarkedEmojis;
 
     @OneToMany(mappedBy = "archives")
     private List<Scraps> scraps = new ArrayList<>();
