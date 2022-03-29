@@ -14,7 +14,9 @@ public class MyProfileResponse {
     public MyProfileResponse(String userName, String userEmail, Survey survey){
         this.userName = userName;
         this.userEmail = userEmail;
-        surveyResponse = new SurveyResponse(survey);
+        if(survey != null){
+            surveyResponse = new SurveyResponse(survey);
+        }
 
     }
 }
