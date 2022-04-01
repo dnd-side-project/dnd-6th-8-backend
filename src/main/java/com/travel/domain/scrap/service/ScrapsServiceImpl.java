@@ -23,16 +23,17 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     private final ScrapsRepository scrapsRepository;
     private final ArchivesRepository archivesRepository;
+    private final UserRepository userRepository;
+
 
     @Override
     @Transactional(readOnly=true)
-    public ScrapPreviewDto addScraps(ScrapsSaveRequestDto scrapsSaveRequestDto, Long archiveId) {
-        Scraps scrap = scrapsSaveRequestDto.toEntity();
+    public Scraps addScraps(String userEmail, Long archiveId) {
+        User user = userRepository.findByEmail(userEmail);
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-        scrap.setArchives(archives);
-        scrapsRepository.save(scrap);
-        return new ScrapPreviewDto(scrap);
+        Scraps scrap = scrapsRepository.save(Scraps.builder().user(user).archives(archives).build());
+        return scrap;
     }
 
     @Override

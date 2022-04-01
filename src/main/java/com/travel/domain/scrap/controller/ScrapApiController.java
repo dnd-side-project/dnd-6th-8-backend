@@ -11,8 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -26,10 +28,10 @@ public class ScrapApiController {
 
     @ApiOperation(value = "스크랩 추가 api")
     @PostMapping("/archives/scraps")
-    public ResponseEntity<ScrapPreviewDto> addScraps(@RequestParam Long archiveId,
-                                                     @RequestBody ScrapsSaveRequestDto scrapsSaveRequestDto){
-        ScrapPreviewDto scrapPreviewDto = scrapsService.addScraps(scrapsSaveRequestDto, archiveId);
-        return ResponseEntity.created(URI.create("/api/v1/archives/scraps" + scrapPreviewDto.getId())).body(scrapPreviewDto);
+    public ResponseEntity<Long> addScraps(@RequestParam Long archiveId,
+                                                     @ApiIgnore Principal principal){
+        Scraps scrap = scrapsService.addScraps(principal.getName(), archiveId);
+        return ResponseEntity.ok(scrap.getId());
     }
 
     @ApiOperation(value = "스크랩 취소 api")
