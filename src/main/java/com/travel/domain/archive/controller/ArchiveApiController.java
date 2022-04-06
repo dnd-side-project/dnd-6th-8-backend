@@ -31,13 +31,14 @@ public class ArchiveApiController {
 
 
     @ApiOperation(value = "아카이브 생성 api")
-    @PostMapping(path = "/archives", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(path = "/archives")
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
-            (@ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto, @ApiIgnore Principal principal){
+            (@RequestPart MultipartFile coverImage,
+             @RequestPart ArchivesSaveRequestDto archivesSaveRequestDto,
+             @ApiIgnore Principal principal){
         System.out.println(principal.getName());
         System.out.println("controller");
-        System.out.println(archivesSaveRequestDto.getCoverPicture());
-        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto, principal.getName());
+        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(coverImage, archivesSaveRequestDto, principal.getName());
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);
     }

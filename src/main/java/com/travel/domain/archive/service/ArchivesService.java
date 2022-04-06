@@ -6,14 +6,14 @@ import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.EReportType;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 
 public interface ArchivesService {
 
-    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto, String user);
-
+    public ArchiveDetailResponseDto saveArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail);
     public ArchiveDetailResponseDto findById(Long id);
 
     public void delete(Long id);

@@ -33,7 +33,7 @@ public class ScrapsSaveRequestDto {
         this.user = user;
     }
 
-    public Scraps toEntity() {
-        return Scraps.builder().scrapDateTime(scrapDateTime).user(user).build();
-    }
+//    public Scraps toEntity() {
+//        return Scraps.builder().scrapDateTime(scrapDateTime).user(user).build();
+//    }
 }

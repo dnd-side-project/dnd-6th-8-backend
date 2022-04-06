@@ -42,10 +42,6 @@ public class ArchivesSaveRequestDto {
     @ApiModelProperty(value = "기록 스타일", example = "감성")
     private EArchivingStyle archivingStyle;
 
-    @ApiModelProperty(value = "이미지")
-    private MultipartFile coverPicture;
-
-
     @Builder
     public ArchivesSaveRequestDto(String title, String place , LocalDate firstDay, LocalDate lastDay,
                                   boolean haveCompanion, EBudget budget, EArchivingStyle archivingStyle) {
@@ -56,7 +52,6 @@ public class ArchivesSaveRequestDto {
         this.haveCompanion = haveCompanion;
         this.budget = budget;
         this.archivingStyle = archivingStyle;
-//        this.coverPicture = coverPicture;
     }
 
     public Archives toEntity(User user, Place place, String imageUrl) {

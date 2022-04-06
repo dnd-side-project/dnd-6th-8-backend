@@ -15,7 +15,9 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,18 +34,18 @@ public class ArchiveServiceImpl implements ArchivesService {
 
     @Override
     @Transactional(readOnly = true)
-    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
+    public ArchiveDetailResponseDto saveArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
         User user = userRepository.findByEmail(userEmail);
         boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
 
         Place place = placeHandler(archivesSaveRequestDto.getPlace());
 
         String imageUrl = null;
-        System.out.println(archivesSaveRequestDto.getCoverPicture());
-        if (archivesSaveRequestDto.getCoverPicture() != null) {
+
+        if (coverImage != null) {
             System.out.println("image not null");
             try {
-                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+                imageUrl = s3Uploader.upload(coverImage
                         , "archive");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -111,16 +113,16 @@ public class ArchiveServiceImpl implements ArchivesService {
             archive.setHaveCompanion(archivesSaveRequestDto.isHaveCompanion());
         }
 
-        if(archivesSaveRequestDto.getCoverPicture() != null){
-            String imageUrl = null;
-            try {
-                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
-                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
-                        , "archive");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        if(archivesSaveRequestDto.getCoverPicture() != null){
+//            String imageUrl = null;
+//            try {
+//                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
+//                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+//                        , "archive");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         archivesRepository.save(archive);
     }
