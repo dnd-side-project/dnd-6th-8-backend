@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Multipart;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -95,10 +97,10 @@ public class ArchiveServiceImpl implements ArchivesService {
             archive.setTitle(archivesSaveRequestDto.getTitle());
         }
         if (archivesSaveRequestDto.getFirstDay() != null) {
-            archive.setFirstDay(archivesSaveRequestDto.getFirstDay());
+            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay(), DateTimeFormatter.ISO_DATE));
         }
         if (archivesSaveRequestDto.getLastDay() != null) {
-            archive.setLastDay(archivesSaveRequestDto.getLastDay());
+            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay(), DateTimeFormatter.ISO_DATE));
         }
         if (archivesSaveRequestDto.getArchivingStyle() != null) {
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
@@ -109,8 +111,8 @@ public class ArchiveServiceImpl implements ArchivesService {
         if (archivesSaveRequestDto.getBudget() != null) {
             archive.setBudget(archivesSaveRequestDto.getBudget());
         }
-        if (archivesSaveRequestDto.isHaveCompanion() != archive.isHaveCompanion()) {
-            archive.setHaveCompanion(archivesSaveRequestDto.isHaveCompanion());
+        if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+            archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
         }
 
 //        if(archivesSaveRequestDto.getCoverPicture() != null){
