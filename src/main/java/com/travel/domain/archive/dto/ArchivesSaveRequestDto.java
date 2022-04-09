@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -27,14 +28,14 @@ public class ArchivesSaveRequestDto {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "출발 날짜", example = "2021-12-10")
-    private LocalDate firstDay;
+    private String firstDay;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "마지막 날짜", example = "2021-12-15")
-    private LocalDate lastDay;
+    private String lastDay;
 
     @ApiModelProperty(value = "동행 여부", example = "함께")
-    private boolean haveCompanion;
+    private String haveCompanion;
 
     @ApiModelProperty(value = "예산 계획", example = "최소한")
     private EBudget budget;
@@ -43,8 +44,8 @@ public class ArchivesSaveRequestDto {
     private EArchivingStyle archivingStyle;
 
     @Builder
-    public ArchivesSaveRequestDto(String title, String place , LocalDate firstDay, LocalDate lastDay,
-                                  boolean haveCompanion, EBudget budget, EArchivingStyle archivingStyle) {
+    public ArchivesSaveRequestDto(String title, String place , String firstDay, String lastDay,
+                                  String haveCompanion, EBudget budget, EArchivingStyle archivingStyle) {
         this.title = title;
         this.place = place;
         this.firstDay = firstDay;
@@ -56,7 +57,9 @@ public class ArchivesSaveRequestDto {
 
     public Archives toEntity(User user, Place place, String imageUrl) {
         System.out.println(user.getId());
-        return Archives.builder().title(title).place(place).firstDay(firstDay).lastDay(lastDay)
-                .haveCompanion(haveCompanion).budget(budget).archivingStyle(archivingStyle).user(user).coverImage(imageUrl).build();
+        return Archives.builder().title(title).place(place).firstDay(LocalDate.parse(firstDay, DateTimeFormatter.ISO_DATE))
+                .lastDay(LocalDate.parse(lastDay, DateTimeFormatter.ISO_DATE))
+                .haveCompanion(Boolean.parseBoolean(haveCompanion)).budget(budget)
+                .archivingStyle(archivingStyle).user(user).coverImage(imageUrl).build();
     }
 }
