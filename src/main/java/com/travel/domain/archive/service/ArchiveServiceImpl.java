@@ -90,6 +90,8 @@ public class ArchiveServiceImpl implements ArchivesService {
     @Transactional(rollbackFor = Exception.class)
     public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto) {
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+
         Archives archive = archivesRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
 
@@ -97,10 +99,10 @@ public class ArchiveServiceImpl implements ArchivesService {
             archive.setTitle(archivesSaveRequestDto.getTitle());
         }
         if (archivesSaveRequestDto.getFirstDay() != null) {
-            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay(), DateTimeFormatter.ISO_DATE));
+            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay(), formatter));
         }
         if (archivesSaveRequestDto.getLastDay() != null) {
-            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay(), DateTimeFormatter.ISO_DATE));
+            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay(), formatter));
         }
         if (archivesSaveRequestDto.getArchivingStyle() != null) {
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());

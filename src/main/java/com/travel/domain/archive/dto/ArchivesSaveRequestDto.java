@@ -8,8 +8,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -57,8 +59,10 @@ public class ArchivesSaveRequestDto {
 
     public Archives toEntity(User user, Place place, String imageUrl) {
         System.out.println(user.getId());
-        return Archives.builder().title(title).place(place).firstDay(LocalDate.parse(firstDay, DateTimeFormatter.ISO_DATE))
-                .lastDay(LocalDate.parse(lastDay, DateTimeFormatter.ISO_DATE))
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");   // yyyy-MM-dd HH:mm:ss
+        return Archives.builder().title(title).place(place)
+                .firstDay(LocalDate.parse(firstDay, formatter))
+                .lastDay(LocalDate.parse(lastDay, formatter))
                 .haveCompanion(Boolean.parseBoolean(haveCompanion)).budget(budget)
                 .archivingStyle(archivingStyle).user(user).coverImage(imageUrl).build();
     }
