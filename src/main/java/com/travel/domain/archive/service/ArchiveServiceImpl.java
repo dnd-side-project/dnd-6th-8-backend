@@ -90,7 +90,7 @@ public class ArchiveServiceImpl implements ArchivesService {
     @Transactional(rollbackFor = Exception.class)
     public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         Archives archive = archivesRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));

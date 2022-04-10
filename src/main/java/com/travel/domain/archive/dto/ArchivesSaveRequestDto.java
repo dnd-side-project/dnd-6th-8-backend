@@ -59,7 +59,7 @@ public class ArchivesSaveRequestDto {
 
     public Archives toEntity(User user, Place place, String imageUrl) {
         System.out.println(user.getId());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");   // yyyy-MM-dd HH:mm:ss
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");   // yyyy-MM-dd HH:mm:ss
         return Archives.builder().title(title).place(place)
                 .firstDay(LocalDate.parse(firstDay, formatter))
                 .lastDay(LocalDate.parse(lastDay, formatter))
