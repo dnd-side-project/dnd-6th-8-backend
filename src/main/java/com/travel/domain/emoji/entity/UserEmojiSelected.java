@@ -26,23 +26,17 @@ public class UserEmojiSelected {
     private Emoji emoji;
 
     @ManyToOne
-    @JoinColumn(name= "user_Id")
+    @JoinColumn(name= "USER_ID")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name= "archive_Id")
+    @JoinColumn(name= "ARCHIVE_ID")
     private Archives archives;
 
     @Builder
     public UserEmojiSelected(Emoji emoji, Archives archives, User user) {
         this.archives = archives;
         this.user = user;
-        setEmoji(emoji);
-    }
-
-    public void setEmoji(Emoji emoji) {
-        if(this.emoji == null){
-            this.emoji = emoji;
-        }
+        this.emoji = emoji;
     }
 }

@@ -22,10 +22,10 @@ import java.util.List;
 public class EmojiApiController {
     private final EmojiService emojiService;
 
-    @PostMapping("/archive/{archiveId}/emojiCheck")
+    @PostMapping("/archive/{ARCHIVE_ID}/{EMOJI_ID}/emojiCheck")
     @ApiOperation(value = "이모지 추가 API")
-    public void emojiCheck(@PathVariable long archiveId, Emoji emojiId, @ApiIgnore Principal principal) {
-        emojiService.emojiCheck(archiveId, principal.getName(), emojiId);
+    public void emojiCheck(@PathVariable long ARCHIVE_ID, @PathVariable long EMOJI_ID, @ApiIgnore Principal principal) {
+        emojiService.emojiCheck(ARCHIVE_ID, principal.getName(), EMOJI_ID);
     }
 
     @DeleteMapping("/archive/{archiveId}/emojiUnCheck")

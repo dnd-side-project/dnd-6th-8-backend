@@ -1,9 +1,15 @@
 package com.travel.domain.emoji.entity;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Emoji {
 
@@ -16,4 +22,9 @@ public class Emoji {
 
     @Column()
     private String emoji_name;
+
+    @Builder
+    public Emoji(String emoji_name){
+        this.emoji_name = emoji_name;
+    }
 }
