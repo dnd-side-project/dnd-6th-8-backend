@@ -27,7 +27,6 @@ public class ScrapsServiceImpl implements ScrapsService {
 
 
     @Override
-    @Transactional(readOnly=true)
     public Scraps addScraps(String userEmail, Long archiveId) {
         User user = userRepository.findByEmail(userEmail);
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
@@ -37,11 +36,10 @@ public class ScrapsServiceImpl implements ScrapsService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public void unScraps(long scrapId) {
         Scraps scrap = scrapsRepository.findById(scrapId).orElseThrow(
-                ()->new IllegalArgumentException("해당 스크랩 내역이 없습니다. id = " + scrapId)
-        );
+                ()->new IllegalArgumentException("해당 스크랩 내역이 없습니다. id = " + scrapId));
         scrapsRepository.delete(scrap);
     }
 

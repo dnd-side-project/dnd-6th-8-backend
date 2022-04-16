@@ -47,6 +47,8 @@ public class ArchiveResponseDto {
         this.archivingStyle = entity.getArchivingStyle();
         this.places = entity.getPlace().getName();
         this.coverPicture = entity.getCoverImage();
+        this.scrapNum = entity.getScraps().size();
+        this.emojiNum = entity.getUserMarkedEmojis().size();
     }
 
     public static String calculateDuration(Archives entity) {

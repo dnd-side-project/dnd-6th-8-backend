@@ -23,12 +23,12 @@ public class Scraps extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "archiveId")
+    @ManyToOne()
+    @JoinColumn(name= "archive_id")
     private Archives archives;
 
     @ManyToOne()
-    @JoinColumn(name="userId")
+    @JoinColumn(name="USER_ID")
     private User user;
 
     @Builder
@@ -43,6 +43,7 @@ public class Scraps extends BaseTimeEntity {
     }
 
     public void setArchives(Archives archives) {
+        System.out.println(archives.getId());
         this.archives = archives;
     }
 }
