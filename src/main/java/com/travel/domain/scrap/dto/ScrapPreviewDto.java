@@ -28,9 +28,9 @@ public class ScrapPreviewDto {
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
-        this.scrapDateTime = entity.getScrapDateTime();
+//        this.scrapDateTime = entity.getScrapDateTime();
         this.archives = entity.getArchives();
-        this.user = entity.getUser();
+//        this.user = entity.getUser();
     }
 
     public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {

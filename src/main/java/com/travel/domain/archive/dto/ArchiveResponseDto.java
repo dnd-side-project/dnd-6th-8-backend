@@ -25,8 +25,10 @@ public class ArchiveResponseDto {
     @ApiModelProperty(value = "아카이브 제목", example = "대충 다녀도 아름다운 제주")
     private String title;
 
-    @ApiModelProperty(value = "출발 날짜", example = "2021-12-10")
     private String travelDuration;
+
+    @ApiModelProperty(value = "출발 날짜", example = "2021-12-10")
+    private LocalDate createdAt;
 
     @ApiModelProperty(value = "기록 스타일", example = "감성")
     private EArchivingStyle archivingStyle;
@@ -47,6 +49,9 @@ public class ArchiveResponseDto {
         this.archivingStyle = entity.getArchivingStyle();
         this.places = entity.getPlace().getName();
         this.coverPicture = entity.getCoverImage();
+        this.scrapNum = entity.getScraps().size();
+        this.emojiNum = entity.getUserMarkedEmojis().size();
+        this.createdAt = entity.getCreatedAt().toLocalDate();
     }
 
     public static String calculateDuration(Archives entity) {

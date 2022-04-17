@@ -3,20 +3,24 @@ package com.travel.domain.archive.service;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.archive.entity.EPlaces;
-import com.travel.domain.archive.entity.Place;
+import com.travel.domain.archive.entity.*;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
+import com.travel.domain.archive.repository.ReportRepository;
 import com.travel.domain.common.S3Uploader;
 import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -28,21 +32,22 @@ public class ArchiveServiceImpl implements ArchivesService {
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
     private final S3Uploader s3Uploader;
+    private final ReportRepository reportRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public ArchiveDetailResponseDto saveArchive(ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
+    public ArchiveDetailResponseDto saveArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
         User user = userRepository.findByEmail(userEmail);
         boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
 
         Place place = placeHandler(archivesSaveRequestDto.getPlace());
 
         String imageUrl = null;
-        System.out.println(archivesSaveRequestDto.getCoverPicture());
-        if (archivesSaveRequestDto.getCoverPicture() != null) {
+
+        if (coverImage != null) {
             System.out.println("image not null");
             try {
-                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+                imageUrl = s3Uploader.upload(coverImage
                         , "archive");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -61,6 +66,14 @@ public class ArchiveServiceImpl implements ArchivesService {
         return new ArchiveDetailResponseDto(archive);
     }
 
+    @Override
+    public void setBadges(Long id, EBadges badges) {
+        Archives archive = archivesRepository.findById(id).orElseThrow
+                (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+        archive.setBadges(badges);
+        archivesRepository.save(archive);
+    }
+
     public Place placeHandler(String placeName) {
         boolean placeExists = placeRepository.existsByName(placeName);
         Place place = null;
@@ -77,6 +90,8 @@ public class ArchiveServiceImpl implements ArchivesService {
     @Transactional(rollbackFor = Exception.class)
     public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto) {
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         Archives archive = archivesRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
 
@@ -84,10 +99,10 @@ public class ArchiveServiceImpl implements ArchivesService {
             archive.setTitle(archivesSaveRequestDto.getTitle());
         }
         if (archivesSaveRequestDto.getFirstDay() != null) {
-            archive.setFirstDay(archivesSaveRequestDto.getFirstDay());
+            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay(), formatter));
         }
         if (archivesSaveRequestDto.getLastDay() != null) {
-            archive.setLastDay(archivesSaveRequestDto.getLastDay());
+            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay(), formatter));
         }
         if (archivesSaveRequestDto.getArchivingStyle() != null) {
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
@@ -98,9 +113,20 @@ public class ArchiveServiceImpl implements ArchivesService {
         if (archivesSaveRequestDto.getBudget() != null) {
             archive.setBudget(archivesSaveRequestDto.getBudget());
         }
-        if (archivesSaveRequestDto.isHaveCompanion() != archive.isHaveCompanion()) {
-            archive.setHaveCompanion(archivesSaveRequestDto.isHaveCompanion());
+        if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+            archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
         }
+
+//        if(archivesSaveRequestDto.getCoverPicture() != null){
+//            String imageUrl = null;
+//            try {
+//                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
+//                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+//                        , "archive");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         archivesRepository.save(archive);
     }
@@ -152,7 +178,18 @@ public class ArchiveServiceImpl implements ArchivesService {
     public void delete(Long id) {
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
+        if(archive.getCoverImage() != null){
+            s3Uploader.deleteS3(archive.getCoverImage(), "archive");
+        }
         archivesRepository.delete(archive);
+    }
+
+    @Override
+    public void reportArchive(long archiveId, String userEmail, EReportType reportType){
+        Archives archives = archivesRepository.getById(archiveId);
+        User user = userRepository.findByEmail(userEmail);
+        Report report = Report.builder().reportType(reportType).archives(archives).user(user).build();
+        reportRepository.save(report);
     }
 
 

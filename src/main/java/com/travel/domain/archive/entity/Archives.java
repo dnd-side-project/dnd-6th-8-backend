@@ -63,6 +63,9 @@ public class Archives extends BaseTimeEntity {
     @JoinColumn(name="PLACE_ID")
     private Place place;
 
+    @Enumerated(EnumType.STRING)
+    private EBadges badges;
+
 
     @OneToMany(mappedBy = "archives")
     private List<UserEmojiSelected> userMarkedEmojis;

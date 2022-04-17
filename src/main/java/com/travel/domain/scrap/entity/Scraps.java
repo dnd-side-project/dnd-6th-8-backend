@@ -1,6 +1,8 @@
 package com.travel.domain.scrap.entity;
 
 import com.travel.domain.archive.entity.Archives;
+import com.travel.domain.archive.entity.Place;
+import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,28 +17,33 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Scraps {
+public class Scraps extends BaseTimeEntity {
 
     @Id
-    @Column(name = "scrapId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
-    @CreatedDate
-    private LocalDateTime scrapDateTime;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "archiveId")
+    @ManyToOne()
+    @JoinColumn(name= "archive_id")
     private Archives archives;
 
-    @Column()
-    private String user;
+    @ManyToOne()
+    @JoinColumn(name="USER_ID")
+    private User user;
 
     @Builder
-    public Scraps(LocalDateTime scrapDateTime, String user) {
-//        this.archives = archives;
-        this.scrapDateTime = scrapDateTime;
-        this.user = user;
+    public Scraps(Archives archives, User user) {
+        setArchives(archives);
+        setUser(user);
+    }
+    public void setUser(User user) {
+        if(this.user == null){
+            this.user = user;
+        }
+    }
+
+    public void setArchives(Archives archives) {
+        System.out.println(archives.getId());
+        this.archives = archives;
     }
 }

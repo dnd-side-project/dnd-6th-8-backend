@@ -23,4 +23,11 @@ public interface ArchivesRepository extends JpaRepository<Archives, Long> {
     List<Archives> findRandom();
 
     List<Archives> findByArchivingStyle(@Param(value = "archivingStyle") EArchivingStyle archivingStyle);
+    List<Archives> findByIsShareAndUser_Id(@Param(value = "isShare")boolean isShare, long userId);
+
+    long countByUser_Id(@Param(value = "userId")long userId);
+
+    @Query("select DISTINCT(a.badges) from Archives a where a.user.id = :userId")
+    List<String> findByBadgesAndUser_Id(@Param(value = "userId")long userId);
+
 }

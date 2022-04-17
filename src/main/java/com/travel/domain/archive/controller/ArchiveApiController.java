@@ -3,7 +3,9 @@ package com.travel.domain.archive.controller;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
+import com.travel.domain.archive.entity.EReportType;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
@@ -28,13 +31,14 @@ public class ArchiveApiController {
 
 
     @ApiOperation(value = "아카이브 생성 api")
-    @PostMapping(path = "/archives", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(path = "/archives")
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
-            (@ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto, @ApiIgnore Principal principal){
+            (@RequestPart MultipartFile coverImage,
+             @RequestPart ArchivesSaveRequestDto archivesSaveRequestDto,
+             @ApiIgnore Principal principal){
         System.out.println(principal.getName());
         System.out.println("controller");
-        System.out.println(archivesSaveRequestDto.getCoverPicture());
-        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(archivesSaveRequestDto, principal.getName());
+        ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(coverImage, archivesSaveRequestDto, principal.getName());
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);
     }
@@ -48,10 +52,11 @@ public class ArchiveApiController {
     @ApiOperation(value = "아카이브 업데이트 API")
     @PutMapping("/archives/{id}")
     public ResponseEntity<Void> updateArchive
-            (@PathVariable Long id, @RequestBody ArchivesSaveRequestDto archivesSaveRequestDto){
+            (@PathVariable Long id, @ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto){
         archivesService.updateArchive(id, archivesSaveRequestDto);
         return ResponseEntity.ok().build();
     }
+
 
     @ApiOperation(value = "아카이브 공유여부변경 API")
     @PutMapping("/archives/{id}/share")
@@ -84,4 +89,18 @@ public class ArchiveApiController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "뱃지 정하기")
+    @PatchMapping("/archives/{archiveId}/badges")
+    public ResponseEntity<Void> setBadge(@PathVariable Long archiveId, @RequestParam EBadges badges){
+        archivesService.setBadges(archiveId, badges);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ApiOperation(value = "아카이브 신고 API")
+    @PostMapping("/report/archives/{archiveId}")
+    public ResponseEntity<Void> reportArchive(@PathVariable Long archiveId, @ApiIgnore Principal principal,
+                                              EReportType reportType){
+        archivesService.reportArchive(archiveId, principal.getName(), reportType);
+        return ResponseEntity.ok().build();
+    }
 }
