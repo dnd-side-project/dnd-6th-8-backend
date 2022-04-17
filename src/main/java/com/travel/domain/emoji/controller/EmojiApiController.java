@@ -1,12 +1,17 @@
 package com.travel.domain.emoji.controller;
 
 import com.travel.domain.emoji.dto.EmojiResponse;
+import com.travel.domain.emoji.entity.Emoji;
+import com.travel.domain.emoji.service.EmojiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +20,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Api(tags = {"이모지"})
 public class EmojiApiController {
+    private final EmojiService emojiService;
 
-    @PostMapping("/archive/{archiveId}")
+    @PostMapping("/archive/{ARCHIVE_ID}/{EMOJI_ID}/emojiCheck")
     @ApiOperation(value = "이모지 추가 API")
-    public ResponseEntity<Void> addEmoji(@RequestParam String emojiName){
-        return ResponseEntity.ok().build();
+    public void emojiCheck(@PathVariable long ARCHIVE_ID, @PathVariable long EMOJI_ID, @ApiIgnore Principal principal) {
+        emojiService.emojiCheck(ARCHIVE_ID, principal.getName(), EMOJI_ID);
     }
 
-
-    @DeleteMapping("/archive/{archiveId}")
+    @DeleteMapping("/archive/{archiveId}/emojiUnCheck")
     @ApiOperation(value = "이모지 취소 API")
-    public ResponseEntity<List<EmojiResponse>> getAllEmojiUserGot(){
-        List EmojiResponse = new ArrayList();
-        return ResponseEntity.noContent().build();
+    public void emojiUnCheck(@PathVariable long archiveId, @ApiIgnore Principal principal) {
+        emojiService.emojiUnCheck(archiveId, principal.getName());
     }
 
 }
