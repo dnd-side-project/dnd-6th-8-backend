@@ -18,17 +18,17 @@ public class ScrapPreviewDto {
     private Long id;
 
     @ApiModelProperty(value = "스크랩한 시간", example = "2022-02-19T22:24:00")
-    private LocalDateTime scrapDateTime;
+    private LocalDateTime createdAt;
 
     @ApiModelProperty(value = "스크랩한 아카이브", example = "대충 다녀도 아름다운 제주")
     private Archives archives;
 
     @ApiModelProperty(value = "스크랩한 유저", example = "경아")
-    private String user;
+    private User user;
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
-        this.scrapDateTime = entity.getScrapDateTime();
+        this.createdAt = entity.getCreatedAt();
         this.archives = entity.getArchives();
         this.user = entity.getUser();
     }
