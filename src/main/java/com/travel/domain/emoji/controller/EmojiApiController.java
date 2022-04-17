@@ -1,19 +1,13 @@
 package com.travel.domain.emoji.controller;
 
-import com.travel.domain.emoji.dto.EmojiResponse;
-import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.emoji.service.EmojiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -28,10 +22,10 @@ public class EmojiApiController {
         emojiService.emojiCheck(ARCHIVE_ID, principal.getName(), EMOJI_ID);
     }
 
-    @DeleteMapping("/archive/{archiveId}/emojiUnCheck")
+    @DeleteMapping("/archive/{USER_EMOJI_SELECTED_ID}/emojiUnCheck")
     @ApiOperation(value = "이모지 취소 API")
-    public void emojiUnCheck(@PathVariable long archiveId, @ApiIgnore Principal principal) {
-        emojiService.emojiUnCheck(archiveId, principal.getName());
+    public void emojiUnCheck(@PathVariable Long USER_EMOJI_SELECTED_ID) {
+        emojiService.emojiUnCheck(USER_EMOJI_SELECTED_ID);
     }
 
 }
