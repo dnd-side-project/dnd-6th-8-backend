@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class UserEmojiSelected {
 
     @Id
-    @Column(name = "userEmojiSelectedId")
+    @Column(name = "USER_EMOJI_SELECTED_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
