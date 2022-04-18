@@ -1,7 +1,6 @@
-package com.travel.domain.emoji.entity;
+package com.travel.domain.day.entity;
 
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,21 +11,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class UserMarkedEmoji {
-
+public class DayImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column()
-    @Enumerated(EnumType.STRING)
-    private EEmojis emoji;
+    private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name= "userId")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name= "archiveId")
     private Archives archives;
+    
+    
 }

@@ -2,27 +2,20 @@ package com.travel.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.archive.entity.EArchivingStyle;
-import com.travel.domain.archive.entity.EBudget;
-import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.scrap.entity.Scraps;
-import com.travel.domain.sticker.entity.Sticker;
 import com.travel.domain.sticker.entity.UserStickerSelected;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 @Entity
+
 public class User {
 
     @Id
@@ -41,6 +34,9 @@ public class User {
     @OneToOne(optional = true)
     @JoinColumn(name = "survey_id")
     private Survey survey;
+
+    @Enumerated(EnumType.STRING)
+    private EDiaryColor diaryColor;
 
     @Column()
     @OneToMany(mappedBy = "user")

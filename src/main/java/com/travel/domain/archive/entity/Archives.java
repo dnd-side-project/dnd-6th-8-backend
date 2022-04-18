@@ -1,11 +1,9 @@
 package com.travel.domain.archive.entity;
 
 import com.travel.domain.day.entity.Days;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import com.travel.domain.emoji.entity.UserMarkedEmoji;
+import com.travel.domain.emoji.entity.UserEmojiSelected;
 import com.travel.domain.scrap.entity.Scraps;
-//import com.travel.domain.sticker.entity.UserSticker;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
@@ -38,10 +36,6 @@ public class Archives extends BaseTimeEntity {
     private String coverImage;
 
     @Column()
-    @Enumerated(EnumType.STRING)
-    private EPlaces place;
-
-    @Column()
     private LocalDate firstDay;
 
     @Column()
@@ -62,31 +56,51 @@ public class Archives extends BaseTimeEntity {
     private List<Days> days = new ArrayList<>();
 
     @ManyToOne()
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="PLACE_ID")
+    private Place place;
+
+    @Enumerated(EnumType.STRING)
+    private EBadges badges;
+
+
     @OneToMany(mappedBy = "archives")
-    List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();
+    private List<UserEmojiSelected> userMarkedEmojis;
 
     @OneToMany(mappedBy = "archives")
     private List<Scraps> scraps = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "archive")
-//    private List<UserSticker> userStickers = new ArrayList<>();
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
-                    EPlaces place, LocalDate firstDay, LocalDate lastDay, EBudget budget,
-                    EArchivingStyle archivingStyle, boolean haveCompanion) {
+                    Place place, LocalDate firstDay, LocalDate lastDay, EBudget budget, EPlaces places,
+                    EArchivingStyle archivingStyle, boolean haveCompanion, User user) {
         this.title = title;
         this.isShare = isShare;
         this.coverImage = coverImage;
-        this.place = place;
         this.firstDay = firstDay;
         this.lastDay = lastDay;
         this.haveCompanion = haveCompanion;
         this.budget = budget;
         this.archivingStyle = archivingStyle;
+        setUser(user);
+        setPlace(place);
+    }
+
+    public void setUser(User user) {
+        System.out.println("setting user");
+        if(this.user == null){
+            System.out.println("user ");
+            this.user = user;
+        }
+    }
+
+    public void setPlace(Place place) {
+        System.out.println(place.getId());
+        this.place = place;
     }
 }
 

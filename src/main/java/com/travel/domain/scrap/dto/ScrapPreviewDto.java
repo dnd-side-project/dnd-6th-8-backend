@@ -30,7 +30,7 @@ public class ScrapPreviewDto {
         this.id = entity.getId();
         this.createdAt = entity.getCreatedAt();
         this.archives = entity.getArchives();
-        this.user = entity.getUser();
+//        this.user = entity.getUser();
     }
 
     public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {

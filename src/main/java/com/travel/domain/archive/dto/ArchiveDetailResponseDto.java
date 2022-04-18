@@ -27,7 +27,7 @@ public class ArchiveDetailResponseDto {
     private LocalDate lastDay;
 
     @ApiModelProperty(value = "여행 장소", example = "부산")
-    private EPlaces places;
+    private String places;
 
     @ApiModelProperty(value = "기록 스타일", example = "감성")
     private EArchivingStyle archivingStyle;
@@ -41,12 +41,16 @@ public class ArchiveDetailResponseDto {
     @ApiModelProperty(value = "아카이브 공유", example = "true")
     private boolean isShare;
 
+
+    private String coverPicture;
+
+
     public ArchiveDetailResponseDto(Archives entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.firstDay = entity.getFirstDay();
         this.lastDay = entity.getLastDay();
-        this.places = entity.getPlace();
+        this.places = entity.getPlace().getName();
         this.archivingStyle = entity.getArchivingStyle();
         this.budget = entity.getBudget();
         this.haveCompanion = entity.isHaveCompanion();
