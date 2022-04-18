@@ -3,6 +3,7 @@ package com.travel.domain.archive.controller;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.dto.HomeResponse;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.EReportType;
@@ -78,6 +79,13 @@ public class ArchiveApiController {
     public ResponseEntity<List<ArchiveResponseDto>> getArchiveRecommendation(@ApiIgnore Principal principal){
         List<ArchiveResponseDto> archivesResponseDtos = archivesService.findByRecommendation(principal.getName());
         return ResponseEntity.ok(archivesResponseDtos);
+    }
+
+    @ApiOperation(value = "홈 ")
+    @GetMapping("/archives/home")
+    public ResponseEntity<HomeResponse> getMain(@ApiIgnore Principal principal){
+        HomeResponse homeResponse = archivesService.getMain(principal.getName());
+        return ResponseEntity.ok(homeResponse);
     }
 
 

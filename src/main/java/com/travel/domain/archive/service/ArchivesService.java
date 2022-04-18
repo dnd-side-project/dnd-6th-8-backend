@@ -3,6 +3,7 @@ package com.travel.domain.archive.service;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.dto.HomeResponse;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.EReportType;
@@ -29,4 +30,6 @@ public interface ArchivesService {
     public void setBadges(Long id, EBadges badges);
 
     public void reportArchive(long archiveId, String userEmail, EReportType reportType);
+
+    public HomeResponse getMain(String userEmail);
 }

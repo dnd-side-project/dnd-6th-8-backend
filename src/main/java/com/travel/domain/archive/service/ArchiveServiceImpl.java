@@ -1,25 +1,34 @@
 package com.travel.domain.archive.service;
 
+import com.sun.tools.jdeps.Archive;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
+import com.travel.domain.archive.dto.HomeResponse;
 import com.travel.domain.archive.entity.*;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
 import com.travel.domain.archive.repository.ReportRepository;
 import com.travel.domain.common.S3Uploader;
+import com.travel.domain.emoji.dto.EmojiResponse;
+//import com.travel.domain.emoji.entity.UserMarkedEmoji;
+import com.travel.domain.emoji.repository.UserEmojiSelectedRepository;
 import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Multipart;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -33,6 +42,7 @@ public class ArchiveServiceImpl implements ArchivesService {
     private final PlaceRepository placeRepository;
     private final S3Uploader s3Uploader;
     private final ReportRepository reportRepository;
+    private final UserEmojiSelectedRepository userEmojiSelectedRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -64,6 +74,17 @@ public class ArchiveServiceImpl implements ArchivesService {
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
         return new ArchiveDetailResponseDto(archive);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public HomeResponse getMain(String userEmail) {
+        Pageable limitThree = PageRequest.of(0,3);
+        LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
+        User user = userRepository.findByEmail(userEmail);
+        List<Archives> archivesList = userEmojiSelectedRepository.orderByCount(sevenDaysAgo, limitThree);
+        long totalArchiveNum = archivesRepository.count();
+        return new HomeResponse(archivesList, totalArchiveNum, user.getUserName());
     }
 
     @Override

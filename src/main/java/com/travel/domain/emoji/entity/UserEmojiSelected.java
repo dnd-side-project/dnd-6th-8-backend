@@ -1,5 +1,6 @@
 package com.travel.domain.emoji.entity;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class UserEmojiSelected {
+public class UserEmojiSelected extends BaseTimeEntity {
 
     @Id
     @Column(name = "userEmojiSelectedId")

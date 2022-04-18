@@ -9,6 +9,8 @@ import com.travel.domain.emoji.repository.UserEmojiSelectedRepository;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class EmojiService {
-
     private final UserEmojiSelectedRepository userEmojiSelectedRepository;
     private final ArchivesRepository archivesRepository;
     private final EmojiRepository emojiRepository;

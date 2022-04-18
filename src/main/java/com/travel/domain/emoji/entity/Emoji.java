@@ -1,5 +1,6 @@
 package com.travel.domain.emoji.entity;
 
+import com.travel.domain.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
