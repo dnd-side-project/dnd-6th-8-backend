@@ -29,8 +29,8 @@ public class EmojiService {
 //        Optional<Archives> archives = archivesRepository.findById(ARCHIVE_ID);
         Archives archives = archivesRepository.findById(ARCHIVE_ID).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + ARCHIVE_ID));
-       Emoji emoji = emojiRepository.findById(EMOJI_ID).orElseThrow(
-               () -> new IllegalArgumentException("해당 이모지가 없습니다. id = " + EMOJI_ID));
+        Emoji emoji = emojiRepository.findById(EMOJI_ID).orElseThrow(
+                () -> new IllegalArgumentException("해당 이모지가 없습니다. id = " + EMOJI_ID));
 
         User user = userRepository.findByEmail(loginEmail);
 
@@ -40,10 +40,10 @@ public class EmojiService {
     }
 
     @Transactional
-    public void emojiUnCheck(long userEmojiSelectedId, String loginEmail) {
-        User user = userRepository.findByEmail(loginEmail);
-
-        UserEmojiSelected userEmojiSelected = userEmojiSelectedRepository.findById(userEmojiSelectedId).get();
+    public void emojiUnCheck(Long USER_EMOJI_SELECTED_ID) {
+        UserEmojiSelected userEmojiSelected = userEmojiSelectedRepository.findById(USER_EMOJI_SELECTED_ID).orElseThrow(
+                () -> new IllegalArgumentException("해당 이모지가 없습니다. id = " + USER_EMOJI_SELECTED_ID));
+        ;
         userEmojiSelectedRepository.delete(userEmojiSelected);
     }
 }
