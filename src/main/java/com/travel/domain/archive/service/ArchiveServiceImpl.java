@@ -1,6 +1,5 @@
 package com.travel.domain.archive.service;
 
-import com.sun.tools.jdeps.Archive;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
