@@ -12,5 +12,5 @@ cloud:
       auto: false
     credentials:
       #      instanceProfile: true #      // AWS CLI에서 aws configure list 정보를 반영할건지 여부
-      accessKey: AKIA325466CDZJGWVOVW
-      secretKey: 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
+      accessKey: AKIA325466CDXABMABWR
+      secretKey: 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
