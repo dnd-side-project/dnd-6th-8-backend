@@ -1,0 +1,16 @@
+cloud:
+  aws:
+    s3:
+      archiveBucket: dnd-archive
+      archiveImagePath: "https://dnd-archive.s3.ap-northeast-2.amazonaws.com/"
+
+      dayBucket: dnd-day
+      dayImagePath: "https://dnd-day.s3.ap-northeast-2.amazonaws.com/"
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      #      instanceProfile: true #      // AWS CLI에서 aws configure list 정보를 반영할건지 여부
+      accessKey: AKIA325466CDXABMABWR
+      secretKey: 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

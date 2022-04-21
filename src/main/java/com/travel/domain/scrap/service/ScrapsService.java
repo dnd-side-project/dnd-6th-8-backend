@@ -1,7 +1,7 @@
 package com.travel.domain.scrap.service;
 
 import com.travel.domain.scrap.dto.ScrapPreviewDto;
-import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
+//import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.user.entity.User;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ScrapsService {
 
-    public Scraps addScraps(String userEmail, Long archiveId);
+    public Scraps addScraps(Long ARCHIVE_ID, String loginEmail);
 
-    public void unScraps(long scrapId);
+    public void unScraps(Long SCRAP_ID);
 
-    public List<ScrapPreviewDto> findByUser(String user);
+    public List<ScrapPreviewDto> findByUser(String loginEmail);
 }
