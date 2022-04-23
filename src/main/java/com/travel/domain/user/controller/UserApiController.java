@@ -2,10 +2,7 @@ package com.travel.domain.user.controller;
 
 
 import com.travel.domain.archive.dto.ArchiveResponseDto;
-import com.travel.domain.user.dto.MyPageResponse;
-import com.travel.domain.user.dto.MyProfileResponse;
-import com.travel.domain.user.dto.SurveySaveRequestDto;
-import com.travel.domain.user.dto.UserSaveRequestDto;
+import com.travel.domain.user.dto.*;
 import com.travel.domain.user.entity.EDiaryColor;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.service.SurveyService;
@@ -43,7 +40,7 @@ public class UserApiController {
 
     @ApiOperation(value = "다이어리 배경 바꾸기")
     @PatchMapping("/user/diarycolor")
-    public ResponseEntity<Void> setUserDiaryColor(@ApiIgnore Principal principal, EDiaryColor diaryColor){
+    public ResponseEntity<Void> setUserDiaryColor(@ApiIgnore Principal principal, @RequestBody UserDiaryColorRequest diaryColor){
         userService.setUserDiaryColor(principal.getName(), diaryColor);
         return ResponseEntity.ok().build();
     }

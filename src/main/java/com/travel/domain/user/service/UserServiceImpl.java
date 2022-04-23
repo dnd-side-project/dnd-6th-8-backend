@@ -8,6 +8,8 @@ import com.travel.domain.config.auth.UserDto;
 import com.travel.domain.user.dto.MyPageResponse;
 import com.travel.domain.user.dto.MyProfileResponse;
 import com.travel.domain.user.dto.SurveyResponse;
+import com.travel.domain.user.dto.UserDiaryColorRequest;
+import com.travel.domain.user.entity.EDiaryColor;
 import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.SurveyRepository;
@@ -65,5 +67,12 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByEmail(userEmail);
         return MyProfileResponse.builder().userName(user.getUserName())
                 .survey(user.getSurvey()).userEmail(user.getEmail()).build();
+    }
+
+    @Override
+    public void setUserDiaryColor(String userEmail, UserDiaryColorRequest diaryColor){
+        User user = userRepository.findByEmail(userEmail);
+        user.setDiaryColor(diaryColor.getDiaryColor());
+        userRepository.save(user);
     }
 }
