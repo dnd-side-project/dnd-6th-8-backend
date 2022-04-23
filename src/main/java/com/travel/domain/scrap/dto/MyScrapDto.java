@@ -23,7 +23,7 @@ public class MyScrapDto {
                 .build();
     }
 
-    public static List<MyScrapDto> listFrom(List<Archives> archivesList, User user, List<Long> archiveId) {
+    public static List<MyScrapDto> listFrom(List<Archives> archivesList) {
         if(archivesList == null){
             return null;
         }
