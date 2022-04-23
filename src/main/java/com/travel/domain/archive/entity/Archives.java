@@ -102,5 +102,9 @@ public class Archives extends BaseTimeEntity {
         System.out.println(place.getId());
         this.place = place;
     }
+
+    public int countScraps() {
+        return this.scraps.size();
+    }
 }
 

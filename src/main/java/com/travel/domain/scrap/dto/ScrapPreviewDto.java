@@ -20,9 +20,8 @@ public class ScrapPreviewDto {
     @ApiModelProperty(value = "스크랩한 시간", example = "2022-02-19T22:24:00")
     private LocalDateTime createdAt;
 
-    @ApiModelProperty(value = "스크랩한 아카이브", example = "대충 다녀도 아름다운 제주")
-//    private Archives archives;
-//    private CoverImage;
+    @ApiModelProperty(value = "아카이브 커버 이미지", example = "대충 다녀도 아름다운 제주")
+    private String CoverImage;
 
     @ApiModelProperty(value = "스크랩한 유저", example = "경아")
     private User user;
