@@ -6,6 +6,7 @@ import com.travel.domain.user.dto.MyPageResponse;
 import com.travel.domain.user.dto.MyProfileResponse;
 import com.travel.domain.user.dto.SurveySaveRequestDto;
 import com.travel.domain.user.dto.UserSaveRequestDto;
+import com.travel.domain.user.entity.EDiaryColor;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.service.SurveyService;
 import com.travel.domain.user.service.UserService;
@@ -38,6 +39,13 @@ public class UserApiController {
     public ResponseEntity<MyPageResponse> getUserInfo(@ApiIgnore Principal principal){
         MyPageResponse myPageResponse = userService.getUserInfo(principal.getName());
         return ResponseEntity.ok(myPageResponse);
+    }
+
+    @ApiOperation(value = "다이어리 배경 바꾸기")
+    @PatchMapping("/user/diarycolor")
+    public ResponseEntity<Void> setUserDiaryColor(@ApiIgnore Principal principal, EDiaryColor diaryColor){
+        userService.setUserDiaryColor(principal.getName(), diaryColor);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "프로필 정보")
