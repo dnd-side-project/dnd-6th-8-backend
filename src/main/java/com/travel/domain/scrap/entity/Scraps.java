@@ -1,7 +1,6 @@
 package com.travel.domain.scrap.entity;
 
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.archive.entity.Place;
 import com.travel.domain.common.BaseTimeEntity;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
@@ -20,30 +19,21 @@ import java.time.LocalDateTime;
 public class Scraps extends BaseTimeEntity {
 
     @Id
+    @Column(name = "SCRAP_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne()
-    @JoinColumn(name= "archive_id")
+    @ManyToOne
+    @JoinColumn(name= "ARCHIVE_ID")
     private Archives archives;
 
-    @ManyToOne()
-    @JoinColumn(name="USER_ID")
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Builder
     public Scraps(Archives archives, User user) {
-        setArchives(archives);
-        setUser(user);
-    }
-    public void setUser(User user) {
-        if(this.user == null){
-            this.user = user;
-        }
-    }
-
-    public void setArchives(Archives archives) {
-        System.out.println(archives.getId());
         this.archives = archives;
+        this.user = user;
     }
 }
