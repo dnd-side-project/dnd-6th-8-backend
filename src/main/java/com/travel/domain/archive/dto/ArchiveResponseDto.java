@@ -42,6 +42,9 @@ public class ArchiveResponseDto {
 
     private int emojiNum;
 
+    private String shortContent;
+
+
     public ArchiveResponseDto(Archives entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -52,6 +55,7 @@ public class ArchiveResponseDto {
         this.scrapNum = entity.getScraps().size();
         this.emojiNum = entity.getUserMarkedEmojis().size();
         this.createdAt = entity.getCreatedAt().toLocalDate();
+//        this.shortContent = entity.get
     }
 
     public static String calculateDuration(Archives entity) {
