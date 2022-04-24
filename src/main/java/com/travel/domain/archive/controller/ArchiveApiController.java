@@ -30,7 +30,6 @@ public class ArchiveApiController {
 
     private final ArchivesService archivesService;
 
-
     @ApiOperation(value = "아카이브 생성 api")
     @PostMapping(path = "/archives")
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
@@ -39,6 +38,7 @@ public class ArchiveApiController {
              @ApiIgnore Principal principal){
         System.out.println(principal.getName());
         System.out.println("controller");
+        System.out.println(coverImage);
         ArchiveDetailResponseDto archivesResponseDto = archivesService.saveArchive(coverImage, archivesSaveRequestDto, principal.getName());
         return ResponseEntity.created(URI.create("/api/v1/archives" + archivesResponseDto.getId()))
                 .body(archivesResponseDto);
@@ -57,7 +57,6 @@ public class ArchiveApiController {
         archivesService.updateArchive(id, archivesSaveRequestDto);
         return ResponseEntity.ok().build();
     }
-
 
     @ApiOperation(value = "아카이브 공유여부변경 API")
     @PutMapping("/archives/{id}/share")
@@ -87,8 +86,6 @@ public class ArchiveApiController {
         HomeResponse homeResponse = archivesService.getMain(principal.getName());
         return ResponseEntity.ok(homeResponse);
     }
-
-
 
     @ApiOperation(value = "아카이브 삭제 API")
     @DeleteMapping("/archives/{archiveId}")

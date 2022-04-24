@@ -1,6 +1,5 @@
 package com.travel.domain.archive.service;
 
-import com.sun.tools.jdeps.Archive;
 import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
 import com.travel.domain.archive.dto.ArchiveResponseDto;
 import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
@@ -11,7 +10,6 @@ import com.travel.domain.archive.repository.PlaceRepository;
 import com.travel.domain.archive.repository.ReportRepository;
 import com.travel.domain.common.S3Uploader;
 import com.travel.domain.emoji.dto.EmojiResponse;
-//import com.travel.domain.emoji.entity.UserMarkedEmoji;
 import com.travel.domain.emoji.repository.UserEmojiSelectedRepository;
 import com.travel.domain.user.entity.Survey;
 import com.travel.domain.user.entity.User;
@@ -54,7 +52,8 @@ public class ArchiveServiceImpl implements ArchivesService {
 
         String imageUrl = null;
 
-        if (coverImage != null) {
+        System.out.println(coverImage.isEmpty());
+        if (coverImage.getResource().exists()) {
             System.out.println("image not null");
             try {
                 imageUrl = s3Uploader.upload(coverImage

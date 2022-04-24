@@ -37,8 +37,8 @@ public class Days {
     @Column()
     private String tipDescription;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "archiveId")
+    @ManyToOne
+    @JoinColumn(name= "ARCHIVE_ID")
     private Archives archives;
 
     @Builder
@@ -50,6 +50,12 @@ public class Days {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
+        setArchives(archives);
     }
 
+    public void setArchives(Archives archives) {
+        if(archives == null){
+            this.archives = archives;
+        }
+    }
 }

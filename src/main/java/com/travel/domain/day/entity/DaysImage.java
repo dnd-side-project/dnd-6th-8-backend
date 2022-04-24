@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class DayImage {
+public class DaysImage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +20,6 @@ public class DayImage {
     private String imageUrl;
 
     @ManyToOne
-    private Archives archives;
-    
-    
+    @JoinColumn(name="DAYS_ID")
+    private Days days;
 }

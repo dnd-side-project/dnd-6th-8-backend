@@ -60,10 +60,26 @@ public class ArchivesSaveRequestDto {
     public Archives toEntity(User user, Place place, String imageUrl) {
         System.out.println(user.getId());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");   // yyyy-MM-dd HH:mm:ss
+
+        LocalDate firstDayFormatted = null;
+        LocalDate lastDayFormatted = null;
+        Boolean haveCompanionFormatted = false;
+
+        if(firstDay != null){
+            firstDayFormatted = LocalDate.parse(firstDay, formatter);
+        }
+        if(lastDay != null){
+            lastDayFormatted = LocalDate.parse(lastDay, formatter);
+        }
+        if(haveCompanion != null){
+            haveCompanionFormatted = Boolean.parseBoolean(haveCompanion);
+        }
+
         return Archives.builder().title(title).place(place)
-                .firstDay(LocalDate.parse(firstDay, formatter))
-                .lastDay(LocalDate.parse(lastDay, formatter))
-                .haveCompanion(Boolean.parseBoolean(haveCompanion)).budget(budget)
+                .firstDay(firstDayFormatted)
+                .lastDay(lastDayFormatted)
+                .haveCompanion(haveCompanionFormatted)
+                .budget(budget)
                 .archivingStyle(archivingStyle).user(user).coverImage(imageUrl).build();
     }
 }

@@ -15,5 +15,4 @@ public class MyPageResponse {
     private long archiveNumber;
     private EDiaryColor diaryColor;
     private List<String> badgesList;
-
 }
