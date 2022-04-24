@@ -26,11 +26,13 @@ public class ScrapPreviewDto {
     @ApiModelProperty(value = "스크랩한 유저", example = "경아")
     private User user;
 
+    private MyScrapDto countScrapsOfUser;
+
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
         this.createdAt = entity.getCreatedAt();
-//        this.archives = entity.getArchives();
         this.user = entity.getUser();
+        this.countScrapsOfUser = MyScrapDto.from(entity.getUser());
     }
 
     public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {

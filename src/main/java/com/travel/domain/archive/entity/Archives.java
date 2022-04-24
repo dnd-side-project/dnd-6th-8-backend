@@ -103,7 +103,7 @@ public class Archives extends BaseTimeEntity {
         this.place = place;
     }
 
-    public int countScraps() {
+    public int countScrapsOfArchive() {
         return this.scraps.size();
     }
 }

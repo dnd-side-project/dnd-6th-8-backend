@@ -1,7 +1,6 @@
 package com.travel.domain.scrap.dto;
 
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,22 +11,22 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 public class MyScrapDto {
-    public int countScraps;
+    public int countScrapsOfUser;
 
-    public static MyScrapDto from(Archives archives) {
-        if(archives == null) {
+    public static MyScrapDto from(User user) {
+        if(user == null) {
             return null;
         }
         return MyScrapDto.builder()
-                .countScraps(archives.countScraps())
+                .countScrapsOfUser(user.countScrapsOfUser())
                 .build();
     }
 
-    public static List<MyScrapDto> listFrom(List<Archives> archivesList) {
-        if(archivesList == null){
+    public static List<MyScrapDto> listFrom(List<User> userList) {
+        if(userList == null){
             return null;
         }
-        return archivesList.stream()
+        return userList.stream()
                 .map(MyScrapDto::from)
                 .collect(Collectors.toList());
     }
