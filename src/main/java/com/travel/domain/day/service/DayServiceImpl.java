@@ -29,12 +29,12 @@ public class DayServiceImpl implements DaysService {
     @Override
     @Transactional(readOnly=true)
     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-        List<MultipartFile> days = daysSaveRequestDto.getImages();
+//        List<MultipartFile> days = daysSaveRequestDto.getImages();
 
-        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-                .collect(Collectors.toList());
+//        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
+//                .collect(Collectors.toList());
 
-        imageUrls.stream().forEach(System.out::println);
+//        imageUrls.stream().forEach(System.out::println);
 
         Days day = daysSaveRequestDto.toEntity();
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
@@ -65,15 +65,15 @@ public class DayServiceImpl implements DaysService {
     public void updateDay(Long id, DaysSaveRequestDto daysSaveRequestDto) {
         Days day = daysRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 피드가 없습니다. id = " + id));
 
-        if (daysSaveRequestDto.getDayNumber() != 0) {
-            day.setDayNumber(daysSaveRequestDto.getDayNumber());
-        }
-        if (daysSaveRequestDto.getDate() != null) {
-            day.setDate(daysSaveRequestDto.getDate());
-        }
-        if (daysSaveRequestDto.getWeather() != null) {
-            day.setWeather(daysSaveRequestDto.getWeather());
-        }
+//        if (daysSaveRequestDto.getDayNumber() != 0) {
+//            day.setDayNumber(daysSaveRequestDto.getDayNumber());
+//        }
+//        if (daysSaveRequestDto.getDate() != null) {
+//            day.setDate(daysSaveRequestDto.getDate());
+//        }
+//        if (daysSaveRequestDto.getWeather() != null) {
+//            day.setWeather(daysSaveRequestDto.getWeather());
+//        }
 //        if (daysSaveRequestDto.getImage() != null) {
 //            day.setImage(daysSaveRequestDto.getImage());
 //        }
