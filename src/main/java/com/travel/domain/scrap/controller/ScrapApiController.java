@@ -39,7 +39,7 @@ public class ScrapApiController {
     @ApiOperation(value = "유저별 스크랩 목록 api")
     @GetMapping("/archives/scraps")
     public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@ApiIgnore Principal principal){
-        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByUser(principal.getName());
-        return ResponseEntity.ok(scrapPreviewDtos);
+        List<ScrapPreviewDto> scrapPreviewDto = scrapsService.findByUser(principal.getName());
+        return ResponseEntity.ok(scrapPreviewDto);
     }
 }

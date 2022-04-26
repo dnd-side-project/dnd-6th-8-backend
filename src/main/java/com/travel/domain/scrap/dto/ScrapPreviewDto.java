@@ -1,8 +1,6 @@
 package com.travel.domain.scrap.dto;
-import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.scrap.entity.Scraps;
 import com.travel.domain.user.entity.User;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -26,13 +24,13 @@ public class ScrapPreviewDto {
     @ApiModelProperty(value = "스크랩한 유저", example = "경아")
     private User user;
 
-    private MyScrapDto countScrapsOfUser;
+    private CountMyScrapsDto countMyScraps;
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
         this.createdAt = entity.getCreatedAt();
         this.user = entity.getUser();
-        this.countScrapsOfUser = MyScrapDto.from(entity.getUser());
+        this.countMyScraps = CountMyScrapsDto.from(entity.getUser());
     }
 
     public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {
