@@ -21,12 +21,12 @@ public class CountMyScrapsDto {
                 .build();
     }
 
-    public static List<CountMyScrapsDto> listFrom(List<User> userList) {
-        if(userList == null){
-            return null;
-        }
-        return userList.stream()
-                .map(CountMyScrapsDto::from)
-                .collect(Collectors.toList());
-    }
+//    public static List<CountMyScrapsDto> listFrom(List<User> userList) {
+//        if(userList == null){
+//            return null;
+//        }
+//        return userList.stream()
+//                .map(CountMyScrapsDto::from)
+//                .collect(Collectors.toList());
+//    }
 }
