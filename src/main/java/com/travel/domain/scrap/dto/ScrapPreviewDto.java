@@ -21,23 +21,23 @@ public class ScrapPreviewDto {
     @ApiModelProperty(value = "아카이브 커버 이미지", example = "대충 다녀도 아름다운 제주")
     private String CoverImage;
 
-    @ApiModelProperty(value = "스크랩한 유저", example = "경아")
-    private User user;
+//    @ApiModelProperty(value = "스크랩한 유저", example = "경아")
+//    private User user;
 
     private CountMyScrapsDto countMyScraps;
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
         this.createdAt = entity.getCreatedAt();
-        this.user = entity.getUser();
         this.countMyScraps = CountMyScrapsDto.from(entity.getUser());
     }
 
-    public static List<ScrapPreviewDto> listOf(List<Scraps> filtered) {
+    public static List<ScrapPreviewDto> listOf(List<Scraps> scrapsFilteredByUser) {
         List<ScrapPreviewDto> scrapResponses = new ArrayList<>();
 
-        for (Scraps scrap : filtered) {
+        for (Scraps scrap : scrapsFilteredByUser) {
             scrapResponses.add(new ScrapPreviewDto(scrap));
+//            System.out.println("scrapResponses = " + scrapResponses);
         }
 
         return scrapResponses;

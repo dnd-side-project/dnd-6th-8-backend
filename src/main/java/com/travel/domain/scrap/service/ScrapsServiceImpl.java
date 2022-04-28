@@ -45,9 +45,10 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScrapPreviewDto> findByUser(String loginEmail) {
+    public List<ScrapPreviewDto> getMyScrapList(String loginEmail) {
         User userEntity = userRepository.findByEmail(loginEmail);
-        List<Scraps> filtered = scrapsRepository.findByUserId(userEntity.getId());
-        return ScrapPreviewDto.listOf(filtered);
+        List<Scraps> scrapsOfLoggedInUser = scrapsRepository.findByUserId(userEntity.getId());
+//        System.out.println("scrapsOfLoggedInUser = " + scrapsOfLoggedInUser);
+        return ScrapPreviewDto.listOf(scrapsOfLoggedInUser);
     }
 }
