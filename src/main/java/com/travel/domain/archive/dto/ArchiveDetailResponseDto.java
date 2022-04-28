@@ -3,7 +3,6 @@ package com.travel.domain.archive.dto;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.entity.EArchivingStyle;
 import com.travel.domain.archive.entity.EBudget;
-import com.travel.domain.archive.entity.EPlaces;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -42,7 +41,7 @@ public class ArchiveDetailResponseDto {
     private boolean isShare;
 
 
-    private String coverPicture;
+    private String coverImage;
 
 
     public ArchiveDetailResponseDto(Archives entity){

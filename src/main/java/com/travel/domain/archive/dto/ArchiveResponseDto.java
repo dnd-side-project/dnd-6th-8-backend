@@ -2,15 +2,11 @@ package com.travel.domain.archive.dto;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.entity.EArchivingStyle;
-import com.travel.domain.archive.entity.EPlaces;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
-import org.apache.tomcat.jni.Local;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +32,7 @@ public class ArchiveResponseDto {
     @ApiModelProperty(value = "여행 장소", example = "부산")
     private String places;
 
-    private String coverPicture;
+    private String coverImage;
 
     private int scrapNum;
 
@@ -51,7 +47,7 @@ public class ArchiveResponseDto {
         this.travelDuration = calculateDuration(entity);
         this.archivingStyle = entity.getArchivingStyle();
         this.places = entity.getPlace().getName();
-        this.coverPicture = entity.getCoverImage();
+        this.coverImage = entity.getCoverImage();
         this.scrapNum = entity.getScraps().size();
         this.emojiNum = entity.getUserMarkedEmojis().size();
         this.createdAt = entity.getCreatedAt().toLocalDate();
