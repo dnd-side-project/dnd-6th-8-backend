@@ -12,5 +12,5 @@ public interface ScrapsService {
 
     public void unScraps(Long SCRAP_ID);
 
-    public List<ScrapPreviewDto> getMyScrapList(String loginEmail);
+    public List<ScrapPreviewDto> getMyScrapPreviewList(String loginEmail);
 }
