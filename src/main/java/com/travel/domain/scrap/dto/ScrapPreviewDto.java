@@ -1,7 +1,7 @@
 package com.travel.domain.scrap.dto;
+import com.travel.domain.archive.entity.EArchivingStyle;
 import com.travel.domain.scrap.entity.Scraps;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -11,17 +11,27 @@ import java.util.List;
 @Getter
 @ApiModel(value = "스크랩 목록")
 public class ScrapPreviewDto {
-    @ApiModelProperty(value = "스크랩 id", example = "1")
     private Long id;
 
-    @ApiModelProperty(value = "스크랩한 시간", example = "2022-02-19T22:24:00")
-    private LocalDateTime createdAt;
+    private Long archiveId;
+
+    private String archiveTitle;
+
+    private EArchivingStyle archivingStyle;
+
+    private String coverImage;
+
+    private LocalDateTime scrapedAt;
 
     private CountMyScrapsDto countMyScraps;
 
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
-        this.createdAt = entity.getCreatedAt();
+        this.archiveId = entity.getArchives().getId();
+        this.archiveTitle = entity.getArchives().getTitle();
+        this.archivingStyle = entity.getArchives().getArchivingStyle();
+        this.coverImage = entity.getArchives().getCoverImage();
+        this.scrapedAt = entity.getCreatedAt();
         this.countMyScraps = CountMyScrapsDto.from(entity.getUser());
     }
 
