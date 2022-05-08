@@ -48,6 +48,6 @@ public class ScrapsServiceImpl implements ScrapsService {
     public List<ScrapPreviewDto> getMyScrapPreviewList(String loginEmail) {
         User userEntity = userRepository.findByEmail(loginEmail);
         List<Scraps> scrapsOfLoggedInUser = scrapsRepository.findByUserId(userEntity.getId());
-        return ScrapPreviewDto.getScrapListOfUser(scrapsOfLoggedInUser);
+        return ScrapPreviewDto.getScrapListOfUser(scrapsOfLoggedInUser, userEntity);
     }
 }

@@ -1,6 +1,7 @@
 package com.travel.domain.scrap.dto;
 import com.travel.domain.archive.entity.EArchivingStyle;
 import com.travel.domain.scrap.entity.Scraps;
+import com.travel.domain.user.entity.User;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 
@@ -23,8 +24,6 @@ public class ScrapPreviewDto {
 
     private LocalDateTime scrapedAt;
 
-    private CountMyScrapsDto countMyScraps;
-
     public ScrapPreviewDto(Scraps entity) {
         this.id = entity.getId();
         this.archiveId = entity.getArchives().getId();
@@ -32,15 +31,19 @@ public class ScrapPreviewDto {
         this.archivingStyle = entity.getArchives().getArchivingStyle();
         this.coverImage = entity.getArchives().getCoverImage();
         this.scrapedAt = entity.getCreatedAt();
-        this.countMyScraps = CountMyScrapsDto.from(entity.getUser());
     }
 
-    public static List<ScrapPreviewDto> getScrapListOfUser(List<Scraps> scrapsFilteredByUser) {
+    public static List<ScrapPreviewDto> getScrapListOfUser(List<Scraps> scrapsFilteredByUser, User userEntity) {
         List<ScrapPreviewDto> scrapResponses = new ArrayList<>();
 
         for (Scraps scrap : scrapsFilteredByUser) {
             scrapResponses.add(new ScrapPreviewDto(scrap));
         }
+
+        List countMyScrapsList = new ArrayList<>();
+        int countMyScraps = userEntity.countScrapsOfUser();
+        countMyScrapsList.add(countMyScraps);
+        scrapResponses.addAll(countMyScrapsList);
 
         return scrapResponses;
     }
