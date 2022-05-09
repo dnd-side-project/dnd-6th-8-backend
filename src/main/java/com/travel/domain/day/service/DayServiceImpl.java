@@ -4,6 +4,11 @@ import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.service.ArchivesService;
 import com.travel.domain.common.S3Uploader;
+import com.travel.domain.day.dto.DayInfoSaveRequestDto;
+import com.travel.domain.day.entity.DaysImage;
+import com.travel.domain.day.entity.DaysInfo;
+import com.travel.domain.day.repository.DayImageRepository;
+import com.travel.domain.day.repository.DaysInfoRepository;
 import com.travel.domain.day.repository.DaysRepository;
 import com.travel.domain.day.dto.DayDetailResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
@@ -15,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.Multipart;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +31,44 @@ public class DayServiceImpl implements DaysService {
     private final DaysRepository daysRepository;
     private final ArchivesRepository archivesRepository;
     private final S3Uploader s3Uploader;
+    private final DayImageRepository dayImageRepository;
+    private final DaysInfoRepository daysInfoRepository;
 
     @Override
     @Transactional(readOnly=true)
+<<<<<<< HEAD
+    public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+
+        Archives archive = archivesRepository.getById(archiveId);
+
+        for(int i=0; i < daysSaveRequestDto.size(); i++){
+
+            List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
+            List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
+            Days day = daysSaveRequestDto.get(i).toEntity();
+            System.out.println("setting archive");
+            day.setArchives(archive);
+            day = daysRepository.save(day);
+
+            for(int j=0; j > dayImages.size(); j++){
+                try {
+                    String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
+                    dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for(int j=0; j > daysInfosDto.size(); j++) {
+                DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
+                daysInfoRepository.save(DaysInfo.builder()
+                        .departure(dayInfoSaveRequestDto.getDeparture())
+                        .arrival(dayInfoSaveRequestDto.getArrival())
+                        .travelTime(dayInfoSaveRequestDto.getTravelTime())
+                        .transportation(dayInfoSaveRequestDto.getTransportation()).build());
+            }
+        }
+=======
     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
 //        List<MultipartFile> days = daysSaveRequestDto.getImages();
 
@@ -35,13 +76,12 @@ public class DayServiceImpl implements DaysService {
 //                .collect(Collectors.toList());
 
 //        imageUrls.stream().forEach(System.out::println);
+>>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
 
-        Days day = daysSaveRequestDto.toEntity();
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-        day.setArchives(archives);
-        daysRepository.save(day);
-        return new DayDetailResponseDto(day);
+
+        return DayDetailResponseDto.listOf(archive.getDays());
     }
 
     public String imageUploader(MultipartFile image){
@@ -68,6 +108,10 @@ public class DayServiceImpl implements DaysService {
 //        if (daysSaveRequestDto.getDayNumber() != 0) {
 //            day.setDayNumber(daysSaveRequestDto.getDayNumber());
 //        }
+<<<<<<< HEAD
+
+=======
+>>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
 //        if (daysSaveRequestDto.getDate() != null) {
 //            day.setDate(daysSaveRequestDto.getDate());
 //        }

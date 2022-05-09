@@ -1,6 +1,7 @@
 package com.travel.domain.day.entity;
 
 import com.travel.domain.archive.entity.Archives;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,14 @@ public class DaysImage {
     @ManyToOne
     @JoinColumn(name="DAYS_ID")
     private Days days;
+
+    @Builder
+    public DaysImage(String imageUrl, Days days){
+        this.imageUrl = imageUrl;
+        setDays(days);
+    }
+
+    public void setDays(Days days) {
+        this.days = days;
+    }
 }
