@@ -14,14 +14,14 @@ import java.util.List;
 @ApiModel(value = "데이 피드 읽기(Detail)")
 public class DayDetailResponseDto {
 
-    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-    public Integer dayNumber;
+//    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
+//    public Integer dayNumber;
 
-    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
-    private LocalDate date;
-
-    @ApiModelProperty(value = "날씨", example="맑음")
-    private String weather;
+//    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
+//    private LocalDate date;
+//
+//    @ApiModelProperty(value = "날씨", example="맑음")
+//    private String weather;
 
     @ApiModelProperty(value = "날씨", example="맑음")
     private String travelDescription;
@@ -33,7 +33,7 @@ public class DayDetailResponseDto {
     private String tipDescription;
 
     @ApiModelProperty(value = "연결된 아카이브", example = "제주 여행")
-    private Archives archives;
+    private Long archiveId;
 
     public DayDetailResponseDto(Days entity){
 //        this.dayNumber = entity.getDayNumber();
@@ -42,7 +42,7 @@ public class DayDetailResponseDto {
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();
-        this.archives = entity.getArchives();
+        this.archiveId = entity.getArchives().getId();
     }
 
     public static List<DayDetailResponseDto> listOf(List<Days> filtered) {

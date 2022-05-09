@@ -7,10 +7,10 @@ import java.time.LocalDate;
 public class DaysResponseDto {
 
     private Long id;
-    private Integer dayNumber;
-    private LocalDate date;
-    private String weather;
-    private String image;
+//    private Integer dayNumber;
+//    private LocalDate date;
+//    private String weather;
+//    private String image;
     private String travelDescription;
     private String emotionDescription;
     private String tipDescription;

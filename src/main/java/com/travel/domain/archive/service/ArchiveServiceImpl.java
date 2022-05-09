@@ -137,11 +137,11 @@ public class ArchiveServiceImpl implements ArchivesService {
             archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
         }
 
-//        if(archivesSaveRequestDto.getCoverPicture() != null){
+//        if(archivesSaveRequestDto.getCoverImage() != null){
 //            String imageUrl = null;
 //            try {
 //                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
-//                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverPicture()
+//                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverImage()
 //                        , "archive");
 //            } catch (IOException e) {
 //                e.printStackTrace();

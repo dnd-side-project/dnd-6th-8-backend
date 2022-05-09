@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class ScrapApiController {
     private final ScrapsService scrapsService;
 
     @ApiOperation(value = "스크랩 추가 api")
-    @PostMapping("/archives/{ARCHIVE_ID}/scraps")
-    public void addScraps(@PathVariable Long ARCHIVE_ID, @ApiIgnore Principal principal){
-        scrapsService.addScraps(ARCHIVE_ID, principal.getName());
+    @PostMapping("/archives/{archiveId}/scraps")
+    public void addScraps(@PathVariable Long archiveId, @ApiIgnore Principal principal){
+        scrapsService.addScraps(archiveId, principal.getName());
     }
 
     @ApiOperation(value = "스크랩 취소 api")
@@ -38,8 +37,8 @@ public class ScrapApiController {
 
     @ApiOperation(value = "유저별 스크랩 목록 api")
     @GetMapping("/archives/scraps")
-    public ResponseEntity<List<ScrapPreviewDto>> getScrapListByUser(@ApiIgnore Principal principal){
-        List<ScrapPreviewDto> scrapPreviewDtos = scrapsService.findByUser(principal.getName());
-        return ResponseEntity.ok(scrapPreviewDtos);
+    public ResponseEntity<List<ScrapPreviewDto>> getMyScrapList(@ApiIgnore Principal principal){
+        List<ScrapPreviewDto> scrapPreviewDto = scrapsService.getMyScrapPreviewList(principal.getName());
+        return ResponseEntity.ok(scrapPreviewDto);
     }
 }

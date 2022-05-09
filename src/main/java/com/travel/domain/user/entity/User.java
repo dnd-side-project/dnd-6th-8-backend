@@ -46,7 +46,7 @@ public class User {
 //    @OneToMany(mappedBy = "user")
 //    private List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();;
 
-    @OrderBy("scrapDateTime DESC")
+    @OrderBy("createdAt DESC")
     @JsonIgnoreProperties({"user"})
     @OneToMany(mappedBy = "user")
     private List<Scraps> scraps = new ArrayList<>();;
@@ -67,4 +67,5 @@ public class User {
         this.survey = survey;
     }
 
+    public int countScrapsOfUser() { return this.scraps.size();}
 }
