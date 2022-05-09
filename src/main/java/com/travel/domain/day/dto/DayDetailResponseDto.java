@@ -36,9 +36,9 @@ public class DayDetailResponseDto {
     private Archives archives;
 
     public DayDetailResponseDto(Days entity){
-        this.dayNumber = entity.getDayNumber();
-        this.date = entity.getDate();
-        this.weather = entity.getWeather();
+//        this.dayNumber = entity.getDayNumber();
+//        this.date = entity.getDate();
+//        this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();

@@ -16,17 +16,10 @@ public class Days {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dayNumber")
-    private Integer dayNumber;
+    private Integer day;
 
-    @Column
-    private LocalDate date;
-
-    @Column()
-    private String weather;
-
-    @Column()
-    private String image;
+//    @Column()
+//    private String weather;
 
     @Column()
     private String travelDescription;
@@ -42,11 +35,11 @@ public class Days {
     private Archives archives;
 
     @Builder
-    public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
-        this.dayNumber = dayNumber;
-        this.date = date;
-        this.weather = weather;
-        this.image = image;
+    public Days(Integer dayNumber, String travelDescription, String emotionDescription, String tipDescription) {
+        this.day = dayNumber;
+//        this.date = date;
+//        this.weather = weather;
+//        this.image = image;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
@@ -54,8 +47,7 @@ public class Days {
     }
 
     public void setArchives(Archives archives) {
-        if(archives == null){
-            this.archives = archives;
-        }
+        System.out.println("setArchives");
+        this.archives = archives;
     }
 }

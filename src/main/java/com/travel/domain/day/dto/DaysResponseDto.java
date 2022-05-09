@@ -17,10 +17,10 @@ public class DaysResponseDto {
 
     public DaysResponseDto(Days entity){
         this.id = entity.getId();
-        this.dayNumber = entity.getDayNumber();
-        this.date = entity.getDate();
-        this.weather = entity.getWeather();
-        this.image = entity.getImage();
+//        this.dayNumber = entity.getDayNumber();
+//        this.date = entity.getDate();
+//        this.weather = entity.getWeather();
+//        this.image = entity.getImage();
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();

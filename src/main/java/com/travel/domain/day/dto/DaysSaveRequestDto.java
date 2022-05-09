@@ -2,10 +2,12 @@ package com.travel.domain.day.dto;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
+import com.travel.domain.day.entity.DaysImage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@Setter
 @ApiModel(value = "데이 피드 기록하기")
 public class DaysSaveRequestDto {
 
@@ -39,20 +42,26 @@ public class DaysSaveRequestDto {
     private String tipDescription;
 
 
+    private List<DayInfoSaveRequestDto> dayInfoSaveRequestDtos;
+
+
     @Builder
-    public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
+    public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, List<MultipartFile> images, String travelDescription,
+                              String emotionDescription, String tipDescription, List<DayInfoSaveRequestDto> dayInfoSaveRequestDtos) {
         this.dayNumber = dayNumber;
         this.date = date;
         this.weather = weather;
-//        this.image = image;
+        this.images = images;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
+        this.dayInfoSaveRequestDtos = dayInfoSaveRequestDtos;
     }
 
 
+
     public Days toEntity() {
-        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).travelDescription(travelDescription).
+        return Days.builder().dayNumber(dayNumber).travelDescription(travelDescription).
                 emotionDescription(emotionDescription).tipDescription(tipDescription).build();
     }
 }
