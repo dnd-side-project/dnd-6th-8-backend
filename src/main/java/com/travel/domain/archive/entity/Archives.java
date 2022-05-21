@@ -73,6 +73,9 @@ public class Archives extends BaseTimeEntity {
     @OneToMany(mappedBy = "archives")
     private List<Scraps> scraps = new ArrayList<>();
 
+    @OneToMany(mappedBy = "archives")
+    private List<Days> dayFeeds = new ArrayList<>();
+
 
     @Builder
     public Archives(String title, boolean isShare, String coverImage,
@@ -106,5 +109,7 @@ public class Archives extends BaseTimeEntity {
     public int countScrapsOfArchive() {
         return this.scraps.size();
     }
+
+    public int countDaysFeedsOfArchive() { return this.dayFeeds.size(); }
 }
 
