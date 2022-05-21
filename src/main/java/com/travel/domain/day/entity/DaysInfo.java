@@ -1,5 +1,7 @@
 package com.travel.domain.day.entity;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,4 +23,19 @@ public class DaysInfo {
     @ManyToOne
     @JoinColumn(name="DAYS_ID")
     private Days days;
+
+    @Builder
+    public DaysInfo(String departure, String arrival,
+                    String travelTime, ETransportation transportation){
+        this.departure = departure;
+        this.arrival = arrival;
+        this.travelTime = travelTime;
+        this.transportation = transportation;
+        setDays(days);
+    }
+
+    public void setDays(Days days) {
+        this.days = days;
+    }
+
 }
