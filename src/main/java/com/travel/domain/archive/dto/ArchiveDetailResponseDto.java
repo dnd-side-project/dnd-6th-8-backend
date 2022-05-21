@@ -40,9 +40,9 @@ public class ArchiveDetailResponseDto {
     @ApiModelProperty(value = "아카이브 공유", example = "true")
     private boolean isShare;
 
-
     private String coverImage;
 
+    private int countDaysFeeds;
 
     public ArchiveDetailResponseDto(Archives entity){
         this.id = entity.getId();
@@ -53,7 +53,8 @@ public class ArchiveDetailResponseDto {
         this.archivingStyle = entity.getArchivingStyle();
         this.budget = entity.getBudget();
         this.haveCompanion = entity.isHaveCompanion();
-        this.isShare = entity.isShare();
-        this.coverPicture = entity.getCoverImage();
+        this.isShare = entity.isShare
+        this.countDaysFeeds = entity.countDaysFeedsOfArchive();
+        this.CoverImage = entity.getCoverImage();
     }
 }
