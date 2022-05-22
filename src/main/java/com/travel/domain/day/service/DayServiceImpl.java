@@ -67,6 +67,7 @@ public class DayServiceImpl implements DaysService {
                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
             }
         }
+    }
 //     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
 // //        List<MultipartFile> days = daysSaveRequestDto.getImages();
 
