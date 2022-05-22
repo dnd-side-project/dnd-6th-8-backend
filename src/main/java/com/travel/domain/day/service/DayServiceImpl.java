@@ -36,60 +36,60 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+//     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
 
-        Archives archive = archivesRepository.getById(archiveId);
+//         Archives archive = archivesRepository.getById(archiveId);
 
-        for(int i=0; i < daysSaveRequestDto.size(); i++){
+//         for(int i=0; i < daysSaveRequestDto.size(); i++){
 
-            List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
-            List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
-            Days day = daysSaveRequestDto.get(i).toEntity();
-            System.out.println("setting archive");
-            day.setArchives(archive);
-            day = daysRepository.save(day);
+//             List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
+//             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
+//             Days day = daysSaveRequestDto.get(i).toEntity();
+//             System.out.println("setting archive");
+//             day.setArchives(archive);
+//             day = daysRepository.save(day);
 
-            for(int j=0; j > dayImages.size(); j++){
-                try {
-                    String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
-                    dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+//             for(int j=0; j > dayImages.size(); j++){
+//                 try {
+//                     String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
+//                     dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
+//                 } catch (IOException e) {
+//                     e.printStackTrace();
+//                 }
+//             }
 
-            for(int j=0; j > daysInfosDto.size(); j++) {
-                DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
-                daysInfoRepository.save(DaysInfo.builder()
-                        .departure(dayInfoSaveRequestDto.getDeparture())
-                        .arrival(dayInfoSaveRequestDto.getArrival())
-                        .travelTime(dayInfoSaveRequestDto.getTravelTime())
-                        .transportation(dayInfoSaveRequestDto.getTransportation()).build());
-            }
-        }
-    }
-//     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-// //        List<MultipartFile> days = daysSaveRequestDto.getImages();
-
-// //        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-// //                .collect(Collectors.toList());
-
-// //        imageUrls.stream().forEach(System.out::println);
-
-//         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-//                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-
-//         return DayDetailResponseDto.listOf(archive.getDays());
-//     }
-
-//     public String imageUploader(MultipartFile image){
-//         try {
-//             return s3Uploader.upload(image, "day");
-//         } catch (IOException e) {
-//             e.printStackTrace();
+//             for(int j=0; j > daysInfosDto.size(); j++) {
+//                 DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
+//                 daysInfoRepository.save(DaysInfo.builder()
+//                         .departure(dayInfoSaveRequestDto.getDeparture())
+//                         .arrival(dayInfoSaveRequestDto.getArrival())
+//                         .travelTime(dayInfoSaveRequestDto.getTravelTime())
+//                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
+//             }
 //         }
-//         return null;
 //     }
+    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
+//        List<MultipartFile> days = daysSaveRequestDto.getImages();
+
+//        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
+//                .collect(Collectors.toList());
+
+//        imageUrls.stream().forEach(System.out::println);
+
+        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
+
+        return DayDetailResponseDto.listOf(archive.getDays());
+    }
+
+    public String imageUploader(MultipartFile image){
+        try {
+            return s3Uploader.upload(image, "day");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     @Transactional(readOnly=true)
