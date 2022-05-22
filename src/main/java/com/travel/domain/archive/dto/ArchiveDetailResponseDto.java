@@ -53,7 +53,7 @@ public class ArchiveDetailResponseDto {
         this.archivingStyle = entity.getArchivingStyle();
         this.budget = entity.getBudget();
         this.haveCompanion = entity.isHaveCompanion();
-        this.isShare = entity.isShare
+        this.isShare = entity.isShare();
         this.countDaysFeeds = entity.countDaysFeedsOfArchive();
         this.CoverImage = entity.getCoverImage();
     }
