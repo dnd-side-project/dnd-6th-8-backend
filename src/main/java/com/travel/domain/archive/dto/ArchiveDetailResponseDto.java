@@ -55,6 +55,6 @@ public class ArchiveDetailResponseDto {
         this.haveCompanion = entity.isHaveCompanion();
         this.isShare = entity.isShare();
         this.countDaysFeeds = entity.countDaysFeedsOfArchive();
-        this.CoverImage = entity.getCoverImage();
+        this.coverImage = entity.getCoverImage();
     }
 }
