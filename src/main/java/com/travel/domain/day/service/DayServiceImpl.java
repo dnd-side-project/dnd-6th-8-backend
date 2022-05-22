@@ -36,7 +36,6 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-<<<<<<< HEAD
     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
 
         Archives archive = archivesRepository.getById(archiveId);
@@ -68,30 +67,28 @@ public class DayServiceImpl implements DaysService {
                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
             }
         }
-=======
-    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-//        List<MultipartFile> days = daysSaveRequestDto.getImages();
+//     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
+// //        List<MultipartFile> days = daysSaveRequestDto.getImages();
 
-//        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-//                .collect(Collectors.toList());
+// //        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
+// //                .collect(Collectors.toList());
 
-//        imageUrls.stream().forEach(System.out::println);
->>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
+// //        imageUrls.stream().forEach(System.out::println);
 
-        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
+//         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+//                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
 
-        return DayDetailResponseDto.listOf(archive.getDays());
-    }
+//         return DayDetailResponseDto.listOf(archive.getDays());
+//     }
 
-    public String imageUploader(MultipartFile image){
-        try {
-            return s3Uploader.upload(image, "day");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//     public String imageUploader(MultipartFile image){
+//         try {
+//             return s3Uploader.upload(image, "day");
+//         } catch (IOException e) {
+//             e.printStackTrace();
+//         }
+//         return null;
+//     }
 
     @Override
     @Transactional(readOnly=true)
@@ -108,10 +105,7 @@ public class DayServiceImpl implements DaysService {
 //        if (daysSaveRequestDto.getDayNumber() != 0) {
 //            day.setDayNumber(daysSaveRequestDto.getDayNumber());
 //        }
-<<<<<<< HEAD
 
-=======
->>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
 //        if (daysSaveRequestDto.getDate() != null) {
 //            day.setDate(daysSaveRequestDto.getDate());
 //        }
