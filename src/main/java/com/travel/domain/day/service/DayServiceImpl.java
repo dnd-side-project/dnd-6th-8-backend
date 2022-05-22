@@ -34,8 +34,8 @@ public class DayServiceImpl implements DaysService {
     private final DayImageRepository dayImageRepository;
     private final DaysInfoRepository daysInfoRepository;
 
-    @Override
-    @Transactional(readOnly=true)
+//     @Override
+//     @Transactional(readOnly=true)
 //     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
 
 //         Archives archive = archivesRepository.getById(archiveId);
@@ -68,19 +68,19 @@ public class DayServiceImpl implements DaysService {
 //             }
 //         }
 //     }
-    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-//        List<MultipartFile> days = daysSaveRequestDto.getImages();
+//     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
+// //        List<MultipartFile> days = daysSaveRequestDto.getImages();
 
-//        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-//                .collect(Collectors.toList());
+// //        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
+// //                .collect(Collectors.toList());
 
-//        imageUrls.stream().forEach(System.out::println);
+// //        imageUrls.stream().forEach(System.out::println);
 
-        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
+//         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+//                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
 
-        return DayDetailResponseDto.listOf(archive.getDays());
-    }
+//         return DayDetailResponseDto.listOf(archive.getDays());
+//     }
 
     public String imageUploader(MultipartFile image){
         try {
