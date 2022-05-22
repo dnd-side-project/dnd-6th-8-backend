@@ -46,20 +46,11 @@ public class DaysSaveRequestDto {
 
 
     @Builder
-<<<<<<< HEAD
-    public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, List<MultipartFile> images, String travelDescription,
-                              String emotionDescription, String tipDescription, List<DayInfoSaveRequestDto> dayInfoSaveRequestDtos) {
-        this.dayNumber = dayNumber;
-        this.date = date;
-        this.weather = weather;
-        this.images = images;
-=======
     public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
 //        this.dayNumber = dayNumber;
 //        this.date = date;
 //        this.weather = weather;
 //        this.image = image;
->>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
@@ -69,13 +60,10 @@ public class DaysSaveRequestDto {
 
 
     public Days toEntity() {
-<<<<<<< HEAD
-        return Days.builder().dayNumber(dayNumber).travelDescription(travelDescription).
-=======
+
 //        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).travelDescription(travelDescription).
 //                emotionDescription(emotionDescription).tipDescription(tipDescription).build();
         return Days.builder().travelDescription(travelDescription).
->>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
                 emotionDescription(emotionDescription).tipDescription(tipDescription).build();
     }
 }
