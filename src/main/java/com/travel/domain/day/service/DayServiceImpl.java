@@ -30,7 +30,6 @@ public class DayServiceImpl implements DaysService {
     private final DayImageRepository dayImageRepository;
     private final DaysInfoRepository daysInfoRepository;
 
-<<<<<<< HEAD
     @Override
     @Transactional(readOnly=true)
     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
@@ -79,7 +78,7 @@ public class DayServiceImpl implements DaysService {
 //
 //        return DayDetailResponseDto.listOf(archive.getDays());
 //    }
-=======
+//=======
 //     @Override
 //     @Transactional(readOnly=true)
 //     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
@@ -127,7 +126,7 @@ public class DayServiceImpl implements DaysService {
 
 //         return DayDetailResponseDto.listOf(archive.getDays());
 //     }
->>>>>>> b71424d4cc49fde17b3f5f935d40c8fb594a7971
+//>>>>>>> b71424d4cc49fde17b3f5f935d40c8fb594a7971
 
     public String imageUploader(MultipartFile image){
         try {
@@ -153,10 +152,6 @@ public class DayServiceImpl implements DaysService {
 //        if (daysSaveRequestDto.getDayNumber() != 0) {
 //            day.setDayNumber(daysSaveRequestDto.getDayNumber());
 //        }
-<<<<<<< HEAD
-=======
-
->>>>>>> b71424d4cc49fde17b3f5f935d40c8fb594a7971
 //        if (daysSaveRequestDto.getDate() != null) {
 //            day.setDate(daysSaveRequestDto.getDate());
 //        }
