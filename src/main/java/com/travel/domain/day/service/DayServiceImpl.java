@@ -2,7 +2,6 @@ package com.travel.domain.day.service;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
-import com.travel.domain.archive.service.ArchivesService;
 import com.travel.domain.common.S3Uploader;
 import com.travel.domain.day.dto.DayInfoSaveRequestDto;
 import com.travel.domain.day.entity.DaysImage;
@@ -18,11 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,12 +32,11 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-<<<<<<< HEAD
     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
 
         Archives archive = archivesRepository.getById(archiveId);
 
-        for(int i=0; i < daysSaveRequestDto.size(); i++){
+        for (int i = 0; i < daysSaveRequestDto.size(); i++) {
 
             List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
@@ -50,7 +45,7 @@ public class DayServiceImpl implements DaysService {
             day.setArchives(archive);
             day = daysRepository.save(day);
 
-            for(int j=0; j > dayImages.size(); j++){
+            for (int j = 0; j > dayImages.size(); j++) {
                 try {
                     String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
                     dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
@@ -59,7 +54,7 @@ public class DayServiceImpl implements DaysService {
                 }
             }
 
-            for(int j=0; j > daysInfosDto.size(); j++) {
+            for (int j = 0; j > daysInfosDto.size(); j++) {
                 DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
                 daysInfoRepository.save(DaysInfo.builder()
                         .departure(dayInfoSaveRequestDto.getDeparture())
@@ -68,21 +63,21 @@ public class DayServiceImpl implements DaysService {
                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
             }
         }
-=======
-    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-//        List<MultipartFile> days = daysSaveRequestDto.getImages();
-
-//        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-//                .collect(Collectors.toList());
-
-//        imageUrls.stream().forEach(System.out::println);
->>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
-
-        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-
         return DayDetailResponseDto.listOf(archive.getDays());
     }
+//    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
+////        List<MultipartFile> days = daysSaveRequestDto.getImages();
+//
+////        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
+////                .collect(Collectors.toList());
+//
+////        imageUrls.stream().forEach(System.out::println);
+//
+//        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+//                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
+//
+//        return DayDetailResponseDto.listOf(archive.getDays());
+//    }
 
     public String imageUploader(MultipartFile image){
         try {
@@ -108,10 +103,6 @@ public class DayServiceImpl implements DaysService {
 //        if (daysSaveRequestDto.getDayNumber() != 0) {
 //            day.setDayNumber(daysSaveRequestDto.getDayNumber());
 //        }
-<<<<<<< HEAD
-
-=======
->>>>>>> e1020a4a014fadd9dc863f5d0135587129291a61
 //        if (daysSaveRequestDto.getDate() != null) {
 //            day.setDate(daysSaveRequestDto.getDate());
 //        }

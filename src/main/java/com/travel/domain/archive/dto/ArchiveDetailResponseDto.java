@@ -54,6 +54,6 @@ public class ArchiveDetailResponseDto {
         this.budget = entity.getBudget();
         this.haveCompanion = entity.isHaveCompanion();
         this.isShare = entity.isShare();
-        this.coverPicture = entity.getCoverImage();
+        this.coverImage = entity.getCoverImage();
     }
 }
