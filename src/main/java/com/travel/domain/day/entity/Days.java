@@ -18,12 +18,9 @@ public class Days {
 
     private Integer day;
 
-<<<<<<< HEAD
-=======
 //    @Column()
 //    private String weather;
-    
->>>>>>> b71424d4cc49fde17b3f5f935d40c8fb594a7971
+
 //    @Column(name = "dayNumber")
 //    private Integer dayNumber;
 
