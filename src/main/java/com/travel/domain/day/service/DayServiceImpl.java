@@ -65,68 +65,6 @@ public class DayServiceImpl implements DaysService {
         }
         return DayDetailResponseDto.listOf(archive.getDays());
     }
-//    public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-////        List<MultipartFile> days = daysSaveRequestDto.getImages();
-//
-////        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-////                .collect(Collectors.toList());
-//
-////        imageUrls.stream().forEach(System.out::println);
-//
-//        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-//                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-//
-//        return DayDetailResponseDto.listOf(archive.getDays());
-//    }
-//=======
-//     @Override
-//     @Transactional(readOnly=true)
-//     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
-
-//         Archives archive = archivesRepository.getById(archiveId);
-
-//         for(int i=0; i < daysSaveRequestDto.size(); i++){
-
-//             List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
-//             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
-//             Days day = daysSaveRequestDto.get(i).toEntity();
-//             System.out.println("setting archive");
-//             day.setArchives(archive);
-//             day = daysRepository.save(day);
-
-//             for(int j=0; j > dayImages.size(); j++){
-//                 try {
-//                     String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
-//                     dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
-//                 } catch (IOException e) {
-//                     e.printStackTrace();
-//                 }
-//             }
-
-//             for(int j=0; j > daysInfosDto.size(); j++) {
-//                 DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
-//                 daysInfoRepository.save(DaysInfo.builder()
-//                         .departure(dayInfoSaveRequestDto.getDeparture())
-//                         .arrival(dayInfoSaveRequestDto.getArrival())
-//                         .travelTime(dayInfoSaveRequestDto.getTravelTime())
-//                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
-//             }
-//         }
-//     }
-//     public DayDetailResponseDto saveDay(DaysSaveRequestDto daysSaveRequestDto, Long archiveId) {
-// //        List<MultipartFile> days = daysSaveRequestDto.getImages();
-
-// //        List<String> imageUrls = days.stream().map(day-> (imageUploader(day)))
-// //                .collect(Collectors.toList());
-
-// //        imageUrls.stream().forEach(System.out::println);
-
-//         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-//                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-
-//         return DayDetailResponseDto.listOf(archive.getDays());
-//     }
-//>>>>>>> b71424d4cc49fde17b3f5f935d40c8fb594a7971
 
     public String imageUploader(MultipartFile image){
         try {
