@@ -21,13 +21,13 @@ public class DayApiController {
 
     private final DaysService daysService;
 
-    @ApiOperation(value = "데이 피드를 생성하는 API")
-    @PostMapping("/archives/days")
-    public ResponseEntity<List<DayDetailResponseDto>> saveDay
-            (@RequestParam Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
-        List<DayDetailResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
-        return ResponseEntity.ok(dayDetailResponseDto);
-    }
+//     @ApiOperation(value = "데이 피드를 생성하는 API")
+//     @PostMapping("/archives/days")
+//     public ResponseEntity<List<DayDetailResponseDto>> saveDay
+//             (@RequestParam Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
+//         List<DayDetailResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
+//         return ResponseEntity.ok(dayDetailResponseDto);
+//     }
 
     @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")  //PathVariable -> RequestParam
     @GetMapping("/archives/days/{dayNumber}")
