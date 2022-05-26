@@ -15,6 +15,10 @@ public class Days {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer day;
+
+//    @Column()
+//    private String weather;
 
 //    @Column(name = "dayNumber")
 //    private Integer dayNumber;

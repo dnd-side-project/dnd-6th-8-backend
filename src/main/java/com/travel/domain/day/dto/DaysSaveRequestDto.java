@@ -18,7 +18,7 @@ public class DaysSaveRequestDto {
 
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
     private Integer dayNumber;
-
+//
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @ApiModelProperty(value = "다녀온 날짜", example = "2021-12-10", required = true)
 //    private LocalDate date;
@@ -26,8 +26,8 @@ public class DaysSaveRequestDto {
 //    @ApiModelProperty(value = "날씨", example = "맑음", required = true)
 //    private String weather;
 //
-//    @ApiModelProperty(value = "피드 사진 링크", required = true)
-//    private List<MultipartFile> images;
+    @ApiModelProperty(value = "피드 사진 링크", required = true)
+    private List<MultipartFile> images;
 
     @ApiModelProperty(value = "하루의 여정", example = "제주도의 인생 맛집을 찾았다! 간장게장과", required = true)
     private String travelDescription;
@@ -38,6 +38,7 @@ public class DaysSaveRequestDto {
     @ApiModelProperty(value = "여행 꿀팁", example = "성산일출봉 갈 때 주차장 자리 파악하고 가기! 그리고,", required = true)
     private String tipDescription;
 
+    private List<DayInfoSaveRequestDto> dayInfoSaveRequestDtos;
 
     @Builder
     public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
@@ -48,6 +49,7 @@ public class DaysSaveRequestDto {
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
+        this.dayInfoSaveRequestDtos = dayInfoSaveRequestDtos;
     }
 
 
