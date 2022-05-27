@@ -77,8 +77,8 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> getDays(Archives archives, Integer dayNumber) {
-        List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archives.getId());
+    public List<DayDetailResponseDto> getDays(Long archiveId, Integer dayNumber) {
+        List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archiveId);
         return DayDetailResponseDto.listOf(filtered);
     }
 

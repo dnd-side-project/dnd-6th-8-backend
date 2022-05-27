@@ -2,12 +2,10 @@ package com.travel.domain.day.dto;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
-import com.travel.domain.day.entity.DaysImage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +13,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-@Setter
 @ApiModel(value = "데이 피드 기록하기")
 public class DaysSaveRequestDto {
 
@@ -41,16 +38,9 @@ public class DaysSaveRequestDto {
     @ApiModelProperty(value = "여행 꿀팁", example = "성산일출봉 갈 때 주차장 자리 파악하고 가기! 그리고,", required = true)
     private String tipDescription;
 
-
     private List<DayInfoSaveRequestDto> dayInfoSaveRequestDtos;
 
-
     @Builder
-//<<<<<<< HEAD
-//    public DaysSaveRequestDto(Integer dayNumber, String travelDescription, String emotionDescription, String tipDescription) {
-//        this.dayNumber = dayNumber;
-//=======
-
     public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
 //        this.dayNumber = dayNumber;
 //        this.date = date;
@@ -61,7 +51,6 @@ public class DaysSaveRequestDto {
         this.tipDescription = tipDescription;
         this.dayInfoSaveRequestDtos = dayInfoSaveRequestDtos;
     }
-
 
 
     public Days toEntity() {

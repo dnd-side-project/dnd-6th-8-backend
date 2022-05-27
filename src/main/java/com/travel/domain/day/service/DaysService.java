@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface DaysService {
 
-     public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId);
+    public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId);
 
-    public List<DayDetailResponseDto> getDays(Archives archives, Integer dayNumber);
+    public List<DayDetailResponseDto> getDays(Long archiveId, Integer dayNumber);
 
     public void delete(Long id);
 
