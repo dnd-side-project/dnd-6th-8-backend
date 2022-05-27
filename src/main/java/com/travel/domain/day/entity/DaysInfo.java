@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 public class DaysInfo {
 
