@@ -1,6 +1,7 @@
 package com.travel.domain.day.entity;
 
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -21,7 +22,7 @@ public class DaysInfo {
     private ETransportation transportation;
 
     @ManyToOne
-    @JoinColumn(name="DAYS_ID")
+    @JoinColumn(name="DAY_NUMBER")
     private Days days;
 
     @Builder

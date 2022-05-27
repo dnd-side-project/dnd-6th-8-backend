@@ -1,12 +1,10 @@
 package com.travel.domain.day.dto;
 
-import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,7 @@ import java.util.List;
 public class DayDetailResponseDto {
 
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-    public Integer day;
+    public Integer dayNumber;
 
 //    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
 //    private LocalDate date;
@@ -36,7 +34,7 @@ public class DayDetailResponseDto {
     private Long archiveId;
 
     public DayDetailResponseDto(Days entity){
-        this.day = entity.getDay();
+        this.dayNumber = entity.getDayNumber();
 //        this.date = entity.getDate();
 //        this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
