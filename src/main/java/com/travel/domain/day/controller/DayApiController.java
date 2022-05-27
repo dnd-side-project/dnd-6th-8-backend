@@ -31,10 +31,10 @@ public class DayApiController {
          return ResponseEntity.ok(dayDetailResponseDto);
      }
 
-    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")  //PathVariable -> RequestParam
-    @GetMapping("/archives/days/{dayNumber}")
-    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @RequestParam Archives archives) {
-        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.getDays(archives, dayNumber);
+    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
+    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
+    public ResponseEntity<List<DayDetailResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
+        List<DayDetailResponseDto> dayDetailResponseDtos = daysService.getDays(archiveId, dayNumber);
         return ResponseEntity.ok(dayDetailResponseDtos);
     }
 
