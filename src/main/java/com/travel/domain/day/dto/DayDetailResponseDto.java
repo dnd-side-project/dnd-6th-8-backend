@@ -14,8 +14,8 @@ import java.util.List;
 @ApiModel(value = "데이 피드 읽기(Detail)")
 public class DayDetailResponseDto {
 
-//    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-//    public Integer dayNumber;
+    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
+    public Integer day;
 
 //    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
 //    private LocalDate date;
@@ -36,7 +36,7 @@ public class DayDetailResponseDto {
     private Long archiveId;
 
     public DayDetailResponseDto(Days entity){
-//        this.dayNumber = entity.getDayNumber();
+        this.day = entity.getDay();
 //        this.date = entity.getDate();
 //        this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
