@@ -23,7 +23,7 @@ public class DaysInfo {
     private ETransportation transportation;
 
     @ManyToOne
-    @JoinColumn(name="DAY_NUMBER")
+    @JoinColumn(name="DAYS_ID")
     private Days days;
 
     @Builder
