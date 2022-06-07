@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@Setter
 @ApiModel(value = "데이 피드 기록하기")
 public class DaysSaveRequestDto {
 
