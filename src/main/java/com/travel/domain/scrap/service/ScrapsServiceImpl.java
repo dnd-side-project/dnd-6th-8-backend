@@ -2,6 +2,7 @@ package com.travel.domain.scrap.service;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
+import com.travel.domain.scrap.dto.ScrapListDto;
 import com.travel.domain.scrap.dto.ScrapPreviewDto;
 //import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
 import com.travel.domain.scrap.entity.Scraps;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,9 +47,12 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScrapPreviewDto> getMyScrapPreviewList(String loginEmail) {
+    public ScrapListDto getMyScrapPreviewList(String loginEmail) {
         User userEntity = userRepository.findByEmail(loginEmail);
         List<Scraps> scrapsOfLoggedInUser = scrapsRepository.findByUserId(userEntity.getId());
-        return ScrapPreviewDto.getScrapListOfUser(scrapsOfLoggedInUser, userEntity);
+
+        List<ScrapPreviewDto> scrapPreviewDto = ScrapPreviewDto.getScrapListOfUser(scrapsOfLoggedInUser);
+        int countMyScraps = userEntity.countScrapsOfUser();
+        return new ScrapListDto(scrapPreviewDto, countMyScraps);
     }
 }

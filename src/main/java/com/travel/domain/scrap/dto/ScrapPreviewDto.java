@@ -33,17 +33,12 @@ public class ScrapPreviewDto {
         this.scrapedAt = entity.getCreatedAt();
     }
 
-    public static List<ScrapPreviewDto> getScrapListOfUser(List<Scraps> scrapsFilteredByUser, User userEntity) {
+    public static List<ScrapPreviewDto> getScrapListOfUser(List<Scraps> scrapsFilteredByUser) {
         List<ScrapPreviewDto> scrapResponses = new ArrayList<>();
 
         for (Scraps scrap : scrapsFilteredByUser) {
             scrapResponses.add(new ScrapPreviewDto(scrap));
         }
-
-        List countMyScrapsList = new ArrayList<>();
-        int countMyScraps = userEntity.countScrapsOfUser();
-        countMyScrapsList.add(countMyScraps);
-        scrapResponses.addAll(countMyScrapsList);
 
         return scrapResponses;
     }
