@@ -2,7 +2,7 @@ package com.travel.domain.day.controller;
 
 import com.travel.domain.day.dto.DayTotalRequestDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
-import com.travel.domain.day.dto.DaySubjectiveResponseDto;
+import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
 import com.travel.domain.day.service.DaysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,16 +22,16 @@ public class DayApiController {
 
      @ApiOperation(value = "데이 피드를 생성하는 API")
      @PostMapping("/archives/days")
-     public ResponseEntity<List<DaySubjectiveResponseDto>> saveDay
+     public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay
              (@RequestParam Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
-         List<DaySubjectiveResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
+         List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
          return ResponseEntity.ok(dayDetailResponseDto);
      }
 
     @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
     @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<List<DaySubjectiveResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
-        List<DaySubjectiveResponseDto> dayDetailResponseDtos = daysService.getDays(archiveId, dayNumber);
+    public ResponseEntity<List<DaysSubjectiveResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
+        List<DaysSubjectiveResponseDto> dayDetailResponseDtos = daysService.getDays(archiveId, dayNumber);
         return ResponseEntity.ok(dayDetailResponseDtos);
     }
 

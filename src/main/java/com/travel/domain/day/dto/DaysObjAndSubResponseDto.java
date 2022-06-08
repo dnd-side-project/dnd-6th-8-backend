@@ -5,5 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DayObjAndSubResponseDto {
+public class DaysObjAndSubResponseDto {
 }
