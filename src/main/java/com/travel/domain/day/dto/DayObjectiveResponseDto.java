@@ -4,7 +4,7 @@ import com.travel.domain.day.entity.ETransportation;
 import lombok.Getter;
 
 @Getter
-public class DayInfoResponseDto {
+public class DayObjectiveResponseDto {
     private String departure;
     private String arrival;
     private String travelTime;

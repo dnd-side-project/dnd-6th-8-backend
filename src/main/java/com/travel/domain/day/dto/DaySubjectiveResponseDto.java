@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @ApiModel(value = "데이 피드 읽기(Detail)")
-public class DayDetailResponseDto {
+public class DaySubjectiveResponseDto {
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
     public Integer dayNumber;
 
@@ -34,7 +34,7 @@ public class DayDetailResponseDto {
     @ApiModelProperty(value = "연결된 아카이브", example = "제주 여행")
     private Long archiveId;
 
-    public DayDetailResponseDto(Days entity){
+    public DaySubjectiveResponseDto(Days entity){
         this.dayNumber = entity.getDayNumber();
         this.writer = entity.getArchives().getUser().getEmail();
 //        this.date = entity.getDate();
@@ -45,11 +45,11 @@ public class DayDetailResponseDto {
         this.archiveId = entity.getArchives().getId();
     }
 
-    public static List<DayDetailResponseDto> listOf(List<Days> filtered) {
-        List<DayDetailResponseDto> dayResponses = new ArrayList<>();
+    public static List<DaySubjectiveResponseDto> listOf(List<Days> filtered) {
+        List<DaySubjectiveResponseDto> dayResponses = new ArrayList<>();
 
         for (Days day : filtered) {
-            dayResponses.add(new DayDetailResponseDto(day));
+            dayResponses.add(new DaySubjectiveResponseDto(day));
         }
 
         return dayResponses;
