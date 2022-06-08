@@ -9,7 +9,7 @@ import com.travel.domain.day.entity.DaysInfo;
 import com.travel.domain.day.repository.DayImageRepository;
 import com.travel.domain.day.repository.DaysInfoRepository;
 import com.travel.domain.day.repository.DaysRepository;
-import com.travel.domain.day.dto.DayDetailResponseDto;
+import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
 import com.travel.domain.day.entity.Days;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+    public List<DaysSubjectiveResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
 
         Archives archive = archivesRepository.getById(archiveId);
 
@@ -63,7 +63,7 @@ public class DayServiceImpl implements DaysService {
                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
             }
         }
-        return DayDetailResponseDto.listOf(archive.getDays());
+        return DaysSubjectiveResponseDto.listOf(archive.getDays());
     }
 
     public String imageUploader(MultipartFile image){
@@ -77,9 +77,9 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> getDays(Long archiveId, Integer dayNumber) {
+    public List<DaysSubjectiveResponseDto> getDays(Long archiveId, Integer dayNumber) {
         List<Days> filtered = daysRepository.findByArchiveId(archiveId);
-        return DayDetailResponseDto.listOf(filtered);
+        return DaysSubjectiveResponseDto.listOf(filtered);
     }
 
     @Override
