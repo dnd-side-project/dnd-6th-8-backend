@@ -1,9 +1,11 @@
 package com.travel.domain.day.entity;
 
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Entity
 public class DaysInfo {
 

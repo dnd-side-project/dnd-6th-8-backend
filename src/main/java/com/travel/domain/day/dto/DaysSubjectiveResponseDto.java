@@ -1,21 +1,20 @@
 package com.travel.domain.day.dto;
 
-import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @ApiModel(value = "데이 피드 읽기(Detail)")
-public class DayDetailResponseDto {
+public class DaysSubjectiveResponseDto {
+    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
+    public Integer dayNumber;
 
-//    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-//    public Integer dayNumber;
+    private String writer;
 
 //    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
 //    private LocalDate date;
@@ -35,8 +34,9 @@ public class DayDetailResponseDto {
     @ApiModelProperty(value = "연결된 아카이브", example = "제주 여행")
     private Long archiveId;
 
-    public DayDetailResponseDto(Days entity){
-//        this.dayNumber = entity.getDayNumber();
+    public DaysSubjectiveResponseDto(Days entity){
+        this.dayNumber = entity.getDayNumber();
+        this.writer = entity.getArchives().getUser().getEmail();
 //        this.date = entity.getDate();
 //        this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
@@ -45,11 +45,11 @@ public class DayDetailResponseDto {
         this.archiveId = entity.getArchives().getId();
     }
 
-    public static List<DayDetailResponseDto> listOf(List<Days> filtered) {
-        List<DayDetailResponseDto> dayResponses = new ArrayList<>();
+    public static List<DaysSubjectiveResponseDto> listOf(List<Days> filtered) {
+        List<DaysSubjectiveResponseDto> dayResponses = new ArrayList<>();
 
         for (Days day : filtered) {
-            dayResponses.add(new DayDetailResponseDto(day));
+            dayResponses.add(new DaysSubjectiveResponseDto(day));
         }
 
         return dayResponses;
