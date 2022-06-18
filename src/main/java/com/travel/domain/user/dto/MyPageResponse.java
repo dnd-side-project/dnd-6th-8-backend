@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Builder
 public class MyPageResponse {
-
     private String userName;
     private long archiveNumber;
     private EDiaryColor diaryColor;

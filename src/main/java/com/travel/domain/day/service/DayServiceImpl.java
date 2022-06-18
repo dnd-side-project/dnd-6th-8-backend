@@ -37,7 +37,6 @@ public class DayServiceImpl implements DaysService {
         Archives archive = archivesRepository.getById(archiveId);
 
         for (int i = 0; i < daysSaveRequestDto.size(); i++) {
-
             List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
             Days day = daysSaveRequestDto.get(i).toEntity();
