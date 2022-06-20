@@ -10,4 +10,9 @@ import java.util.List;
 public class DaysObjAndSubResponseDto {
     private List<DaysObjectiveResponseDto> daysObjectiveResponseDtoList;
     private List<DaysSubjectiveResponseDto> daysSubjectiveResponseDtoList;
+
+    public DaysObjAndSubResponseDto(List<DaysObjectiveResponseDto> daysObjectiveResponseDtoList, List<DaysSubjectiveResponseDto> daysSubjectiveResponseDtoList) {
+        this.daysObjectiveResponseDtoList = daysObjectiveResponseDtoList;
+        this.daysSubjectiveResponseDtoList = daysSubjectiveResponseDtoList;
+    }
 }
