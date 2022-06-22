@@ -3,6 +3,6 @@ package com.travel.domain.emoji.service;
 import com.travel.domain.emoji.entity.UserEmojiSelected;
 
 public interface EmojiService {
-    public UserEmojiSelected emojiCheck(long ARCHIVE_ID, String loginEmail, long EMOJI_ID);
-    public void emojiUnCheck(Long USER_EMOJI_SELECTED_ID);
+    public UserEmojiSelected emojiCheck(long archiveId, String loginEmail, long emojiId);
+    public void emojiUnCheck(Long userEmojiSelectedId);
 }
