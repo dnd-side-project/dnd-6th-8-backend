@@ -31,10 +31,13 @@ public class DayServiceImpl implements DaysService {
     @Override
     @Transactional(readOnly=true)
     public List<DaysSubjectiveResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+        System.out.println("saving");
+        System.out.println(daysSaveRequestDto.size());
 
         Archives archive = archivesRepository.getById(archiveId);
 
         for (int i = 0; i < daysSaveRequestDto.size(); i++) {
+            System.out.println("day" + i);
             List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
             Days day = daysSaveRequestDto.get(i).toEntity();

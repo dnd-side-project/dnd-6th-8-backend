@@ -46,14 +46,14 @@ public class ArchiveServiceImpl implements ArchivesService {
     @Transactional(readOnly = true)
     public ArchiveDetailResponseDto saveArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
         User user = userRepository.findByEmail(userEmail);
-        boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
+        boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlaces());
 
-        Place place = placeHandler(archivesSaveRequestDto.getPlace());
+        Place place = placeHandler(archivesSaveRequestDto.getPlaces());
 
         String imageUrl = null;
 
-        System.out.println(coverImage.isEmpty());
-        if (coverImage.getResource().exists()) {
+        System.out.println(coverImage == null);
+        if (coverImage != null) {
             System.out.println("image not null");
             try {
                 imageUrl = s3Uploader.upload(coverImage
@@ -127,8 +127,8 @@ public class ArchiveServiceImpl implements ArchivesService {
         if (archivesSaveRequestDto.getArchivingStyle() != null) {
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
         }
-        if (archivesSaveRequestDto.getPlace() != null) {
-            archive.setPlace(placeHandler(archivesSaveRequestDto.getPlace()));
+        if (archivesSaveRequestDto.getPlaces() != null) {
+            archive.setPlace(placeHandler(archivesSaveRequestDto.getPlaces()));
         }
         if (archivesSaveRequestDto.getBudget() != null) {
             archive.setBudget(archivesSaveRequestDto.getBudget());

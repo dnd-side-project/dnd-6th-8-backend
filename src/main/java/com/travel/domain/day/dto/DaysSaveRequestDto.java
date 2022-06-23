@@ -4,17 +4,18 @@ import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.day.entity.Days;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@Data
+@NoArgsConstructor
 @ApiModel(value = "데이 피드 기록하기")
 public class DaysSaveRequestDto {
 
@@ -29,7 +30,7 @@ public class DaysSaveRequestDto {
 //    private String weather;
 //
     @ApiModelProperty(value = "피드 사진 링크", required = true)
-    private List<MultipartFile> images;
+    private ArrayList<MultipartFile> images;
 
     @ApiModelProperty(value = "하루의 여정", example = "제주도의 인생 맛집을 찾았다! 간장게장과", required = true)
     private String travelDescription;
@@ -40,7 +41,7 @@ public class DaysSaveRequestDto {
     @ApiModelProperty(value = "여행 꿀팁", example = "성산일출봉 갈 때 주차장 자리 파악하고 가기! 그리고,", required = true)
     private String tipDescription;
 
-    private List<DayInfoSaveRequestDto> dayInfoSaveRequestDtos;
+    private ArrayList<DayInfoSaveRequestDto> dayInfoSaveRequestDtos;
 
     @Builder
     public DaysSaveRequestDto(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
