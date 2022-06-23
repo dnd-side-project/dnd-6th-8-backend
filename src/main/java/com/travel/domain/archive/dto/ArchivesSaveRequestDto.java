@@ -26,7 +26,7 @@ public class ArchivesSaveRequestDto {
     private String title;
 
     @ApiModelProperty(value = "여행 장소", example = "부산")
-    private String place;
+    private String places;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @ApiModelProperty(value = "출발 날짜", example = "2021-12-10")
