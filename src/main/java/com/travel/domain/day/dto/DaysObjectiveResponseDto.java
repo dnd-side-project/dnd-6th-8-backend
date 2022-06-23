@@ -1,7 +1,11 @@
 package com.travel.domain.day.dto;
 
+import com.travel.domain.day.entity.DaysInfo;
 import com.travel.domain.day.entity.ETransportation;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class DaysObjectiveResponseDto {
@@ -20,4 +24,20 @@ public class DaysObjectiveResponseDto {
 //
 //        return dayInfoResponses;
 //    }
+    public DaysObjectiveResponseDto(DaysInfo entity){
+        this.departure = entity.getDeparture();
+        this.arrival = entity.getArrival();
+        this.travelTime = entity.getTravelTime();
+        this.transportation = entity.getTransportation();
+    }
+
+    public static List<DaysObjectiveResponseDto> listOf(List<DaysInfo> filtered) {
+        List<DaysObjectiveResponseDto> daysObjectiveResponses = new ArrayList<>();
+
+        for (DaysInfo daysInfo : filtered) {
+            daysObjectiveResponses.add(new DaysObjectiveResponseDto(daysInfo));
+        }
+
+        return daysObjectiveResponses;
+    }
 }

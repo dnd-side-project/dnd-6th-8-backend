@@ -3,14 +3,12 @@ package com.travel.domain.day.service;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.common.S3Uploader;
-import com.travel.domain.day.dto.DayInfoSaveRequestDto;
+import com.travel.domain.day.dto.*;
 import com.travel.domain.day.entity.DaysImage;
 import com.travel.domain.day.entity.DaysInfo;
 import com.travel.domain.day.repository.DayImageRepository;
 import com.travel.domain.day.repository.DaysInfoRepository;
 import com.travel.domain.day.repository.DaysRepository;
-import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
-import com.travel.domain.day.dto.DaysSaveRequestDto;
 import com.travel.domain.day.entity.Days;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -76,9 +74,12 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<DaysSubjectiveResponseDto> getDays(Long archiveId, Integer dayNumber) {
-        List<Days> filtered = daysRepository.findByArchiveId(archiveId);
-        return DaysSubjectiveResponseDto.listOf(filtered);
+    public DaysObjAndSubResponseDto getDays(Long archiveId, Integer dayNumber) {
+        List<Days> filteredDays = daysRepository.findByArchiveId(archiveId);
+        List<DaysInfo> filteredDaysInfos = daysInfoRepository.findByArchiveId(archiveId);
+        List<DaysSubjectiveResponseDto> daysSubjectiveResponseDtoList = DaysSubjectiveResponseDto.listOf(filteredDays);
+        List<DaysObjectiveResponseDto> daysObjectiveResponseDtoList = DaysObjectiveResponseDto.listOf(filteredDaysInfos);
+        return new DaysObjAndSubResponseDto(daysObjectiveResponseDtoList, daysSubjectiveResponseDtoList);
     }
 
     @Override

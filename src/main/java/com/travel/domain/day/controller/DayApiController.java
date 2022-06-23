@@ -1,6 +1,7 @@
 package com.travel.domain.day.controller;
 
 import com.travel.domain.day.dto.DayTotalRequestDto;
+import com.travel.domain.day.dto.DaysObjAndSubResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
 import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
 import com.travel.domain.day.service.DaysService;
@@ -30,9 +31,9 @@ public class DayApiController {
 
     @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
     @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<List<DaysSubjectiveResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
-        List<DaysSubjectiveResponseDto> dayDetailResponseDtos = daysService.getDays(archiveId, dayNumber);
-        return ResponseEntity.ok(dayDetailResponseDtos);
+    public ResponseEntity<DaysObjAndSubResponseDto> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
+        DaysObjAndSubResponseDto daysObjAndSubResponseDtoList = daysService.getDays(archiveId, dayNumber);
+        return ResponseEntity.ok(daysObjAndSubResponseDtoList);
     }
 
     @ApiOperation(value = "데이 피드 업데이트 API")
