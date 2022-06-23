@@ -49,7 +49,7 @@ public class ArchivesSaveRequestDto {
     public ArchivesSaveRequestDto(String title, String place , String firstDay, String lastDay,
                                   String haveCompanion, EBudget budget, EArchivingStyle archivingStyle) {
         this.title = title;
-        this.place = place;
+        this.places = place;
         this.firstDay = firstDay;
         this.lastDay = lastDay;
         this.haveCompanion = haveCompanion;

@@ -19,20 +19,11 @@ public class Days {
     @Column(name = "DAY")
     private Integer dayNumber;
 
-//    @Column()
-//    private String weather;
-
-//    @Column(name = "dayNumber")
-//    private Integer dayNumber;
+    @Column()
+    private String weather;
 
 //    @Column
-//    private LocalDate date;
-//
-//    @Column()
-//    private String weather;
-//
-//    @Column()
-//    private String image;
+//    private LocalDate date
 
     @Column()
     private String travelDescription;
@@ -51,8 +42,7 @@ public class Days {
     public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
         this.dayNumber = dayNumber;
 //        this.date = date;
-//        this.weather = weather;
-//        this.image = image;
+        this.weather = weather;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;

@@ -22,9 +22,10 @@ public class DayApiController {
     private final DaysService daysService;
 
      @ApiOperation(value = "데이 피드를 생성하는 API")
-     @PostMapping("/archives/days")
+     @PostMapping("/archives/days/{archiveId}")
      public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay
-             (@RequestParam Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
+             (@PathVariable Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
+         System.out.println("saving");
          List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
          return ResponseEntity.ok(dayDetailResponseDto);
      }
