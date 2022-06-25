@@ -57,8 +57,9 @@ public class DayApiController {
     public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay
     (@PathVariable Long archiveId, @PathVariable Long dayNumber,
      @RequestPart(required = false) List<MultipartFile> dayImages,
-     @RequestPart List<DaysSaveRequestDto> daysSaveRequestDtos){
-        List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
+     @RequestPart DaysSaveRequestDto daysSaveRequestDtos){
+        List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDaySeparate(archiveId,
+                dayNumber, daysSaveRequestDtos, dayImages);
         return ResponseEntity.ok(dayDetailResponseDto);
     }
 
