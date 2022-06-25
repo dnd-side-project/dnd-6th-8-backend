@@ -66,6 +66,45 @@ public class DayServiceImpl implements DaysService {
         return DaysSubjectiveResponseDto.listOf(archive.getDays());
     }
 
+    //   day피드 별로 따로 저장
+//    @Override
+//    @Transactional(readOnly=true)
+//    public List<DaysSubjectiveResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+//        System.out.println("saving");
+//        System.out.println(daysSaveRequestDto.size());
+//
+//        Archives archive = archivesRepository.getById(archiveId);
+//
+//        for (int i = 0; i < daysSaveRequestDto.size(); i++) {
+//            System.out.println("day" + i);
+//            List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
+//            List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
+//            Days day = daysSaveRequestDto.get(i).toEntity();
+//            System.out.println("setting archive");
+//            day.setArchives(archive);
+//            day = daysRepository.save(day);
+//
+//            for (int j = 0; j > dayImages.size(); j++) {
+//                try {
+//                    String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
+//                    dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            for (int j = 0; j > daysInfosDto.size(); j++) {
+//                DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
+//                daysInfoRepository.save(DaysInfo.builder()
+//                        .departure(dayInfoSaveRequestDto.getDeparture())
+//                        .arrival(dayInfoSaveRequestDto.getArrival())
+//                        .travelTime(dayInfoSaveRequestDto.getTravelTime())
+//                        .transportation(dayInfoSaveRequestDto.getTransportation()).build());
+//            }
+//        }
+//        return DaysSubjectiveResponseDto.listOf(archive.getDays());
+//    }
+
     public String imageUploader(MultipartFile image){
         try {
             return s3Uploader.upload(image, "day");
