@@ -29,8 +29,8 @@ public class DaysSaveRequestDto {
 //    @ApiModelProperty(value = "날씨", example = "맑음", required = true)
 //    private String weather;
 //
-    @ApiModelProperty(value = "피드 사진 링크", required = true)
-    private ArrayList<MultipartFile> images;
+//    @ApiModelProperty(value = "피드 사진 링크", required = true)
+//    private ArrayList<MultipartFile> images;
 
     @ApiModelProperty(value = "하루의 여정", example = "제주도의 인생 맛집을 찾았다! 간장게장과", required = true)
     private String travelDescription;
