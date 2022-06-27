@@ -55,6 +55,9 @@ public class ArchiveResponseDto {
     }
 
     public static String calculateDuration(Archives entity) {
+        if(entity.getFirstDay() == null || entity.getLastDay() == null){
+            return "0일";
+        }
         Period period = Period.between(entity.getFirstDay(), entity.getLastDay());
         int end = period.getDays() + 1;
         String result = period.getDays() + "박" + end + "일";
