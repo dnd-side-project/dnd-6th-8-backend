@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,11 @@ public class DaysSubjectiveResponseDto {
 
     private String writer;
 
-//    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
-//    private LocalDate date;
-//
-//    @ApiModelProperty(value = "날씨", example="맑음")
-//    private String weather;
+    @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
+    private LocalDate date;
+
+    @ApiModelProperty(value = "날씨", example="맑음")
+    private String weather;
 
     @ApiModelProperty(value = "날씨", example="맑음")
     private String travelDescription;
@@ -37,8 +38,8 @@ public class DaysSubjectiveResponseDto {
     public DaysSubjectiveResponseDto(Days entity){
         this.dayNumber = entity.getDayNumber();
         this.writer = entity.getArchives().getUser().getEmail();
-//        this.date = entity.getDate();
-//        this.weather = entity.getWeather();
+        this.date = entity.getDate();
+        this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();
