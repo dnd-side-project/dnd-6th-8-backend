@@ -78,9 +78,11 @@ public class DayServiceImpl implements DaysService {
     public DaysObjAndSubResponseDto getDays(Long archiveId, Integer dayNumber) {
         List<Days> filteredDays = daysRepository.findByArchiveId(archiveId);
         List<DaysInfo> filteredDaysInfos = daysInfoRepository.findByArchiveId(archiveId);
+        Archives filteredArchive = archivesRepository.findById(archiveId).orElseThrow(()->new IllegalArgumentException("해당 아카이브가 없습니다. id = " + archiveId));;
         List<DaysSubjectiveResponseDto> daysSubjectiveResponseDtoList = DaysSubjectiveResponseDto.listOf(filteredDays);
         List<DaysObjectiveResponseDto> daysObjectiveResponseDtoList = DaysObjectiveResponseDto.listOf(filteredDaysInfos);
-        return new DaysObjAndSubResponseDto(daysObjectiveResponseDtoList, daysSubjectiveResponseDtoList);
+        DaysInArchiveDto daysInArchiveDto = new DaysInArchiveDto(filteredArchive);
+        return new DaysObjAndSubResponseDto(daysObjectiveResponseDtoList, daysSubjectiveResponseDtoList, daysInArchiveDto);
     }
 
     @Override
