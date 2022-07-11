@@ -69,6 +69,53 @@ public class ArchiveServiceImpl implements ArchivesService {
 
     @Override
     @Transactional(readOnly = true)
+    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail, Long archiveId) {
+        User user = userRepository.findByEmail(userEmail);
+        Archives archive = archivesRepository.getById(archiveId);
+
+        if (archivesSaveRequestDto.getTitle() != null) {
+            archive.setTitle(archivesSaveRequestDto.getTitle());
+        }
+        if (archivesSaveRequestDto.getFirstDay() != null) {
+            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay()));
+        }
+        if (archivesSaveRequestDto.getLastDay() != null) {
+            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay()));
+        }
+        if (archivesSaveRequestDto.getArchivingStyle() != null) {
+            archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
+        }
+        if (archivesSaveRequestDto.getPlaces() != null) {
+            boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlaces());
+            Place place = placeHandler(archivesSaveRequestDto.getPlaces());
+            archive.setPlace(place);
+        }
+        if (archivesSaveRequestDto.getBudget() != null) {
+            archive.setBudget(archivesSaveRequestDto.getBudget());
+        }
+        if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+            archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
+        }
+
+        String imageUrl = null;
+
+        System.out.println(coverImage.isEmpty());
+        if (coverImage.getResource().exists()) {
+            System.out.println("image not null");
+            try {
+                imageUrl = s3Uploader.upload(coverImage
+                        , "archive");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        archivesRepository.save(archive);
+        return new ArchiveDetailResponseDto(archive);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public ArchiveDetailResponseDto findById(Long id) {
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
@@ -106,50 +153,6 @@ public class ArchiveServiceImpl implements ArchivesService {
         return place;
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        Archives archive = archivesRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
-
-        if (archivesSaveRequestDto.getTitle() != null) {
-            archive.setTitle(archivesSaveRequestDto.getTitle());
-        }
-        if (archivesSaveRequestDto.getFirstDay() != null) {
-            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay(), formatter));
-        }
-        if (archivesSaveRequestDto.getLastDay() != null) {
-            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay(), formatter));
-        }
-        if (archivesSaveRequestDto.getArchivingStyle() != null) {
-            archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
-        }
-        if (archivesSaveRequestDto.getPlaces() != null) {
-            archive.setPlace(placeHandler(archivesSaveRequestDto.getPlaces()));
-        }
-        if (archivesSaveRequestDto.getBudget() != null) {
-            archive.setBudget(archivesSaveRequestDto.getBudget());
-        }
-        if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
-            archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
-        }
-
-//        if(archivesSaveRequestDto.getCoverImage() != null){
-//            String imageUrl = null;
-//            try {
-//                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
-//                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverImage()
-//                        , "archive");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        archivesRepository.save(archive);
-    }
 
     @Override
     public void updateArchiveShare(Long id, boolean isShare) {

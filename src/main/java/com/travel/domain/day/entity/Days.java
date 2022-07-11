@@ -26,7 +26,7 @@ public class Days {
     private String weather;
 
 //    @Column()
-//    private String image;
+//    private
 
     @Column()
     private String travelDescription;

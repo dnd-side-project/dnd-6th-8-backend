@@ -19,7 +19,7 @@ public interface ArchivesService {
 
     public void delete(Long id);
 
-    public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto);
+    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail, Long archiveId);
 
     public void updateArchiveShare(Long id, boolean isShare);
 
