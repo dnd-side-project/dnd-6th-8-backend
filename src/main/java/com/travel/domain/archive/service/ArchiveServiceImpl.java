@@ -71,7 +71,6 @@ public class ArchiveServiceImpl implements ArchivesService {
     @Transactional(readOnly = true)
     public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail, Long archiveId) {
         User user = userRepository.findByEmail(userEmail);
-        boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
         Archives archive = archivesRepository.getById(archiveId);
 
         if (archivesSaveRequestDto.getTitle() != null) {
@@ -87,7 +86,9 @@ public class ArchiveServiceImpl implements ArchivesService {
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
         }
         if (archivesSaveRequestDto.getPlace() != null) {
-            archive.setPlace(placeHandler(archivesSaveRequestDto.getPlace()));
+            boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
+            Place place = placeHandler(archivesSaveRequestDto.getPlace());
+            archive.setPlace(place);
         }
         if (archivesSaveRequestDto.getBudget() != null) {
             archive.setBudget(archivesSaveRequestDto.getBudget());
@@ -95,8 +96,6 @@ public class ArchiveServiceImpl implements ArchivesService {
         if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
             archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
         }
-
-        Place place = placeHandler(archivesSaveRequestDto.getPlace());
 
         String imageUrl = null;
 
