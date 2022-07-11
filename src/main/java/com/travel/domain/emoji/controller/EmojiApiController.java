@@ -1,13 +1,16 @@
 package com.travel.domain.emoji.controller;
 
+import com.travel.domain.emoji.dto.EmojiListResponseDto;
 import com.travel.domain.emoji.service.EmojiService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -28,4 +31,10 @@ public class EmojiApiController {
         emojiService.emojiUnCheck(USER_EMOJI_SELECTED_ID);
     }
 
+    @GetMapping("/archives/{archiveId}/getEmojisListOfArchives")
+    @ApiOperation(value = "아카이브 하나의 이모지 목록 API")
+    public ResponseEntity<EmojiListResponseDto> getEmojisListOfArchives(@PathVariable long archiveId) {
+        EmojiListResponseDto emojiListResponseDto = emojiService.getEmojisListOfArchives(archiveId);
+        return ResponseEntity.ok(emojiListResponseDto);
+    }
 }
