@@ -3,14 +3,12 @@ package com.travel.domain.day.service;
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.common.S3Uploader;
-import com.travel.domain.day.dto.DayInfoSaveRequestDto;
+import com.travel.domain.day.dto.*;
 import com.travel.domain.day.entity.DaysImage;
 import com.travel.domain.day.entity.DaysInfo;
 import com.travel.domain.day.repository.DayImageRepository;
 import com.travel.domain.day.repository.DaysInfoRepository;
 import com.travel.domain.day.repository.DaysRepository;
-import com.travel.domain.day.dto.DayDetailResponseDto;
-import com.travel.domain.day.dto.DaysSaveRequestDto;
 import com.travel.domain.day.entity.Days;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,28 +29,30 @@ public class DayServiceImpl implements DaysService {
     private final DaysInfoRepository daysInfoRepository;
 
     @Override
-    @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+    @Transactional(readOnly = true)
+    public List<DaysSubjectiveResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
+        System.out.println("saving");
+        System.out.println(daysSaveRequestDto.size());
 
         Archives archive = archivesRepository.getById(archiveId);
 
         for (int i = 0; i < daysSaveRequestDto.size(); i++) {
-
-            List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
+            System.out.println("day" + i);
+//            List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
             Days day = daysSaveRequestDto.get(i).toEntity();
             System.out.println("setting archive");
             day.setArchives(archive);
             day = daysRepository.save(day);
 
-            for (int j = 0; j > dayImages.size(); j++) {
-                try {
-                    String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
-                    dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+//            for (int j = 0; j > dayImages.size(); j++) {
+//                try {
+//                    String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
+//                    dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
             for (int j = 0; j > daysInfosDto.size(); j++) {
                 DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
@@ -63,10 +63,49 @@ public class DayServiceImpl implements DaysService {
                         .transportation(dayInfoSaveRequestDto.getTransportation()).build());
             }
         }
-        return DayDetailResponseDto.listOf(archive.getDays());
+        return DaysSubjectiveResponseDto.listOf(archive.getDays());
     }
 
-    public String imageUploader(MultipartFile image){
+
+    //   day피드 별로 따로 저장
+    @Override
+    @Transactional(readOnly = true)
+    public List<DaysSubjectiveResponseDto> saveDaySeparate(Long archiveId, Long dayNumber,
+                                                           DaysSaveRequestDto daysSaveRequestDto,
+                                                           List<MultipartFile> dayImages) {
+        Archives archive = archivesRepository.getById(archiveId);
+        Days day = daysSaveRequestDto.toEntity();
+
+        day.setArchives(archive);
+        day = daysRepository.save(day);
+
+        System.out.println("img"+dayImages.size());
+        for (int j = 0; j < dayImages.size(); j++) {
+            System.out.println("dayImage");
+            try {
+                String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
+                dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.getDayInfoSaveRequestDtos();
+        System.out.println("info"+daysInfosDto.size());
+        for (int j = 0; j < daysInfosDto.size(); j++) {
+            System.out.println("dayInfo");
+            DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
+            daysInfoRepository.save(DaysInfo.builder()
+                    .departure(dayInfoSaveRequestDto.getDeparture())
+                    .arrival(dayInfoSaveRequestDto.getArrival())
+                    .travelTime(dayInfoSaveRequestDto.getTravelTime())
+                    .transportation(dayInfoSaveRequestDto.getTransportation()).build());
+        }
+
+        return DaysSubjectiveResponseDto.listOf(archive.getDays());
+    }
+
+    public String imageUploader(MultipartFile image) {
         try {
             return s3Uploader.upload(image, "day");
         } catch (IOException e) {
@@ -76,16 +115,21 @@ public class DayServiceImpl implements DaysService {
     }
 
     @Override
-    @Transactional(readOnly=true)
-    public List<DayDetailResponseDto> getDays(Long archiveId, Integer dayNumber) {
-        List<Days> filtered = daysRepository.findByArchivesAndDayNumber(archiveId);
-        return DayDetailResponseDto.listOf(filtered);
+    @Transactional(readOnly = true)
+    public DaysObjAndSubResponseDto getDays(Long archiveId, Integer dayNumber) {
+        List<Days> filteredDays = daysRepository.findByArchiveId(archiveId);
+        List<DaysInfo> filteredDaysInfos = daysInfoRepository.findByArchiveId(archiveId);
+        Archives filteredArchive = archivesRepository.findById(archiveId).orElseThrow(()->new IllegalArgumentException("해당 아카이브가 없습니다. id = " + archiveId));;
+        List<DaysSubjectiveResponseDto> daysSubjectiveResponseDtoList = DaysSubjectiveResponseDto.listOf(filteredDays);
+        List<DaysObjectiveResponseDto> daysObjectiveResponseDtoList = DaysObjectiveResponseDto.listOf(filteredDaysInfos);
+        DaysInArchiveDto daysInArchiveDto = new DaysInArchiveDto(filteredArchive);
+        return new DaysObjAndSubResponseDto(daysObjectiveResponseDtoList, daysSubjectiveResponseDtoList, daysInArchiveDto);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateDay(Long id, DaysSaveRequestDto daysSaveRequestDto) {
-        Days day = daysRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 피드가 없습니다. id = " + id));
+        Days day = daysRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 피드가 없습니다. id = " + id));
 
 //        if (daysSaveRequestDto.getDayNumber() != 0) {
 //            day.setDayNumber(daysSaveRequestDto.getDayNumber());

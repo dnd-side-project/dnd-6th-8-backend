@@ -15,20 +15,16 @@ public class Days {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer day;
 
-//    @Column()
-//    private String weather;
+    @Column(name = "DAY")
+    private Integer dayNumber;
 
-//    @Column(name = "dayNumber")
-//    private Integer dayNumber;
+    @Column
+    private LocalDate date;
 
-//    @Column
-//    private LocalDate date;
-//
-//    @Column()
-//    private String weather;
-//
+    @Column()
+    private String weather;
+
 //    @Column()
 //    private
 
@@ -47,9 +43,9 @@ public class Days {
 
     @Builder
     public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
-//        this.dayNumber = dayNumber;
-//        this.date = date;
-//        this.weather = weather;
+        this.dayNumber = dayNumber;
+        this.date = date;
+        this.weather = weather;
 //        this.image = image;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;

@@ -31,7 +31,7 @@ public class UserApiController {
     private final UserService userService;
     private final SurveyService surveyService;
 
-    @ApiOperation(value = "마이페이")
+    @ApiOperation(value = "마이페이지")
     @GetMapping("/user")
     public ResponseEntity<MyPageResponse> getUserInfo(@ApiIgnore Principal principal){
         MyPageResponse myPageResponse = userService.getUserInfo(principal.getName());
