@@ -85,9 +85,9 @@ public class ArchiveServiceImpl implements ArchivesService {
         if (archivesSaveRequestDto.getArchivingStyle() != null) {
             archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
         }
-        if (archivesSaveRequestDto.getPlace() != null) {
-            boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlace());
-            Place place = placeHandler(archivesSaveRequestDto.getPlace());
+        if (archivesSaveRequestDto.getPlaces() != null) {
+            boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlaces());
+            Place place = placeHandler(archivesSaveRequestDto.getPlaces());
             archive.setPlace(place);
         }
         if (archivesSaveRequestDto.getBudget() != null) {
