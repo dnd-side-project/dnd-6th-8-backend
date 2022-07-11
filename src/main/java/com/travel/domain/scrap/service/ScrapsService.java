@@ -1,5 +1,6 @@
 package com.travel.domain.scrap.service;
 
+import com.travel.domain.scrap.dto.ScrapListDto;
 import com.travel.domain.scrap.dto.ScrapPreviewDto;
 //import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
 import com.travel.domain.scrap.entity.Scraps;
@@ -12,5 +13,5 @@ public interface ScrapsService {
 
     public void unScraps(Long SCRAP_ID);
 
-    public List<ScrapPreviewDto> getMyScrapPreviewList(String loginEmail);
+    public ScrapListDto getMyScrapPreviewList(String loginEmail);
 }

@@ -1,5 +1,6 @@
 package com.travel.domain.scrap.controller;
 
+import com.travel.domain.scrap.dto.ScrapListDto;
 import com.travel.domain.scrap.dto.ScrapPreviewDto;
 //import com.travel.domain.scrap.dto.ScrapsSaveRequestDto;
 import com.travel.domain.scrap.service.ScrapsService;
@@ -37,8 +38,8 @@ public class ScrapApiController {
 
     @ApiOperation(value = "유저별 스크랩 목록 api")
     @GetMapping("/archives/scraps")
-    public ResponseEntity<List<ScrapPreviewDto>> getMyScrapList(@ApiIgnore Principal principal){
-        List<ScrapPreviewDto> scrapPreviewDto = scrapsService.getMyScrapPreviewList(principal.getName());
-        return ResponseEntity.ok(scrapPreviewDto);
+    public ResponseEntity<ScrapListDto> getMyScrapList(@ApiIgnore Principal principal){
+        ScrapListDto scrapListDto = scrapsService.getMyScrapPreviewList(principal.getName());
+        return ResponseEntity.ok(scrapListDto);
     }
 }

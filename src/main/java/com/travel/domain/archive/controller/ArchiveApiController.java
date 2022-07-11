@@ -30,7 +30,7 @@ public class ArchiveApiController {
     @ApiOperation(value = "아카이브 생성 api")
     @PostMapping(path = "/archives")
     public ResponseEntity<ArchiveDetailResponseDto> saveArchive
-            (@RequestPart MultipartFile coverImage,
+            (@RequestPart(required = false) MultipartFile coverImage,
              @RequestPart ArchivesSaveRequestDto archivesSaveRequestDto,
              @ApiIgnore Principal principal){
         System.out.println(principal.getName());
