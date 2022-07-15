@@ -1,9 +1,6 @@
 package com.travel.domain.archive.controller;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchiveResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.dto.HomeResponse;
+import com.travel.domain.archive.dto.*;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EReportType;
 import com.travel.domain.archive.service.ArchivesService;
@@ -59,10 +56,10 @@ public class ArchiveApiController {
     @PutMapping(path = "/archives/{id}")
     public ResponseEntity<ArchiveDetailResponseDto> updateArchive
             (@RequestPart MultipartFile coverImage,
-             @RequestPart ArchivesSaveRequestDto archivesSaveRequestDto,
+             @RequestPart ArchiveUpdateRequestDto archiveUpdateRequestDto,
              @ApiIgnore Principal principal,
              @PathVariable Long id){
-        ArchiveDetailResponseDto archivesResponseDto = archivesService.updateArchive(coverImage, archivesSaveRequestDto, principal.getName(), id);
+        ArchiveDetailResponseDto archivesResponseDto = archivesService.updateArchive(coverImage, archiveUpdateRequestDto, principal.getName(), id);
         return ResponseEntity.ok().build();
     }
 

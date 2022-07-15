@@ -1,9 +1,6 @@
 package com.travel.domain.archive.service;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchiveResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.dto.HomeResponse;
+import com.travel.domain.archive.dto.*;
 import com.travel.domain.archive.entity.*;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
@@ -69,32 +66,32 @@ public class ArchiveServiceImpl implements ArchivesService {
 
     @Override
     @Transactional(readOnly = true)
-    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail, Long archiveId) {
+    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchiveUpdateRequestDto archiveUpdateRequestDtoRequestDto, String userEmail, Long archiveId) {
         User user = userRepository.findByEmail(userEmail);
         Archives archive = archivesRepository.getById(archiveId);
 
-        if (archivesSaveRequestDto.getTitle() != null) {
-            archive.setTitle(archivesSaveRequestDto.getTitle());
+        if (archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
+            archive.setTitle(archiveUpdateRequestDtoRequestDto.getTitle());
         }
-        if (archivesSaveRequestDto.getFirstDay() != null) {
-            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay()));
+        if (archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
+            archive.setFirstDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getFirstDay()));
         }
-        if (archivesSaveRequestDto.getLastDay() != null) {
-            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay()));
+        if (archiveUpdateRequestDtoRequestDto.getLastDay().equals(archive.getLastDay())) {
+            archive.setLastDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getLastDay()));
         }
-        if (archivesSaveRequestDto.getArchivingStyle() != null) {
-            archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
+        if (archiveUpdateRequestDtoRequestDto.getArchivingStyle().equals(archive.getArchivingStyle())) {
+            archive.setArchivingStyle(archiveUpdateRequestDtoRequestDto.getArchivingStyle());
         }
-        if (archivesSaveRequestDto.getPlaces() != null) {
-            boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlaces());
-            Place place = placeHandler(archivesSaveRequestDto.getPlaces());
+        if (archiveUpdateRequestDtoRequestDto.getPlaces().equals((archive.getPlace()))) {
+            boolean placeExists = placeRepository.existsByName(archiveUpdateRequestDtoRequestDto.getPlaces());
+            Place place = placeHandler(archiveUpdateRequestDtoRequestDto.getPlaces());
             archive.setPlace(place);
         }
-        if (archivesSaveRequestDto.getBudget() != null) {
-            archive.setBudget(archivesSaveRequestDto.getBudget());
+        if (archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
+            archive.setBudget(archiveUpdateRequestDtoRequestDto.getBudget());
         }
-        if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
-            archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
+        if (Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+            archive.setHaveCompanion(Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()));
         }
 
         String imageUrl = null;
