@@ -26,7 +26,7 @@ public class EmojiListResponseDto {
     private String emojisUrl;
 
     public EmojiListResponseDto(HashMap<String, String> emojisMap){
-        this.emojiId = Long.parseLong(emojisMap.get("emojiCount"));
+        this.emojiId = Long.parseLong(emojisMap.get("emojiId"));
         this.emojiCount = Long.parseLong(emojisMap.get("emojiCount"));
         this.emojisName = emojisMap.get("emojisName");
         this.emojisUrl = emojisMap.get("emojisURL");
