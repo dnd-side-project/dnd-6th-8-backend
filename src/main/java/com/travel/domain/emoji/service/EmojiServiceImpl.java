@@ -62,11 +62,6 @@ public class EmojiServiceImpl implements EmojiService {
 
         for(Long id:emojiIds)
         {
-//            List<HashMap> emojisInfo = new ArrayList();
-//            HashMap<String, Long> emojisIdMap = new HashMap<>();
-//            HashMap<String, Long> emojisCountMap = new HashMap<>();
-//            HashMap<String, String> emojisUrlMap = new HashMap<>();
-//            HashMap<String, String> emojisNameMap = new HashMap<>();
             HashMap<String, String> emojisMap = new HashMap<>();
 
             emojisMap.put("emojiId", String.valueOf(id));
@@ -79,11 +74,6 @@ public class EmojiServiceImpl implements EmojiService {
 
             String emojiName = emojiRepository.findById(id).get().getEmoji_name();
             emojisMap.put("emojisName", emojiName);
-
-//            emojisList.add(emojisIdMap);
-//            emojisList.add(emojisCountMap);
-//            emojisList.add(emojisUrlMap);
-//            emojisList.add(emojisNameMap);
 
             emojisList.add(emojisMap);
         }
