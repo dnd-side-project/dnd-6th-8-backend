@@ -1,19 +1,13 @@
 package com.travel.domain.archive.controller;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchiveResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.dto.HomeResponse;
+import com.travel.domain.archive.dto.*;
 import com.travel.domain.archive.entity.EBadges;
-import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.EReportType;
 import com.travel.domain.archive.service.ArchivesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
@@ -50,11 +44,22 @@ public class ArchiveApiController {
         return ResponseEntity.ok(archivesService.findById(id));
     }
 
-    @ApiOperation(value = "아카이브 업데이트 API")
-    @PutMapping("/archives/{id}")
-    public ResponseEntity<Void> updateArchive
-            (@PathVariable Long id, @ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto){
-        archivesService.updateArchive(id, archivesSaveRequestDto);
+//    @ApiOperation(value = "아카이브 업데이트 API")
+//    @PutMapping("/archives/{id}")
+//    public ResponseEntity<Void> updateArchive
+//            (@PathVariable Long id, @ModelAttribute ArchivesSaveRequestDto archivesSaveRequestDto){
+//        archivesService.updateArchive(id, archivesSaveRequestDto);
+//        return ResponseEntity.ok().build();
+//    }
+
+    @ApiOperation(value = "아카이브 업데이트 api")
+    @PutMapping(path = "/archives/{id}")
+    public ResponseEntity<ArchiveDetailResponseDto> updateArchive
+            (@RequestPart MultipartFile coverImage,
+             @RequestPart ArchiveUpdateRequestDto archiveUpdateRequestDto,
+             @ApiIgnore Principal principal,
+             @PathVariable Long id){
+        ArchiveDetailResponseDto archivesResponseDto = archivesService.updateArchive(coverImage, archiveUpdateRequestDto, principal.getName(), id);
         return ResponseEntity.ok().build();
     }
 
@@ -80,7 +85,7 @@ public class ArchiveApiController {
         return ResponseEntity.ok(archivesResponseDtos);
     }
 
-    @ApiOperation(value = "홈 ")
+    @ApiOperation(value = "홈")
     @GetMapping("/archives/home")
     public ResponseEntity<HomeResponse> getMain(@ApiIgnore Principal principal){
         HomeResponse homeResponse = archivesService.getMain(principal.getName());

@@ -1,9 +1,6 @@
 package com.travel.domain.archive.service;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchiveResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.dto.HomeResponse;
+import com.travel.domain.archive.dto.*;
 import com.travel.domain.archive.entity.*;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.repository.PlaceRepository;
@@ -65,6 +62,53 @@ public class ArchiveServiceImpl implements ArchivesService {
 
     @Override
     @Transactional(readOnly = true)
+    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchiveUpdateRequestDto archiveUpdateRequestDtoRequestDto, String userEmail, Long archiveId) {
+        User user = userRepository.findByEmail(userEmail);
+        Archives archive = archivesRepository.getById(archiveId);
+
+        if (archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
+            archive.setTitle(archiveUpdateRequestDtoRequestDto.getTitle());
+        }
+        if (archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
+            archive.setFirstDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getFirstDay()));
+        }
+        if (archiveUpdateRequestDtoRequestDto.getLastDay().equals(archive.getLastDay())) {
+            archive.setLastDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getLastDay()));
+        }
+        if (archiveUpdateRequestDtoRequestDto.getArchivingStyle().equals(archive.getArchivingStyle())) {
+            archive.setArchivingStyle(archiveUpdateRequestDtoRequestDto.getArchivingStyle());
+        }
+        if (archiveUpdateRequestDtoRequestDto.getPlaces().equals((archive.getPlace()))) {
+            boolean placeExists = placeRepository.existsByName(archiveUpdateRequestDtoRequestDto.getPlaces());
+            Place place = placeHandler(archiveUpdateRequestDtoRequestDto.getPlaces());
+            archive.setPlace(place);
+        }
+        if (archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
+            archive.setBudget(archiveUpdateRequestDtoRequestDto.getBudget());
+        }
+        if (Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+            archive.setHaveCompanion(Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()));
+        }
+
+        String imageUrl = null;
+
+        System.out.println(coverImage.isEmpty());
+        if (coverImage.getResource().exists()) {
+            System.out.println("image not null");
+            try {
+                imageUrl = s3Uploader.upload(coverImage
+                        , "archive");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        archivesRepository.save(archive);
+        return new ArchiveDetailResponseDto(archive);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public ArchiveDetailResponseDto findById(Long id) {
         Archives archive = archivesRepository.findById(id).orElseThrow
                 (() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
@@ -102,50 +146,6 @@ public class ArchiveServiceImpl implements ArchivesService {
         return place;
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void updateArchive(Long id, ArchivesSaveRequestDto archivesSaveRequestDto) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        Archives archive = archivesRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + id));
-
-        if (archivesSaveRequestDto.getTitle() != null) {
-            archive.setTitle(archivesSaveRequestDto.getTitle());
-        }
-        if (archivesSaveRequestDto.getFirstDay() != null) {
-            archive.setFirstDay(LocalDate.parse(archivesSaveRequestDto.getFirstDay(), formatter));
-        }
-        if (archivesSaveRequestDto.getLastDay() != null) {
-            archive.setLastDay(LocalDate.parse(archivesSaveRequestDto.getLastDay(), formatter));
-        }
-        if (archivesSaveRequestDto.getArchivingStyle() != null) {
-            archive.setArchivingStyle(archivesSaveRequestDto.getArchivingStyle());
-        }
-        if (archivesSaveRequestDto.getPlaces() != null) {
-            archive.setPlace(placeHandler(archivesSaveRequestDto.getPlaces()));
-        }
-        if (archivesSaveRequestDto.getBudget() != null) {
-            archive.setBudget(archivesSaveRequestDto.getBudget());
-        }
-        if (Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
-            archive.setHaveCompanion(Boolean.parseBoolean(archivesSaveRequestDto.getHaveCompanion()));
-        }
-
-//        if(archivesSaveRequestDto.getCoverImage() != null){
-//            String imageUrl = null;
-//            try {
-//                s3Uploader.deleteS3(archive.getCoverImage(),"archive" );
-//                imageUrl = s3Uploader.upload(archivesSaveRequestDto.getCoverImage()
-//                        , "archive");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-        archivesRepository.save(archive);
-    }
 
     @Override
     public void updateArchiveShare(Long id, boolean isShare) {
