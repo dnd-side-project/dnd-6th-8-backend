@@ -8,5 +8,5 @@ import java.util.List;
 public interface EmojiService {
     public UserEmojiSelected emojiCheck(long archiveId, String loginEmail, long emojiId);
     public void emojiUnCheck(Long userEmojiSelectedId);
-    public EmojiListResponseDto getEmojisListOfArchives(long archiveId);
+    public List<EmojiListResponseDto> getEmojisListOfArchives(long archiveId);
 }

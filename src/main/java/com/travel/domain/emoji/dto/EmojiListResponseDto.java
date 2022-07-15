@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,27 @@ import java.util.stream.Collectors;
 @ApiModel(value = "이모지 응답")
 public class EmojiListResponseDto {
 
-    private HashMap<Long, List> emojisMap = new HashMap<>();
+//    private HashMap<Long, List> emojisMap = new HashMap<>();
 
-    public EmojiListResponseDto(HashMap<Long, List> emojisMap){
-        this.emojisMap = emojisMap;
+    private Long emojiId;
+    private Long emojiCount;
+    private String emojisName;
+    private String emojisUrl;
+
+    public EmojiListResponseDto(HashMap<String, String> emojisMap){
+        this.emojiId = Long.parseLong(emojisMap.get("emojiCount"));
+        this.emojiCount = Long.parseLong(emojisMap.get("emojiCount"));
+        this.emojisName = emojisMap.get("emojisName");
+        this.emojisUrl = emojisMap.get("emojisURL");
+    }
+
+    public static List<EmojiListResponseDto> listOf(List<HashMap> emojisList) {
+        List<EmojiListResponseDto> emojiListResponses = new ArrayList<>();
+
+        for (HashMap<String, String> emojis : emojisList){
+            emojiListResponses.add(new EmojiListResponseDto(emojis));
+        }
+
+        return emojiListResponses;
     }
 }
