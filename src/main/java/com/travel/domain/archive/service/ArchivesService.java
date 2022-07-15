@@ -1,9 +1,6 @@
 package com.travel.domain.archive.service;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchiveResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.archive.dto.HomeResponse;
+import com.travel.domain.archive.dto.*;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EPlaces;
 import com.travel.domain.archive.entity.EReportType;
@@ -19,7 +16,7 @@ public interface ArchivesService {
 
     public void delete(Long id);
 
-    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail, Long archiveId);
+    public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchiveUpdateRequestDto archiveUpdateRequestDto, String userEmail, Long archiveId);
 
     public void updateArchiveShare(Long id, boolean isShare);
 
