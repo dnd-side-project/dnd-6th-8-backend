@@ -28,7 +28,6 @@ public class EmojiServiceImpl implements EmojiService {
 
     @Transactional
     public UserEmojiSelected emojiCheck(long archiveId, String loginEmail, long emojiId) {
-//        Optional<Archives> archives = archivesRepository.findById(archiveId);
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         Emoji emoji = emojiRepository.findById(emojiId).orElseThrow(
