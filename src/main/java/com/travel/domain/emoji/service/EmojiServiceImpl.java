@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -52,7 +53,35 @@ public class EmojiServiceImpl implements EmojiService {
     public EmojiListResponseDto getEmojisListOfArchives(long archiveId) {
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
-//        List<UserEmojiSelected> userEmojiSelected = userEmojiSelectedRepository.findByArchiveId(archiveId);
-        return new EmojiListResponseDto(archives);
+        List<UserEmojiSelected> userEmojiSelected = userEmojiSelectedRepository.findByArchiveId(archiveId);
+        List<Emoji> emojis = emojiRepository.findAll();
+
+        List<Long> emojiIds = new ArrayList<>();
+        emojis.stream().forEach(e -> emojiIds.add(e.getId()));
+
+        HashMap<Long, List> emojisMap = new HashMap<>();
+
+        for(Long id:emojiIds)
+        {
+            List<HashMap> emojisInfo = new ArrayList();
+            HashMap<String, Long> emojisCountMap = new HashMap<>();
+            HashMap<String, String> emojisUrlMap = new HashMap<>();
+            HashMap<String, String> emojisNameMap = new HashMap<>();
+
+            long emojiCount = userEmojiSelected.stream().filter(e -> e.getEmoji().getId()==id).count();
+            emojisCountMap.put("emojiCount", emojiCount);
+
+            String emojiUrl = emojiRepository.findById(id).get().getEmoji_url();
+            emojisUrlMap.put("emojiURL", emojiUrl);
+
+            String emojiName = emojiRepository.findById(id).get().getEmoji_name();
+            emojisNameMap.put("emojiName", emojiName);
+
+            emojisInfo.add(emojisCountMap);
+            emojisInfo.add(emojisUrlMap);
+            emojisInfo.add(emojisNameMap);
+            emojisMap.put(id, emojisInfo);
+        }
+        return new EmojiListResponseDto(emojisMap);
     }
 }
