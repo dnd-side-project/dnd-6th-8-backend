@@ -55,7 +55,7 @@ public class ArchiveApiController {
     @ApiOperation(value = "아카이브 업데이트 api")
     @PutMapping(path = "/archives/{id}")
     public ResponseEntity<ArchiveDetailResponseDto> updateArchive
-            (@RequestPart MultipartFile coverImage,
+            (@RequestPart(required = false) MultipartFile coverImage,
              @RequestPart ArchiveUpdateRequestDto archiveUpdateRequestDto,
              @ApiIgnore Principal principal,
              @PathVariable Long id){
