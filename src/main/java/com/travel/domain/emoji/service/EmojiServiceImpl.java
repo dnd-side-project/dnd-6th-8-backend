@@ -49,11 +49,12 @@ public class EmojiServiceImpl implements EmojiService {
     }
 
     @Transactional
-    public List<EmojiListResponseDto> getEmojisListOfArchives(long archiveId) {
+    public List<EmojiListResponseDto> getEmojisListOfArchives(long archiveId, String loginEmail) {
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         List<UserEmojiSelected> filtered = userEmojiSelectedRepository.findByArchiveId(archiveId);
         List<Emoji> emojis = emojiRepository.findAll();
+        User user = userRepository.findByEmail(loginEmail);
 
         List<Long> emojiIds = new ArrayList<>();
         emojis.stream().forEach(e -> emojiIds.add(e.getId()));
@@ -74,6 +75,9 @@ public class EmojiServiceImpl implements EmojiService {
 
             String emojiName = emojiRepository.findById(id).get().getEmoji_name();
             emojisMap.put("emojisName", emojiName);
+
+            Boolean emojisChecked = filtered.stream().filter(e -> e.getEmoji().getId()==id).anyMatch(e -> e.getUser()==user);
+            emojisMap.put("emojisChecked", emojisChecked.toString());
 
             emojisList.add(emojisMap);
         }

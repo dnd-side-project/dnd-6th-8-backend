@@ -33,8 +33,8 @@ public class EmojiApiController {
 
     @GetMapping("/archives/{archiveId}/getEmojisListOfArchives")
     @ApiOperation(value = "아카이브 하나의 이모지 목록 API")
-    public ResponseEntity<List<EmojiListResponseDto>> getEmojisListOfArchives(@PathVariable long archiveId) {
-        List<EmojiListResponseDto> emojiListResponseDtos = emojiService.getEmojisListOfArchives(archiveId);
+    public ResponseEntity<List<EmojiListResponseDto>> getEmojisListOfArchives(@PathVariable long archiveId, @ApiIgnore Principal principal) {
+        List<EmojiListResponseDto> emojiListResponseDtos = emojiService.getEmojisListOfArchives(archiveId, principal.getName());
         return ResponseEntity.ok(emojiListResponseDtos);
     }
 }
