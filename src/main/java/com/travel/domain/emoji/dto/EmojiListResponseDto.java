@@ -24,12 +24,14 @@ public class EmojiListResponseDto {
     private Long emojiCount;
     private String emojisName;
     private String emojisUrl;
+    private Boolean emojisChecked;
 
     public EmojiListResponseDto(HashMap<String, String> emojisMap){
         this.emojiId = Long.parseLong(emojisMap.get("emojiId"));
         this.emojiCount = Long.parseLong(emojisMap.get("emojiCount"));
         this.emojisName = emojisMap.get("emojisName");
         this.emojisUrl = emojisMap.get("emojisURL");
+        this.emojisChecked = Boolean.parseBoolean(emojisMap.get("emojisChecked"));
     }
 
     public static List<EmojiListResponseDto> listOf(List<HashMap> emojisList) {
