@@ -50,8 +50,6 @@ public class EmojiServiceImpl implements EmojiService {
 
     @Transactional
     public List<EmojiListResponseDto> getEmojisListOfArchives(long archiveId, String loginEmail) {
-        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         List<UserEmojiSelected> filtered = userEmojiSelectedRepository.findByArchiveId(archiveId);
         List<Emoji> emojis = emojiRepository.findAll();
         User user = userRepository.findByEmail(loginEmail);
