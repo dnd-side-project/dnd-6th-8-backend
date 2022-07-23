@@ -25,6 +25,7 @@ public class EmojiListResponseDto {
     private String emojisName;
     private String emojisUrl;
     private Boolean emojisChecked;
+    private Long emojisCheckedId;
 
     public EmojiListResponseDto(HashMap<String, String> emojisMap){
         this.emojiId = Long.parseLong(emojisMap.get("emojiId"));
@@ -32,6 +33,7 @@ public class EmojiListResponseDto {
         this.emojisName = emojisMap.get("emojisName");
         this.emojisUrl = emojisMap.get("emojisURL");
         this.emojisChecked = Boolean.parseBoolean(emojisMap.get("emojisChecked"));
+        this.emojisCheckedId = Long.parseLong(emojisMap.get("emojisCheckedId"));
     }
 
     public static List<EmojiListResponseDto> listOf(List<HashMap> emojisList) {
