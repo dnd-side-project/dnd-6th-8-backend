@@ -12,13 +12,14 @@ import java.util.List;
 @Setter
 public class DaysObjAndSubResponseDto {
 //    private DaysInArchiveDto daysInArchiveDto; 일단 이 dto를 Day set 이라고 생각해보기
-    private Long dayNumber;
+    private int dayNumber;
     private String daysImg;
     private DaysObjectiveResponseDto daysObjectiveResponseDto;
     private DaysSubjectiveResponseDto daysSubjectiveResponseDto;
 
-    public DaysObjAndSubResponseDto(DaysObjectiveResponseDto daysObjectiveResponseDto, DaysSubjectiveResponseDto daysSubjectiveResponseDto) { //DaysInArchiveDto daysInArchiveDto
+    public DaysObjAndSubResponseDto(int dayNum, DaysObjectiveResponseDto daysObjectiveResponseDto, DaysSubjectiveResponseDto daysSubjectiveResponseDto) { //DaysInArchiveDto daysInArchiveDto
 //        this.daysInArchiveDto = daysInArchiveDto;
+        this.dayNumber = dayNum;
         this.daysObjectiveResponseDto = daysObjectiveResponseDto;
         this.daysSubjectiveResponseDto = daysSubjectiveResponseDto;
     }
@@ -33,7 +34,7 @@ public class DaysObjAndSubResponseDto {
             DaysInfo daysInfo = filteredDaysInfos.stream().filter(d->d.getDays().getDayNumber()==dayNum).findAny().get();
             DaysObjectiveResponseDto daysObjectiveResponseDto = new DaysObjectiveResponseDto(daysInfo);
 
-            dayResponses.add(new DaysObjAndSubResponseDto(daysObjectiveResponseDto, daysSubjectiveResponseDto));
+            dayResponses.add(new DaysObjAndSubResponseDto(dayNum, daysObjectiveResponseDto, daysSubjectiveResponseDto));
         }
 
         return dayResponses;
