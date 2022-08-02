@@ -1,7 +1,5 @@
 package com.travel.domain.day.controller;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
 import com.travel.domain.day.dto.DayTotalRequestDto;
 import com.travel.domain.day.dto.DaysObjAndSubResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
@@ -13,10 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
-
-import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
