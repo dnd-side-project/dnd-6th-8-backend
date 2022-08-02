@@ -1,5 +1,6 @@
 package com.travel.domain.day.service;
 
+import com.travel.domain.day.dto.DaysInArchiveDto;
 import com.travel.domain.day.dto.DaysObjAndSubResponseDto;
 import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
@@ -15,7 +16,7 @@ public interface DaysService {
                                                            DaysSaveRequestDto daysSaveRequestDto,
                                                            List<MultipartFile> dayImages);
 
-    public List<DaysObjAndSubResponseDto> getDays(Long archiveId, Integer dayNumber);
+    public DaysInArchiveDto getDays(Long archiveId, Integer dayNumber);
 
     public void delete(Long id);
 

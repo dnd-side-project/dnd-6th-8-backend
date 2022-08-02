@@ -16,12 +16,14 @@ public class DaysInArchiveDto {
     private String archiveTitle;
     private LocalDate firstDay;
     private LocalDate lastDay;
+    private List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto;
 
-    public DaysInArchiveDto(Archives entity) {
+    public DaysInArchiveDto(Archives entity, List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto) {
         this.writer = entity.getUser().getEmail();
         this.archiveId = entity.getId();
         this.archiveTitle = entity.getTitle();
         this.firstDay = entity.getFirstDay();
         this.lastDay = entity.getLastDay();
+        this.daysObjAndSubResponseDto = daysObjAndSubResponseDto;
     }
 }

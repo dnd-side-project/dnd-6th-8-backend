@@ -1,9 +1,6 @@
 package com.travel.domain.day.controller;
 
-import com.travel.domain.day.dto.DayTotalRequestDto;
-import com.travel.domain.day.dto.DaysObjAndSubResponseDto;
-import com.travel.domain.day.dto.DaysSaveRequestDto;
-import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
+import com.travel.domain.day.dto.*;
 import com.travel.domain.day.service.DaysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,9 +56,9 @@ public class DayApiController {
 
     @ApiOperation(value = "데이 피드를 archiveId로 가져오기 API(해당 아카이브 내 데이 피드 전체, dayNumber은 임시값)")
     @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<List<DaysObjAndSubResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
-        List<DaysObjAndSubResponseDto> daysObjAndSubResponseDtoList = daysService.getDays(archiveId, dayNumber);
-        return ResponseEntity.ok(daysObjAndSubResponseDtoList);
+    public ResponseEntity<DaysInArchiveDto> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
+        DaysInArchiveDto daysInArchiveDto = daysService.getDays(archiveId, dayNumber);
+        return ResponseEntity.ok(daysInArchiveDto);
     }
 
     @ApiOperation(value = "데이 피드 업데이트 API")
