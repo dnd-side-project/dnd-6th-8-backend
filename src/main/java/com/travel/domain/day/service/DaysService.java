@@ -15,7 +15,7 @@ public interface DaysService {
                                                            DaysSaveRequestDto daysSaveRequestDto,
                                                            List<MultipartFile> dayImages);
 
-    public DaysObjAndSubResponseDto getDays(Long archiveId, Integer dayNumber);
+    public List<DaysObjAndSubResponseDto> getDays(Long archiveId, Integer dayNumber);
 
     public void delete(Long id);
 

@@ -65,8 +65,8 @@ public class DayApiController {
 
     @ApiOperation(value = "데이 피드를 archiveId로 가져오기 API(해당 아카이브 내 데이 피드 전체, dayNumber은 임시값)")
     @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<DaysObjAndSubResponseDto> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
-        DaysObjAndSubResponseDto daysObjAndSubResponseDtoList = daysService.getDays(archiveId, dayNumber);
+    public ResponseEntity<List<DaysObjAndSubResponseDto>> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
+        List<DaysObjAndSubResponseDto> daysObjAndSubResponseDtoList = daysService.getDays(archiveId, dayNumber);
         return ResponseEntity.ok(daysObjAndSubResponseDtoList);
     }
 
