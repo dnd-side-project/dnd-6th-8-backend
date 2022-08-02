@@ -77,6 +77,12 @@ public class EmojiServiceImpl implements EmojiService {
             Boolean emojisChecked = filtered.stream().filter(e -> e.getEmoji().getId()==id).anyMatch(e -> e.getUser()==user);
             emojisMap.put("emojisChecked", emojisChecked.toString());
 
+            emojisMap.put("emojisCheckedId", "0");
+            if (emojisChecked) {
+                Long emojisCheckedId = filtered.stream().filter(e -> e.getEmoji().getId() == id).filter(e -> e.getUser() == user).findFirst().get().getId();
+                emojisMap.put("emojisCheckedId", emojisCheckedId.toString());
+            }
+
             emojisList.add(emojisMap);
         }
         return EmojiListResponseDto.listOf(emojisList);
