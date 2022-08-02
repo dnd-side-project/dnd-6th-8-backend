@@ -1,15 +1,13 @@
 package com.travel.domain.day.dto;
 
 import com.travel.domain.archive.entity.Archives;
-import com.travel.domain.day.entity.Days;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class DaysInArchiveDto {
+public class DaysInArchiveResponseDto {
 
     private String writer;
     private Long archiveId;
@@ -18,7 +16,7 @@ public class DaysInArchiveDto {
     private LocalDate lastDay;
     private List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto;
 
-    public DaysInArchiveDto(Archives entity, List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto) {
+    public DaysInArchiveResponseDto(Archives entity, List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto) {
         this.writer = entity.getUser().getEmail();
         this.archiveId = entity.getId();
         this.archiveTitle = entity.getTitle();

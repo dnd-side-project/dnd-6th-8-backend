@@ -116,13 +116,13 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly = true)
-    public DaysInArchiveDto getDays(Long archiveId, Integer dayNumber) {
+    public DaysInArchiveResponseDto getDays(Long archiveId) {
         List<Days> filteredDays = daysRepository.findByArchiveId(archiveId);
         List<DaysInfo> filteredDaysInfos = daysInfoRepository.findByArchiveId(archiveId);
         Archives filteredArchive = archivesRepository.findById(archiveId).orElseThrow(()->new IllegalArgumentException("해당 아카이브가 없습니다. id = " + archiveId));;
         List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto = DaysObjAndSubResponseDto.listOf(filteredDays, filteredDaysInfos);
-        DaysInArchiveDto daysInArchiveDto = new DaysInArchiveDto(filteredArchive, daysObjAndSubResponseDto);
-        return daysInArchiveDto;
+        DaysInArchiveResponseDto daysInArchiveResponseDto = new DaysInArchiveResponseDto(filteredArchive, daysObjAndSubResponseDto);
+        return daysInArchiveResponseDto;
     }
 
     @Override

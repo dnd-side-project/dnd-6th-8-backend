@@ -1,7 +1,6 @@
 package com.travel.domain.day.service;
 
-import com.travel.domain.day.dto.DaysInArchiveDto;
-import com.travel.domain.day.dto.DaysObjAndSubResponseDto;
+import com.travel.domain.day.dto.DaysInArchiveResponseDto;
 import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
 import com.travel.domain.day.dto.DaysSaveRequestDto;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +15,7 @@ public interface DaysService {
                                                            DaysSaveRequestDto daysSaveRequestDto,
                                                            List<MultipartFile> dayImages);
 
-    public DaysInArchiveDto getDays(Long archiveId, Integer dayNumber);
+    public DaysInArchiveResponseDto getDays(Long archiveId);
 
     public void delete(Long id);
 

@@ -54,11 +54,11 @@ public class DayApiController {
         return ResponseEntity.ok(dayDetailResponseDto);
     }
 
-    @ApiOperation(value = "데이 피드를 archiveId로 가져오기 API(해당 아카이브 내 데이 피드 전체, dayNumber은 임시값)")
-    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<DaysInArchiveDto> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
-        DaysInArchiveDto daysInArchiveDto = daysService.getDays(archiveId, dayNumber);
-        return ResponseEntity.ok(daysInArchiveDto);
+    @ApiOperation(value = "데이 피드를 archiveId로 가져오기 API(해당 아카이브 내 데이 피드 전체)")
+    @GetMapping("/archives/{archiveId}/days/detail")
+    public ResponseEntity<DaysInArchiveResponseDto> getDayListByArchivesAndDayNumber(@PathVariable Long archiveId) {
+        DaysInArchiveResponseDto daysInArchiveResponseDto = daysService.getDays(archiveId);
+        return ResponseEntity.ok(daysInArchiveResponseDto);
     }
 
     @ApiOperation(value = "데이 피드 업데이트 API")
