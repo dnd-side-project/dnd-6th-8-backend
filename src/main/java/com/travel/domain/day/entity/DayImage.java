@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class DaysImage {
+public class DayImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,15 @@ public class DaysImage {
     @JoinColumn(name="DAYS_ID")
     private Days days;
 
+    @ManyToOne
+    @JoinColumn(name="ARCHIVE_ID")
+    private Archives archives;
+
     @Builder
-    public DaysImage(String imageUrl, Days days){
+    public DayImage(String imageUrl, Days days){
         this.imageUrl = imageUrl;
         setDays(days);
+        this.archives = days.getArchives();
     }
 
     public void setDays(Days days) {

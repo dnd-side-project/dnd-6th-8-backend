@@ -12,10 +12,6 @@ import java.util.List;
 @Getter
 @ApiModel(value = "데이 피드 읽기(Detail)")
 public class DaysSubjectiveResponseDto {
-    @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
-    public Integer dayNumber;
-
-    private String writer;
 
     @ApiModelProperty(value = "여행 날짜", example="yyyy-MM-dd")
     private LocalDate date;
@@ -32,18 +28,12 @@ public class DaysSubjectiveResponseDto {
     @ApiModelProperty(value = "꿀팁")
     private String tipDescription;
 
-    @ApiModelProperty(value = "연결된 아카이브", example = "제주 여행")
-    private Long archiveId;
-
     public DaysSubjectiveResponseDto(Days entity){
-        this.dayNumber = entity.getDayNumber();
-        this.writer = entity.getArchives().getUser().getEmail();
         this.date = entity.getDate();
         this.weather = entity.getWeather();
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();
-        this.archiveId = entity.getArchives().getId();
     }
 
     public static List<DaysSubjectiveResponseDto> listOf(List<Days> filtered) {
