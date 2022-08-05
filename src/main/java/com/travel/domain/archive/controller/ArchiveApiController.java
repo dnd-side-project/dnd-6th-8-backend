@@ -120,7 +120,6 @@ public class ArchiveApiController {
         return ResponseEntity.ok().build();
     }
 
-    private final ArchivesRepository archivesRepository;
     @ApiOperation(value = "해당 아카이브 스크랩 여부 확인 API")
     @GetMapping("/archives/{archiveId}/scrap")
     public boolean isScraped(@ApiIgnore Principal principal, @PathVariable Long archiveId){
