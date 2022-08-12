@@ -2,6 +2,7 @@ package com.travel.domain.emoji.service;
 
 import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
+import com.travel.domain.emoji.dto.EmojiListResponseDto;
 import com.travel.domain.emoji.entity.Emoji;
 import com.travel.domain.emoji.entity.UserEmojiSelected;
 import com.travel.domain.emoji.repository.EmojiRepository;
@@ -11,6 +12,10 @@ import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +28,6 @@ public class EmojiServiceImpl implements EmojiService {
 
     @Transactional
     public UserEmojiSelected emojiCheck(long archiveId, String loginEmail, long emojiId) {
-//        Optional<Archives> archives = archivesRepository.findById(archiveId);
         Archives archives = archivesRepository.findById(archiveId).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         Emoji emoji = emojiRepository.findById(emojiId).orElseThrow(
@@ -42,5 +46,45 @@ public class EmojiServiceImpl implements EmojiService {
                 () -> new IllegalArgumentException("해당 이모지가 없습니다. id = " + userEmojiSelectedId));
         ;
         userEmojiSelectedRepository.delete(userEmojiSelected);
+    }
+
+    @Transactional
+    public List<EmojiListResponseDto> getEmojisListOfArchives(long archiveId, String loginEmail) {
+        List<UserEmojiSelected> filtered = userEmojiSelectedRepository.findByArchiveId(archiveId);
+        List<Emoji> emojis = emojiRepository.findAll();
+        User user = userRepository.findByEmail(loginEmail);
+
+        List<Long> emojiIds = new ArrayList<>();
+        emojis.stream().forEach(e -> emojiIds.add(e.getId()));
+
+        List<HashMap> emojisList = new ArrayList<>();
+
+        for(Long id:emojiIds)
+        {
+            HashMap<String, String> emojisMap = new HashMap<>();
+
+            emojisMap.put("emojiId", String.valueOf(id));
+
+            long emojiCount = filtered.stream().filter(e -> e.getEmoji().getId()==id).count();
+            emojisMap.put("emojiCount", String.valueOf(emojiCount));
+
+            String emojiUrl = emojiRepository.findById(id).get().getEmoji_url();
+            emojisMap.put("emojisURL", emojiUrl);
+
+            String emojiName = emojiRepository.findById(id).get().getEmoji_name();
+            emojisMap.put("emojisName", emojiName);
+
+            Boolean emojisChecked = filtered.stream().filter(e -> e.getEmoji().getId()==id).anyMatch(e -> e.getUser()==user);
+            emojisMap.put("emojisChecked", emojisChecked.toString());
+
+            emojisMap.put("emojisCheckedId", "0");
+            if (emojisChecked) {
+                Long emojisCheckedId = filtered.stream().filter(e -> e.getEmoji().getId() == id).filter(e -> e.getUser() == user).findFirst().get().getId();
+                emojisMap.put("emojisCheckedId", emojisCheckedId.toString());
+            }
+
+            emojisList.add(emojisMap);
+        }
+        return EmojiListResponseDto.listOf(emojisList);
     }
 }

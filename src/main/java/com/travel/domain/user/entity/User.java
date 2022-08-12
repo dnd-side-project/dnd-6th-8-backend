@@ -44,7 +44,7 @@ public class User {
     private List<Archives> archives = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "user")
-//    private List<UserMarkedEmoji> userMarkedEmojis = new ArrayList<>();;
+//    private List<UserMarkedEmoji> userEmojiSelected = new ArrayList<>();;
 
     @OrderBy("createdAt DESC")
     @JsonIgnoreProperties({"user"})

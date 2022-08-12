@@ -3,7 +3,11 @@ package com.travel.domain.archive.controller;
 import com.travel.domain.archive.dto.*;
 import com.travel.domain.archive.entity.EBadges;
 import com.travel.domain.archive.entity.EReportType;
+import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.archive.service.ArchivesService;
+import com.travel.domain.scrap.repository.ScrapsRepository;
+import com.travel.domain.user.entity.User;
+import com.travel.domain.user.repository.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,8 @@ import java.util.List;
 public class ArchiveApiController {
 
     private final ArchivesService archivesService;
+    private final ScrapsRepository scrapsRepository;
+    private final UserRepository userRepository;
 
     @ApiOperation(value = "아카이브 생성 api")
     @PostMapping(path = "/archives")
@@ -113,5 +119,20 @@ public class ArchiveApiController {
         archivesService.reportArchive(archiveId, principal.getName(), reportType);
         System.out.println(reportType);
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "해당 아카이브 스크랩 여부 확인 API")
+    @GetMapping("/archives/{archiveId}/scrap")
+    public boolean isScraped(@ApiIgnore Principal principal, @PathVariable Long archiveId){
+        boolean isScraped;
+
+        Long loginUserId = userRepository.findByEmail(principal.getName()).getId();
+        if (scrapsRepository.findByUserAndArchive(loginUserId, archiveId) == null){
+            isScraped = false;
+        }
+        else{
+            isScraped = true;
+        }
+        return isScraped;
     }
 }

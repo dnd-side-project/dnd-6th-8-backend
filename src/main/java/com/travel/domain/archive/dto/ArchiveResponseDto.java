@@ -49,7 +49,7 @@ public class ArchiveResponseDto {
         this.places = entity.getPlace().getName();
         this.coverImage = entity.getCoverImage();
         this.scrapNum = entity.getScraps().size();
-        this.emojiNum = entity.getUserMarkedEmojis().size();
+        this.emojiNum = entity.getUserEmojiSelected().size();
         this.createdAt = entity.getCreatedAt().toLocalDate();
 //        this.shortContent = entity.get
     }

@@ -1,11 +1,6 @@
 package com.travel.domain.day.controller;
 
-import com.travel.domain.archive.dto.ArchiveDetailResponseDto;
-import com.travel.domain.archive.dto.ArchivesSaveRequestDto;
-import com.travel.domain.day.dto.DayTotalRequestDto;
-import com.travel.domain.day.dto.DaysObjAndSubResponseDto;
-import com.travel.domain.day.dto.DaysSaveRequestDto;
-import com.travel.domain.day.dto.DaysSubjectiveResponseDto;
+import com.travel.domain.day.dto.*;
 import com.travel.domain.day.service.DaysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,10 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
-
-import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -63,11 +54,11 @@ public class DayApiController {
         return ResponseEntity.ok(dayDetailResponseDto);
     }
 
-    @ApiOperation(value = "데이 피드를 archiveId와 dayNumber로 가져오기 API")
-    @GetMapping("/archives/{archiveId}/days/{dayNumber}")
-    public ResponseEntity<DaysObjAndSubResponseDto> getDayListByArchivesAndDayNumber(@PathVariable Integer dayNumber, @PathVariable Long archiveId) {
-        DaysObjAndSubResponseDto daysObjAndSubResponseDtoList = daysService.getDays(archiveId, dayNumber);
-        return ResponseEntity.ok(daysObjAndSubResponseDtoList);
+    @ApiOperation(value = "데이 피드를 archiveId로 가져오기 API(해당 아카이브 내 데이 피드 전체)")
+    @GetMapping("/archives/{archiveId}/days/detail")
+    public ResponseEntity<DaysInArchiveResponseDto> getDayListByArchivesAndDayNumber(@PathVariable Long archiveId) {
+        DaysInArchiveResponseDto daysInArchiveResponseDto = daysService.getDays(archiveId);
+        return ResponseEntity.ok(daysInArchiveResponseDto);
     }
 
     @ApiOperation(value = "데이 피드 업데이트 API")
