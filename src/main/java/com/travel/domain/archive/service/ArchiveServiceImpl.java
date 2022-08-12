@@ -209,6 +209,7 @@ public class ArchiveServiceImpl implements ArchivesService {
         Archives archives = archivesRepository.getById(archiveId);
         User user = userRepository.findByEmail(userEmail);
         Report report = Report.builder().reportType(reportType).archives(archives).user(user).build();
+        System.out.println(report.getReportType());
         reportRepository.save(report);
     }
 

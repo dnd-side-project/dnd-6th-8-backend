@@ -109,8 +109,9 @@ public class ArchiveApiController {
     @ApiOperation(value = "아카이브 신고 API")
     @PostMapping("/report/archives/{archiveId}")
     public ResponseEntity<Void> reportArchive(@PathVariable Long archiveId, @ApiIgnore Principal principal,
-                                              EReportType reportType){
+                                              @RequestParam EReportType reportType){
         archivesService.reportArchive(archiveId, principal.getName(), reportType);
+        System.out.println(reportType);
         return ResponseEntity.ok().build();
     }
 }
