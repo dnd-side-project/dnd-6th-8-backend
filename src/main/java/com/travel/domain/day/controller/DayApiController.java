@@ -5,6 +5,7 @@ import com.travel.domain.day.service.DaysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,15 +43,17 @@ public class DayApiController {
 //                .body(archivesResponseDto);
 //    }
 
-    //day별로 따로 데이터를 받기->
+    // day별로 따로 데이터를 받기->
     @ApiOperation(value = "데이 피드를 생성하는 API")
     @PostMapping("/archives/{archiveId}/days/{dayNumber}")
     public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay
     (@PathVariable Long archiveId, @PathVariable Long dayNumber,
-     @RequestPart(required = false) List<MultipartFile> dayImages,
+     @RequestPart(required = false, name = "dayImages") List<MultipartFile> dayImages,
      @RequestPart DaysSaveRequestDto daysSaveRequestDtos){
+        System.out.println(dayImages.size());
         List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDaySeparate(archiveId,
                 dayNumber, daysSaveRequestDtos, dayImages);
+
         return ResponseEntity.ok(dayDetailResponseDto);
     }
 

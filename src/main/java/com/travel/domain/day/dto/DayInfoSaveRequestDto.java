@@ -3,11 +3,11 @@ package com.travel.domain.day.dto;
 import com.travel.domain.day.entity.Days;
 import com.travel.domain.day.entity.DaysInfo;
 import com.travel.domain.day.entity.ETransportation;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @Data
 public class DayInfoSaveRequestDto {
     private String departure;

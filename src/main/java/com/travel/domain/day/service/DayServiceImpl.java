@@ -69,7 +69,7 @@ public class DayServiceImpl implements DaysService {
 
     //   day피드 별로 따로 저장
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<DaysSubjectiveResponseDto> saveDaySeparate(Long archiveId, Long dayNumber,
                                                            DaysSaveRequestDto daysSaveRequestDto,
                                                            List<MultipartFile> dayImages) {
