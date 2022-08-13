@@ -81,6 +81,7 @@ public class S3Uploader {
         } else {
             bucket = dayBucket;
         }
+        System.out.println(bucket);
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
