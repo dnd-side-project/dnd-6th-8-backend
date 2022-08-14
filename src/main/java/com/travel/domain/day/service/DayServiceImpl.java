@@ -91,7 +91,6 @@ public class DayServiceImpl implements DaysService {
         }
 
         List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.getDayInfoSaveRequestDtos();
-        System.out.println("info"+daysInfosDto.size());
         for (int j = 0; j < daysInfosDto.size(); j++) {
             System.out.println("dayInfo");
             DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
