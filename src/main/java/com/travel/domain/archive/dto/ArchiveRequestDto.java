@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "아카이브 기록하기")
+@ApiModel(value = "아카이브 신고하기")
 public class ArchiveRequestDto {
     EReportType reportType;
 }
