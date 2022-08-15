@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@ApiModel(value = "자세한 아카이브")
+@ApiModel(value = "아카이브 응답")
 public class ArchiveResponseDto {
 
     @ApiModelProperty(value = "아카이브 id", example = "1")

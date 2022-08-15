@@ -17,7 +17,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel(value = "아카이브 기록하기")
+@ApiModel(value = "아카이브 업데이트")
 public class ArchiveUpdateRequestDto {
 
     @ApiModelProperty(value = "아카이브 제목", example = "대충 다녀도 아름다운 제주")
