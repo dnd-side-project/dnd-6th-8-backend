@@ -14,4 +14,7 @@ public interface ScrapsRepository extends JpaRepository<Scraps, Long> {
 
     @Query(value = "select * from scraps where user_id = :userId and archive_id = :archiveId", nativeQuery = true)
     Scraps findByUserAndArchive(@Param("userId") long userId, @Param("archiveId") long archiveId);
+// // 중복 스크랩 부분 추후 작업
+//    @Query(value = "select * from scraps where user_id = :userId and archive_id = :archiveId", nativeQuery = true)
+//    boolean existsByUserAndArchive(@Param("userId") long userId, @Param("archiveId") long archiveId);
 }

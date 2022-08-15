@@ -10,6 +10,7 @@ import com.travel.domain.scrap.repository.ScrapsRepository;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,21 +28,29 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(readOnly=true)
-    public Scraps addScraps(Long ARCHIVE_ID, String loginEmail) {
-        Archives archives = archivesRepository.findById(ARCHIVE_ID).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + ARCHIVE_ID));
+    public Scraps addScraps(Long archiveId, String loginEmail) {
+        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         User user = userRepository.findByEmail(loginEmail);
 
         Scraps scrap = scrapsRepository.save(Scraps.builder().archives(archives).user(user).build());
+
+//        Scraps scrap;  // 중복 스크랩 부분 추후 작업
+//        scrapsRepository.existsByUserAndArchive(user.getId(), archives.getId())
+//            System.out.println("이미 존재하는 스크랩입니다.");
+//            return null;
+//        } else {
+//            scrap = scrapsRepository.save(Scraps.builder().archives(archives).user(user).build());
+//        }
+
         return scrap;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void unScraps(Long SCRAP_ID) {
-        Scraps scrap = scrapsRepository.findById(SCRAP_ID).orElseThrow(
-                ()->new IllegalArgumentException("해당 스크랩 내역이 없습니다. id = " + SCRAP_ID)
-        );
+    public void unScraps(Long archiveId, String loginEmail) {
+        User user = userRepository.findByEmail(loginEmail);
+        Scraps scrap = scrapsRepository.findByUserAndArchive(user.getId(), archiveId);  //해당 스크랩 없을 경우 예외 처리 필요
         scrapsRepository.delete(scrap);
     }
 
