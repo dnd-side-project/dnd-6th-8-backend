@@ -10,6 +10,7 @@ import com.travel.domain.scrap.repository.ScrapsRepository;
 import com.travel.domain.user.entity.User;
 import com.travel.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,15 @@ public class ScrapsServiceImpl implements ScrapsService {
         User user = userRepository.findByEmail(loginEmail);
 
         Scraps scrap = scrapsRepository.save(Scraps.builder().archives(archives).user(user).build());
+
+//        Scraps scrap;  // 중복 스크랩 부분 추후 작업
+//        scrapsRepository.existsByUserAndArchive(user.getId(), archives.getId())
+//            System.out.println("이미 존재하는 스크랩입니다.");
+//            return null;
+//        } else {
+//            scrap = scrapsRepository.save(Scraps.builder().archives(archives).user(user).build());
+//        }
+
         return scrap;
     }
 
