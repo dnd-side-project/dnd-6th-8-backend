@@ -4,7 +4,7 @@ import com.travel.domain.archive.entity.Archives;
 import com.travel.domain.archive.repository.ArchivesRepository;
 import com.travel.domain.common.S3Uploader;
 import com.travel.domain.day.dto.*;
-import com.travel.domain.day.entity.DaysImage;
+import com.travel.domain.day.entity.DayImage;
 import com.travel.domain.day.entity.DaysInfo;
 import com.travel.domain.day.repository.DayImageRepository;
 import com.travel.domain.day.repository.DaysInfoRepository;
@@ -84,14 +84,13 @@ public class DayServiceImpl implements DaysService {
             System.out.println("dayImage");
             try {
                 String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
-                dayImageRepository.save(DaysImage.builder().imageUrl(imageUrl).days(day).build());
+                dayImageRepository.save(DayImage.builder().imageUrl(imageUrl).days(day).build());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.getDayInfoSaveRequestDtos();
-        System.out.println("info"+daysInfosDto.size());
         for (int j = 0; j < daysInfosDto.size(); j++) {
             System.out.println("dayInfo");
             DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
@@ -116,14 +115,16 @@ public class DayServiceImpl implements DaysService {
 
     @Override
     @Transactional(readOnly = true)
-    public DaysObjAndSubResponseDto getDays(Long archiveId, Integer dayNumber) {
+    public DaysInArchiveResponseDto getDays(Long archiveId) {
+        //필요한 값 필터링
         List<Days> filteredDays = daysRepository.findByArchiveId(archiveId);
         List<DaysInfo> filteredDaysInfos = daysInfoRepository.findByArchiveId(archiveId);
         Archives filteredArchive = archivesRepository.findById(archiveId).orElseThrow(()->new IllegalArgumentException("해당 아카이브가 없습니다. id = " + archiveId));;
-        List<DaysSubjectiveResponseDto> daysSubjectiveResponseDtoList = DaysSubjectiveResponseDto.listOf(filteredDays);
-        List<DaysObjectiveResponseDto> daysObjectiveResponseDtoList = DaysObjectiveResponseDto.listOf(filteredDaysInfos);
-        DaysInArchiveDto daysInArchiveDto = new DaysInArchiveDto(filteredArchive);
-        return new DaysObjAndSubResponseDto(daysObjectiveResponseDtoList, daysSubjectiveResponseDtoList, daysInArchiveDto);
+        List<DayImage> filteredDaysImgs = dayImageRepository.findByArchiveId(archiveId);
+        //필터링된 값으로 Dto 생성
+        List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto = DaysObjAndSubResponseDto.listOf(filteredDays, filteredDaysInfos, filteredDaysImgs);
+        DaysInArchiveResponseDto daysInArchiveResponseDto = new DaysInArchiveResponseDto(filteredArchive, daysObjAndSubResponseDto);
+        return daysInArchiveResponseDto;
     }
 
     @Override
