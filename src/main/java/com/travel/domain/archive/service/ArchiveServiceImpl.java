@@ -121,7 +121,7 @@ public class ArchiveServiceImpl implements ArchivesService {
         Pageable limitThree = PageRequest.of(0,3);
         LocalDateTime sevenDaysAgo = LocalDateTime.now().minusDays(7);
         User user = userRepository.findByEmail(userEmail);
-        List<Archives> archivesList = userEmojiSelectedRepository.orderByCount(sevenDaysAgo, limitThree);
+        List<Archives> archivesList = userEmojiSelectedRepository.orderByCount(limitThree);
         long totalArchiveNum = archivesRepository.count();
         return new HomeResponse(archivesList, totalArchiveNum, user.getUserName());
     }
