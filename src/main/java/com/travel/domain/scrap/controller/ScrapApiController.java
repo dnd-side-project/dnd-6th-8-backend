@@ -30,9 +30,9 @@ public class ScrapApiController {
     }
 
     @ApiOperation(value = "스크랩 취소 api")
-    @DeleteMapping("/archives/{SCRAP_ID}/unScraps")
-    public void unScraps(@PathVariable long SCRAP_ID) {
-        scrapsService.unScraps(SCRAP_ID);
+    @DeleteMapping("/archives/{archiveId}/unScraps")
+    public void unScraps(@PathVariable Long archiveId, @ApiIgnore Principal principal) {
+        scrapsService.unScraps(archiveId, principal.getName());
 
     }
 

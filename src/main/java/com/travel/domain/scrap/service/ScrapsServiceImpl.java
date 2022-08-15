@@ -28,9 +28,9 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(readOnly=true)
-    public Scraps addScraps(Long ARCHIVE_ID, String loginEmail) {
-        Archives archives = archivesRepository.findById(ARCHIVE_ID).orElseThrow(
-                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + ARCHIVE_ID));
+    public Scraps addScraps(Long archiveId, String loginEmail) {
+        Archives archives = archivesRepository.findById(archiveId).orElseThrow(
+                () -> new IllegalArgumentException("해당 게시물이 없습니다. id = " + archiveId));
         User user = userRepository.findByEmail(loginEmail);
 
         Scraps scrap = scrapsRepository.save(Scraps.builder().archives(archives).user(user).build());
@@ -48,10 +48,9 @@ public class ScrapsServiceImpl implements ScrapsService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void unScraps(Long SCRAP_ID) {
-        Scraps scrap = scrapsRepository.findById(SCRAP_ID).orElseThrow(
-                ()->new IllegalArgumentException("해당 스크랩 내역이 없습니다. id = " + SCRAP_ID)
-        );
+    public void unScraps(Long archiveId, String loginEmail) {
+        User user = userRepository.findByEmail(loginEmail);
+        Scraps scrap = scrapsRepository.findByUserAndArchive(user.getId(), archiveId);  //해당 스크랩 없을 경우 예외 처리 필요
         scrapsRepository.delete(scrap);
     }
 
