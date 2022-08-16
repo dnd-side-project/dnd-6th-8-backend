@@ -9,12 +9,14 @@ import java.util.List;
 
 @Getter
 public class DaysObjectiveResponseDto {
+    private Long daysInfo_Id;
     private String departure;
     private String arrival;
     private String travelTime;
     private ETransportation transportation;
 
     public DaysObjectiveResponseDto(DaysInfo entity){
+        this.daysInfo_Id = entity.getId();
         this.departure = entity.getDeparture();
         this.arrival = entity.getArrival();
         this.travelTime = entity.getTravelTime();
