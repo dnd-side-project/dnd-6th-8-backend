@@ -9,6 +9,8 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 
+import static com.travel.domain.archive.dto.ArchiveResponseDto.calculateDuration;
+
 @Getter
 @ApiModel(value = "자세한 아카이브")
 public class ArchiveDetailResponseDto {
@@ -44,6 +46,8 @@ public class ArchiveDetailResponseDto {
 
     private int countDaysFeeds;
 
+    private String travelDuration;
+
     public ArchiveDetailResponseDto(Archives entity){
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -52,6 +56,7 @@ public class ArchiveDetailResponseDto {
         this.places = entity.getPlace().getName();
         this.archivingStyle = entity.getArchivingStyle();
         this.budget = entity.getBudget();
+        this.travelDuration = calculateDuration(entity);
         this.haveCompanion = entity.isHaveCompanion();
         this.isShare = entity.isShare();
         this.countDaysFeeds = entity.countDaysFeedsOfArchive();

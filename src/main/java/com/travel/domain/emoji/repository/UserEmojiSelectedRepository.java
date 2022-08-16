@@ -18,4 +18,7 @@ public interface UserEmojiSelectedRepository extends JpaRepository<UserEmojiSele
 
     @Query(value = "select * from user_emoji_selected where archive_id = :archiveId", nativeQuery = true)
     public List<UserEmojiSelected> findByArchiveId(@Param("archiveId") long archiveId);
+
+    @Query("SELECT DISTINCT e.archives FROM UserEmojiSelected e GROUP BY e.archives ORDER BY COUNT(e.archives) DESC")
+    public List<Archives> orderByCount(Pageable pageable);
 }
