@@ -15,21 +15,26 @@ import java.util.stream.Collectors;
 public class DaysObjAndSubResponseDto {
     private int dayNumber;
     private ArrayList<String> imgUrl;
-    private DaysObjectiveResponseDto daysObjectiveResponseDto;
+    private List<DaysObjectiveResponseDto> daysObjectiveResponses;
     private DaysSubjectiveResponseDto daysSubjectiveResponseDto;
 
-    public DaysObjAndSubResponseDto(int dayNum, ArrayList<String> imgUrl, DaysObjectiveResponseDto daysObjectiveResponseDto, DaysSubjectiveResponseDto daysSubjectiveResponseDto) { //DaysInArchiveDto daysInArchiveDto
+    public DaysObjAndSubResponseDto(int dayNum, ArrayList<String> imgUrl, List<DaysObjectiveResponseDto> daysObjectiveResponses, DaysSubjectiveResponseDto daysSubjectiveResponseDto) {
         this.dayNumber = dayNum;
         this.imgUrl = imgUrl;
-        this.daysObjectiveResponseDto = daysObjectiveResponseDto;
+        this.daysObjectiveResponses = daysObjectiveResponses;
         this.daysSubjectiveResponseDto = daysSubjectiveResponseDto;
     }
 
     public static List<DaysObjAndSubResponseDto> listOf(List<Days> filteredDays, List<DaysInfo> filteredDaysInfos, List<DayImage> filteredDaysImgs) {
         List<DaysObjAndSubResponseDto> dayResponses = new ArrayList<>();
         for (int i = 1; i<=filteredDays.size(); i++) {
+
             int dayNum = i;
             Days day = filteredDays.stream().filter(d->d.getDayNumber()==dayNum).findAny().get();
+
+            List<DaysInfo> dayInfos = filteredDaysInfos.stream().filter(info->info.getDays().getId()==day.getId()).collect(Collectors.toList());
+            List<DaysObjectiveResponseDto> daysObjectiveResponses = DaysObjectiveResponseDto.listOf(dayInfos);
+
             ArrayList<String> imgUrl = new ArrayList<>();
             List<DayImage> dayImgs = filteredDaysImgs.stream().filter(img->img.getDays().getId()==day.getId()).collect(Collectors.toList());
 
@@ -39,10 +44,7 @@ public class DaysObjAndSubResponseDto {
 
             DaysSubjectiveResponseDto daysSubjectiveResponseDto = new DaysSubjectiveResponseDto(day);
 
-            DaysInfo daysInfo = filteredDaysInfos.stream().filter(d->d.getDays().getDayNumber()==dayNum).findAny().get();
-            DaysObjectiveResponseDto daysObjectiveResponseDto = new DaysObjectiveResponseDto(daysInfo);
-
-            dayResponses.add(new DaysObjAndSubResponseDto(dayNum, imgUrl, daysObjectiveResponseDto, daysSubjectiveResponseDto));
+            dayResponses.add(new DaysObjAndSubResponseDto(dayNum, imgUrl, daysObjectiveResponses, daysSubjectiveResponseDto));
         }
 
         return dayResponses;
