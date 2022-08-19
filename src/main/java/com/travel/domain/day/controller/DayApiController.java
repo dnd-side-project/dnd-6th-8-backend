@@ -18,15 +18,17 @@ public class DayApiController {
 
     private final DaysService daysService;
 
-     //day전체 데이터를 받기
-     @ApiOperation(value = "데이 피드를 생성하는 API")
-     @PostMapping("/archives/days/{archiveId}")
-     public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay
-             (@PathVariable Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
-         System.out.println("saving");
-         List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
-         return ResponseEntity.ok(dayDetailResponseDto);
-     }
+    // TODO: 언젠가는 modelAttribute쓰자 제대로 구현하자...
+
+//     //day전체 데이터를 받기
+//     @ApiOperation(value = "데이 피드를 생성하는 API")
+//     @PostMapping("/archives/days/{archiveId}")
+//     public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay
+//             (@PathVariable Long archiveId, @ModelAttribute DayTotalRequestDto dayTotalRequestDto){
+//         System.out.println("saving");
+//         List<DaysSubjectiveResponseDto> dayDetailResponseDto = daysService.saveDay(dayTotalRequestDto.getDaysSaveRequestDto(), archiveId);
+//         return ResponseEntity.ok(dayDetailResponseDto);
+//     }
 
 //    @ApiOperation(value = "아카이브 생성 api")
 //    @PostMapping(path = "/archives")

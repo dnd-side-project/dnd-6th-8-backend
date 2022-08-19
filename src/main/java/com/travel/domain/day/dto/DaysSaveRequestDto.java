@@ -59,7 +59,7 @@ public class DaysSaveRequestDto {
     public Days toEntity() {
 //        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).travelDescription(travelDescription).
 //                emotionDescription(emotionDescription).tipDescription(tipDescription).build();
-        return Days.builder().travelDescription(travelDescription).
+        return Days.builder().travelDescription(travelDescription).dayNumber(dayNumber).
                 emotionDescription(emotionDescription).tipDescription(tipDescription).build();
     }
 }
