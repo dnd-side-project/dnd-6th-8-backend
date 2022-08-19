@@ -27,7 +27,7 @@ public interface ArchivesRepository extends JpaRepository<Archives, Long> {
 
     long countByUser_Id(@Param(value = "userId")long userId);
 
-    @Query("select DISTINCT(a.badges) from Archives a where a.user.id = :userId")
+    @Query("select a.badges from Archives a where a.user.id = :userId")
     List<String> findByBadgesAndUser_Id(@Param(value = "userId")long userId);
 
 }
