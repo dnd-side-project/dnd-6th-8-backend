@@ -92,8 +92,7 @@ public class ArchiveServiceImpl implements ArchivesService {
 
         String imageUrl = null;
 
-        System.out.println(coverImage.isEmpty());
-        if (coverImage.getResource().exists()) {
+        if (coverImage != null && !coverImage.isEmpty()) {
             System.out.println("image not null");
             try {
                 imageUrl = s3Uploader.upload(coverImage

@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByEmail(userEmail);
         long archiveNum = archivesRepository.countByUser_Id(user.getId());
         List<String> badgesList = archivesRepository.findByBadgesAndUser_Id(user.getId());
-        System.out.println(badgesList);
         return MyPageResponse.builder().userName(user.getUserName())
                 .archiveNumber(archiveNum).badgesList(badgesList).diaryColor(user.getDiaryColor()).build();
     }

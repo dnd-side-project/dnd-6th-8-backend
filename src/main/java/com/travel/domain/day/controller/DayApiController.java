@@ -42,7 +42,7 @@ public class DayApiController {
 //                .body(archivesResponseDto);
 //    }
 
-    //day별로 따로 데이터를 받기->
+    // day별로 따로 데이터를 받기->
     @ApiOperation(value = "데이 피드를 생성하는 API")
     @PostMapping("/archives/{archiveId}/days/{dayNumber}")
     public ResponseEntity<List<DaysSubjectiveResponseDto>> saveDay

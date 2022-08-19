@@ -25,13 +25,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        System.out.println("userName" + userNameAttributeName);
-        System.out.println("registrationId" + registrationId);
 
         OAuth2Attribute oAuth2Attribute =
                 OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        System.out.println("oauth" + oAuth2Attribute);
 
         var memberAttribute = oAuth2Attribute.convertToMap();
 
