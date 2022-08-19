@@ -23,7 +23,8 @@ public class Days {
     private LocalDate date;
 
     @Column()
-    private String weather;
+    @Enumerated(EnumType.STRING)
+    private EWeather weather;
 
 //    @Column()
 //    private
@@ -45,7 +46,7 @@ public class Days {
     public Days(Integer dayNumber, LocalDate date, String weather, String image, String travelDescription, String emotionDescription, String tipDescription) {
         this.dayNumber = dayNumber;
         this.date = date;
-        this.weather = weather;
+        this.weather = EWeather.valueOf(weather);
 //        this.image = image;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;

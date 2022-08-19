@@ -21,16 +21,13 @@ public class DaysSaveRequestDto {
 
     @ApiModelProperty(value = "데이 넘버(n일차)", example = "1")
     private Integer dayNumber;
-//
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @ApiModelProperty(value = "다녀온 날짜", example = "2021-12-10", required = true)
-//    private LocalDate date;
-//
-//    @ApiModelProperty(value = "날씨", example = "맑음", required = true)
-//    private String weather;
-//
-//    @ApiModelProperty(value = "피드 사진 링크", required = true)
-//    private ArrayList<MultipartFile> images;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(value = "다녀온 날짜", example = "2021-12-10", required = true)
+    private LocalDate date;
+
+    @ApiModelProperty(value = "날씨", example = "맑음", required = true)
+    private String weather;
 
     @ApiModelProperty(value = "하루의 여정", example = "제주도의 인생 맛집을 찾았다! 간장게장과", required = true)
     private String travelDescription;
@@ -49,6 +46,7 @@ public class DaysSaveRequestDto {
 //        this.date = date;
 //        this.weather = weather;
 //        this.image = image;
+        this.weather = weather;
         this.travelDescription = travelDescription;
         this.emotionDescription = emotionDescription;
         this.tipDescription = tipDescription;
@@ -59,7 +57,7 @@ public class DaysSaveRequestDto {
     public Days toEntity() {
 //        return Days.builder().dayNumber(dayNumber).date(date).weather(weather).travelDescription(travelDescription).
 //                emotionDescription(emotionDescription).tipDescription(tipDescription).build();
-        return Days.builder().travelDescription(travelDescription).
+        return Days.builder().travelDescription(travelDescription).dayNumber(dayNumber).weather(weather).date(date).
                 emotionDescription(emotionDescription).tipDescription(tipDescription).build();
     }
 }

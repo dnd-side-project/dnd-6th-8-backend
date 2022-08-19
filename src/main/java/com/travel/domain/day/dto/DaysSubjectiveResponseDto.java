@@ -30,7 +30,7 @@ public class DaysSubjectiveResponseDto {
 
     public DaysSubjectiveResponseDto(Days entity){
         this.date = entity.getDate();
-        this.weather = entity.getWeather();
+        this.weather = String.valueOf(entity.getWeather());
         this.travelDescription = entity.getTravelDescription();
         this.emotionDescription = entity.getEmotionDescription();
         this.tipDescription = entity.getTipDescription();

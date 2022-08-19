@@ -31,17 +31,14 @@ public class DayServiceImpl implements DaysService {
     @Override
     @Transactional(readOnly = true)
     public List<DaysSubjectiveResponseDto> saveDay(List<DaysSaveRequestDto> daysSaveRequestDto, Long archiveId) {
-        System.out.println("saving");
         System.out.println(daysSaveRequestDto.size());
 
         Archives archive = archivesRepository.getById(archiveId);
 
         for (int i = 0; i < daysSaveRequestDto.size(); i++) {
-            System.out.println("day" + i);
 //            List<MultipartFile> dayImages = daysSaveRequestDto.get(i).getImages();
             List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.get(i).getDayInfoSaveRequestDtos();
             Days day = daysSaveRequestDto.get(i).toEntity();
-            System.out.println("setting archive");
             day.setArchives(archive);
             day = daysRepository.save(day);
 
@@ -74,6 +71,7 @@ public class DayServiceImpl implements DaysService {
                                                            DaysSaveRequestDto daysSaveRequestDto,
                                                            List<MultipartFile> dayImages) {
         Archives archive = archivesRepository.getById(archiveId);
+
         Days day = daysSaveRequestDto.toEntity();
 
         day.setArchives(archive);
@@ -82,7 +80,6 @@ public class DayServiceImpl implements DaysService {
 
         int j = 0;
         while (dayImages != null && j < dayImages.size() && !dayImages.get(j).isEmpty()) {
-            System.out.println("dayImage");
             try {
                 String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
                 dayImageRepository.save(DayImage.builder().imageUrl(imageUrl).days(day).build());
@@ -95,7 +92,6 @@ public class DayServiceImpl implements DaysService {
 
         List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.getDayInfoSaveRequestDtos();
         while (daysInfosDto != null && j < daysInfosDto.size()) {
-            System.out.println("dayInfo");
             DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
             daysInfoRepository.save(DaysInfo.builder()
                     .departure(dayInfoSaveRequestDto.getDeparture())
