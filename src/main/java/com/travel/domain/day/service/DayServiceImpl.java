@@ -79,8 +79,9 @@ public class DayServiceImpl implements DaysService {
         day.setArchives(archive);
         day = daysRepository.save(day);
 
-        System.out.println("img"+dayImages.size());
-        for (int j = 0; j < dayImages.size(); j++) {
+
+        int j = 0;
+        while (dayImages != null && j < dayImages.size() && !dayImages.get(j).isEmpty()) {
             System.out.println("dayImage");
             try {
                 String imageUrl = s3Uploader.upload(dayImages.get(j), "days");
@@ -88,10 +89,12 @@ public class DayServiceImpl implements DaysService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            j++;
         }
+        j = 0;
 
         List<DayInfoSaveRequestDto> daysInfosDto = daysSaveRequestDto.getDayInfoSaveRequestDtos();
-        for (int j = 0; j < daysInfosDto.size(); j++) {
+        while (daysInfosDto != null && j < daysInfosDto.size()) {
             System.out.println("dayInfo");
             DayInfoSaveRequestDto dayInfoSaveRequestDto = daysInfosDto.get(j);
             daysInfoRepository.save(DaysInfo.builder()
@@ -99,6 +102,7 @@ public class DayServiceImpl implements DaysService {
                     .arrival(dayInfoSaveRequestDto.getArrival())
                     .travelTime(dayInfoSaveRequestDto.getTravelTime())
                     .transportation(dayInfoSaveRequestDto.getTransportation()).build());
+            j++;
         }
 
         return DaysSubjectiveResponseDto.listOf(archive.getDays());
@@ -119,7 +123,8 @@ public class DayServiceImpl implements DaysService {
         //필요한 값 필터링
         List<Days> filteredDays = daysRepository.findByArchiveId(archiveId);
         List<DaysInfo> filteredDaysInfos = daysInfoRepository.findByArchiveId(archiveId);
-        Archives filteredArchive = archivesRepository.findById(archiveId).orElseThrow(()->new IllegalArgumentException("해당 아카이브가 없습니다. id = " + archiveId));;
+        Archives filteredArchive = archivesRepository.findById(archiveId).orElseThrow(() -> new IllegalArgumentException("해당 아카이브가 없습니다. id = " + archiveId));
+        ;
         List<DayImage> filteredDaysImgs = dayImageRepository.findByArchiveId(archiveId);
         //필터링된 값으로 Dto 생성
         List<DaysObjAndSubResponseDto> daysObjAndSubResponseDto = DaysObjAndSubResponseDto.listOf(filteredDays, filteredDaysInfos, filteredDaysImgs);
