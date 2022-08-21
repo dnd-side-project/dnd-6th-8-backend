@@ -65,7 +65,7 @@ jobs:
         aws s3 cp \
         --region ap-northeast-2 \
         --acl private \
-        ./travel-build.zip s3://dnd-travel/
+        ./travel-build2.zip s3://dnd-travel2/
 
     # Deploy
     - name: Deploy
@@ -74,8 +74,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         aws deploy create-deployment \
-        --application-name dnd-travel-api \
-        --deployment-group-name dnd-travel-api-group \
+        --application-name TraciousServer \
+        --deployment-group-name TraciousServer-group \
         --file-exists-behavior OVERWRITE \
-        --s3-location bucket=dnd-travel,bundleType=zip,key=travel-build.zip \
+        --s3-location bucket=dnd-travel2,bundleType=zip,key=travel-build.zip \
         --region ap-northeast-2
