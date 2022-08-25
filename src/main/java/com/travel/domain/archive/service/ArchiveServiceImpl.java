@@ -66,24 +66,24 @@ public class ArchiveServiceImpl implements ArchivesService {
         User user = userRepository.findByEmail(userEmail);
         Archives archive = archivesRepository.getById(archiveId);
 
-        if (archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
+        if (!archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
             archive.setTitle(archiveUpdateRequestDtoRequestDto.getTitle());
         }
-        if (archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
+        if (!archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
             archive.setFirstDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getFirstDay()));
         }
-        if (archiveUpdateRequestDtoRequestDto.getLastDay().equals(archive.getLastDay())) {
+        if (!archiveUpdateRequestDtoRequestDto.getLastDay().equals(archive.getLastDay())) {
             archive.setLastDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getLastDay()));
         }
-        if (archiveUpdateRequestDtoRequestDto.getArchivingStyle().equals(archive.getArchivingStyle())) {
+        if (!archiveUpdateRequestDtoRequestDto.getArchivingStyle().equals(archive.getArchivingStyle())) {
             archive.setArchivingStyle(archiveUpdateRequestDtoRequestDto.getArchivingStyle());
         }
-        if (archiveUpdateRequestDtoRequestDto.getPlaces().equals((archive.getPlace()))) {
+        if (!archiveUpdateRequestDtoRequestDto.getPlaces().equals((archive.getPlace()))) {
             boolean placeExists = placeRepository.existsByName(archiveUpdateRequestDtoRequestDto.getPlaces());
             Place place = placeHandler(archiveUpdateRequestDtoRequestDto.getPlaces());
             archive.setPlace(place);
         }
-        if (archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
+        if (!archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
             archive.setBudget(archiveUpdateRequestDtoRequestDto.getBudget());
         }
         if (Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
@@ -101,7 +101,7 @@ public class ArchiveServiceImpl implements ArchivesService {
                 e.printStackTrace();
             }
         }
-
+        archive.setCoverImage(imageUrl);
         archivesRepository.save(archive);
         return new ArchiveDetailResponseDto(archive);
     }
