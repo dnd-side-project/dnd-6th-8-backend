@@ -74,7 +74,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_PROD_SECRET_KEY }}
       run: |
         aws deploy create-deployment \
-        --application-name dnd-travel-api \
+        --application-name dnd-api \
         --deployment-group-name dnd-deploy-group \
         --file-exists-behavior OVERWRITE \
         --s3-location bucket=dnd-travel2,bundleType=zip,key=travel-build.zip \
