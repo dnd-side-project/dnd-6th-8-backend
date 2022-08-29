@@ -66,27 +66,27 @@ public class ArchiveServiceImpl implements ArchivesService {
         User user = userRepository.findByEmail(userEmail);
         Archives archive = archivesRepository.getById(archiveId);
 
-        if (!archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
+        if (archiveUpdateRequestDtoRequestDto.getTitle() !=null && !archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
             archive.setTitle(archiveUpdateRequestDtoRequestDto.getTitle());
         }
-        if (!archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
+        if (archiveUpdateRequestDtoRequestDto.getFirstDay() !=null && !archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
             archive.setFirstDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getFirstDay()));
         }
-        if (!archiveUpdateRequestDtoRequestDto.getLastDay().equals(archive.getLastDay())) {
+        if (archiveUpdateRequestDtoRequestDto.getLastDay() !=null && !archiveUpdateRequestDtoRequestDto.getLastDay().equals(archive.getLastDay())) {
             archive.setLastDay(LocalDate.parse(archiveUpdateRequestDtoRequestDto.getLastDay()));
         }
-        if (!archiveUpdateRequestDtoRequestDto.getArchivingStyle().equals(archive.getArchivingStyle())) {
+        if (archiveUpdateRequestDtoRequestDto.getArchivingStyle() !=null && !archiveUpdateRequestDtoRequestDto.getArchivingStyle().equals(archive.getArchivingStyle())) {
             archive.setArchivingStyle(archiveUpdateRequestDtoRequestDto.getArchivingStyle());
         }
-        if (!archiveUpdateRequestDtoRequestDto.getPlaces().equals((archive.getPlace()))) {
+        if (archiveUpdateRequestDtoRequestDto.getPlaces() !=null && !archiveUpdateRequestDtoRequestDto.getPlaces().equals((archive.getPlace()))) {
             boolean placeExists = placeRepository.existsByName(archiveUpdateRequestDtoRequestDto.getPlaces());
             Place place = placeHandler(archiveUpdateRequestDtoRequestDto.getPlaces());
             archive.setPlace(place);
         }
-        if (!archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
+        if (archiveUpdateRequestDtoRequestDto.getBudget() !=null && !archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
             archive.setBudget(archiveUpdateRequestDtoRequestDto.getBudget());
         }
-        if (Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+        if (archiveUpdateRequestDtoRequestDto.getHaveCompanion() !=null && Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
             archive.setHaveCompanion(Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()));
         }
 
