@@ -36,7 +36,7 @@ public class ArchiveServiceImpl implements ArchivesService {
     private final UserEmojiSelectedRepository userEmojiSelectedRepository;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public ArchiveDetailResponseDto saveArchive(MultipartFile coverImage, ArchivesSaveRequestDto archivesSaveRequestDto, String userEmail) {
         User user = userRepository.findByEmail(userEmail);
         boolean placeExists = placeRepository.existsByName(archivesSaveRequestDto.getPlaces());
@@ -61,12 +61,13 @@ public class ArchiveServiceImpl implements ArchivesService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public ArchiveDetailResponseDto updateArchive(MultipartFile coverImage, ArchiveUpdateRequestDto archiveUpdateRequestDtoRequestDto, String userEmail, Long archiveId) {
         User user = userRepository.findByEmail(userEmail);
         Archives archive = archivesRepository.getById(archiveId);
 
         if (archiveUpdateRequestDtoRequestDto.getTitle() !=null && !archiveUpdateRequestDtoRequestDto.getTitle().equals(archive.getTitle())) {
+            System.out.println("updating");
             archive.setTitle(archiveUpdateRequestDtoRequestDto.getTitle());
         }
         if (archiveUpdateRequestDtoRequestDto.getFirstDay() !=null && !archiveUpdateRequestDtoRequestDto.getFirstDay().equals(archive.getFirstDay())) {
@@ -102,6 +103,7 @@ public class ArchiveServiceImpl implements ArchivesService {
             }
         }
         archive.setCoverImage(imageUrl);
+        System.out.println(archive.getTitle());
         archivesRepository.save(archive);
         return new ArchiveDetailResponseDto(archive);
     }
