@@ -87,7 +87,8 @@ public class ArchiveServiceImpl implements ArchivesService {
         if (archiveUpdateRequestDtoRequestDto.getBudget() !=null && !archiveUpdateRequestDtoRequestDto.getBudget().equals(archive.getBudget())) {
             archive.setBudget(archiveUpdateRequestDtoRequestDto.getBudget());
         }
-        if (archiveUpdateRequestDtoRequestDto.getHaveCompanion() !=null && Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.isHaveCompanion()) {
+        if (archiveUpdateRequestDtoRequestDto.getHaveCompanion() !=null
+                && Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()) != archive.getHaveCompanion()) {
             archive.setHaveCompanion(Boolean.parseBoolean(archiveUpdateRequestDtoRequestDto.getHaveCompanion()));
         }
 
