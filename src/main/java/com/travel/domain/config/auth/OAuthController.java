@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class OAuthController {
 
     //여기서 접근 url던져준다.
-    private String kakaoUrl = "https://tracious.shop/login/oauth2/code/kakao";
+    private String kakaoUrl = "https://tracious-api.shop/oauth2/authorization/kakao";
     private String naverUrl = "";
     private String googleUrl = "";
 
