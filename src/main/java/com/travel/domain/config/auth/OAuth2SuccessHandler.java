@@ -45,6 +45,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Token token = tokenService.generateToken(userDto.getEmail(), "USER");
         String redirect = "/" + token.getAccessToken() + "/" + newUser + "/" + URLEncoder.encode(user.getUserName());
 
+        System.out.println(redirect);
         response.sendRedirect("http://tracious.shop/callback" + redirect);
     }
 
